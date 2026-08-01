@@ -4,11 +4,11 @@
 
 ## 현재 스킬
 
-| 폴더 | 역할 | 상태 |
+| 스킬 | 역할 | 상태 |
 |---|---|---|
-| `skills/prompt-router` | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
-| `skills/obsidian-lecture-pack` | 자막·NotebookLM·YouTube를 근거로 Obsidian 강의팩 생성 | stable draft |
-| `skills/fieldpilot` | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
+| [Prompt Router](skills/prompt-router/) | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
+| [Obsidian Lecture Pack](skills/obsidian-lecture-pack/) | 자막·NotebookLM·YouTube를 근거로 Obsidian 강의팩 생성 | stable draft |
+| [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
 
 ## 저장 원칙
 
