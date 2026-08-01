@@ -57,3 +57,12 @@ Copyright © 2026 gimhyuna0221-art. All rights reserved.
 별도 허가를 받아야 합니다.
 
 Commercial licensing inquiries may be directed to the repository owner.
+
+## Contributions
+
+현재 이 저장소는 외부 코드·문서 기여와 Pull Request를 받지 않습니다.
+
+오류 제보와 개선 의견은 GitHub Issue로 제안할 수 있지만,
+제안된 내용을 실제 저장소에 반영할지는 저장소 소유자가 결정합니다.
+
+상업화와 라이선스 정책이 확정된 뒤 기여 정책을 다시 검토할 예정입니다.
