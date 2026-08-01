@@ -43,3 +43,16 @@ ai-skills-vault/
 5. `Commit changes`를 누른다.
 
 ZIP 파일 자체만 올리지 말고 압축을 풀어 폴더와 Markdown 파일을 올린다.
+## Usage and licensing
+
+Copyright © 2026 gimhyuna0221-art. All rights reserved.
+
+이 저장소는 포트폴리오 공개 및 평가 목적으로 게시되었습니다.
+
+저장소 소유자의 사전 서면 허가 없이 이 자료를 복제, 수정, 재배포,
+재판매, 재허가하거나 상업적으로 이용할 수 없습니다.
+
+개인적인 열람과 평가를 넘어 사용하려는 경우 저장소 소유자에게
+별도 허가를 받아야 합니다.
+
+Commercial licensing inquiries may be directed to the repository owner.
