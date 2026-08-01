@@ -1,0 +1,20 @@
+# Secrets and local configuration
+.env
+.env.*
+*.key
+*.pem
+secrets/
+private/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary and generated files
+*.log
+tmp/
+temp/
