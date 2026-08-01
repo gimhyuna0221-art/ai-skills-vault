@@ -34,15 +34,16 @@ ai-skills-vault/
    └─ codex/
 ```
 
-## GitHub에 올리는 방법
+## 현재 단계
 
-1. GitHub에서 `ai-skills-vault` 저장소를 만든다.
-2. 이 ZIP을 컴퓨터에서 압축 해제한다.
-3. 저장소의 `Add file → Upload files`에서 압축 해제한 내부 파일을 업로드한다.
-4. 커밋 메시지에 `Initialize AI skills vault`를 입력한다.
-5. `Commit changes`를 누른다.
+이 저장소의 스킬은 실제 사용과 검증을 거치며 개선하고 있습니다.
 
-ZIP 파일 자체만 올리지 말고 압축을 풀어 폴더와 Markdown 파일을 올린다.
+- `stable`: 반복 사용과 기본 검증이 완료된 스킬
+- `stable draft`: 구조는 완성됐지만 추가 사례와 검증이 필요한 스킬
+- `experimental`: 초기 실험 단계의 스킬
+
+현재 공개된 자료는 포트폴리오와 기능 평가를 위한 버전입니다.
+
 ## Usage and licensing
 
 Copyright © 2026 gimhyuna0221-art. All rights reserved.
