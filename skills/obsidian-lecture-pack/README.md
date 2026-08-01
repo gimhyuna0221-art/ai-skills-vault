@@ -21,3 +21,10 @@
 - 필요한 화면 캡처
 
 YouTube URL이 없으면 클릭형 타임링크와 영상 임베드는 보류합니다.
+
+## 검증 현황
+
+현재 상태는 `stable draft`입니다.
+
+실제 실행 기록과 `stable` 승격 조건은
+[Validation Log](VALIDATION_LOG.md)에서 확인할 수 있습니다.
