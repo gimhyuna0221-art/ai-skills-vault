@@ -38,11 +38,14 @@ ai-skills-vault/
 
 이 저장소의 스킬은 실제 사용과 검증을 거치며 개선하고 있습니다.
 
+상세 기준: [Skill Validation Standard](VALIDATION.md)
+
 - `stable`: 반복 사용과 기본 검증이 완료된 스킬
 - `stable draft`: 구조는 완성됐지만 추가 사례와 검증이 필요한 스킬
 - `experimental`: 초기 실험 단계의 스킬
 
 현재 공개된 자료는 포트폴리오와 기능 평가를 위한 버전입니다.
+
 
 ## Usage and licensing
 
