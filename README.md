@@ -69,3 +69,10 @@ Commercial licensing inquiries may be directed to the repository owner.
 제안된 내용을 실제 저장소에 반영할지는 저장소 소유자가 결정합니다.
 
 상업화와 라이선스 정책이 확정된 뒤 기여 정책을 다시 검토할 예정입니다.
+
+## 검증 현황
+
+현재 상태는 `stable draft`입니다.
+
+실제 실행 기록과 `stable` 승격 조건은
+[Validation Log](VALIDATION_LOG.md)에서 확인할 수 있습니다.
