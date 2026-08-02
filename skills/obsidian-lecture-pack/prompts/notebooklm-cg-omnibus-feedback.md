@@ -1,4 +1,4 @@
-# NotebookLM CG Character Lecture Analysis Prompt
+# NotebookLM CG Omnibus Feedback Lecture Analysis Prompt
 
 선택된 이번 강의 소스 1개만 근거로 분석해줘.
 
