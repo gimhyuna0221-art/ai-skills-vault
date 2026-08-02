@@ -7,8 +7,8 @@
 | 스킬 | 역할 | 상태 |
 |---|---|---|
 | [Prompt Router](skills/prompt-router/) | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
-| [Obsidian Lecture Pack — General](obsidian-lecture-pack/) | 일반 동영상 강의를 주제·개념·절차 중심의 Obsidian 강의팩으로 변환 | stable draft |
-| [Obsidian Lecture Pack — CG Omnibus](obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
+| [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 동영상 강의를 주제·개념·절차 중심의 Obsidian 강의팩으로 변환 | stable draft |
+| [Obsidian Lecture Pack — CG Omnibus](skills/obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
 | [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
 
 ## Obsidian 스킬 구분
@@ -16,7 +16,7 @@
 ### 일반 동영상 강의
 
 ```text
-obsidian-lecture-pack/
+skills/obsidian-lecture-pack/
 ```
 
 대상: 설교, 인문학, 철학, 웹소설 작법, 일반 이론·실습·튜토리얼, 학생별 피드백이 없는 CG 튜토리얼.
@@ -32,7 +32,7 @@ obsidian-lecture-pack/
 ### CG 학생별 옴니버스 피드백
 
 ```text
-obsidian-lecture-pack-cg/
+skills/obsidian-lecture-pack-cg/
 ```
 
 대상: 여러 학생이 서로 다른 캐릭터 제작 단계에서 순차적으로 피드백받는 수업.
@@ -58,11 +58,11 @@ obsidian-lecture-pack-cg/
 
 ```text
 ai-skills-vault/
-├─ obsidian-lecture-pack/
-├─ obsidian-lecture-pack-cg/
 ├─ skills/
 │  ├─ prompt-router/
-│  └─ fieldpilot/
+│  ├─ fieldpilot/
+│  ├─ obsidian-lecture-pack/
+│  └─ obsidian-lecture-pack-cg/
 ├─ templates/
 │  └─ skill-template/
 └─ adapters/
