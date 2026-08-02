@@ -7,8 +7,44 @@
 | 스킬 | 역할 | 상태 |
 |---|---|---|
 | [Prompt Router](skills/prompt-router/) | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
-| [Obsidian Lecture Pack](skills/obsidian-lecture-pack/) | 자막·NotebookLM·YouTube를 근거로 Obsidian 강의팩 생성 | stable draft |
+| [Obsidian Lecture Pack — General](obsidian-lecture-pack/) | 일반 동영상 강의를 주제·개념·절차 중심의 Obsidian 강의팩으로 변환 | stable draft |
+| [Obsidian Lecture Pack — CG Omnibus](obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
 | [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
+
+## Obsidian 스킬 구분
+
+### 일반 동영상 강의
+
+```text
+obsidian-lecture-pack/
+```
+
+대상: 설교, 인문학, 철학, 웹소설 작법, 일반 이론·실습·튜토리얼, 학생별 피드백이 없는 CG 튜토리얼.
+
+호출:
+
+```text
+/obsidianpack
+/obsidian
+/obsidian-general
+```
+
+### CG 학생별 옴니버스 피드백
+
+```text
+obsidian-lecture-pack-cg/
+```
+
+대상: 여러 학생이 서로 다른 캐릭터 제작 단계에서 순차적으로 피드백받는 수업.
+
+호출:
+
+```text
+/obsidian-cg
+/obsidianpack-cg
+```
+
+두 스킬은 프롬프트, 동기화팩, 학생 이력, 지식베이스를 자동 혼합하지 않습니다.
 
 ## 저장 원칙
 
@@ -22,9 +58,10 @@
 
 ```text
 ai-skills-vault/
+├─ obsidian-lecture-pack/
+├─ obsidian-lecture-pack-cg/
 ├─ skills/
 │  ├─ prompt-router/
-│  ├─ obsidian-lecture-pack/
 │  └─ fieldpilot/
 ├─ templates/
 │  └─ skill-template/
@@ -46,13 +83,11 @@ ai-skills-vault/
 
 현재 공개된 자료는 포트폴리오와 기능 평가를 위한 버전입니다.
 
-
 ## Usage and licensing
 
 Copyright © 2026 gimhyuna0221-art. All rights reserved.
 
 이 저장소는 포트폴리오 공개 및 평가 목적으로 게시되었습니다.
-
 저장소 소유자의 사전 서면 허가 없이 이 자료를 복제, 수정, 재배포,
 재판매, 재허가하거나 상업적으로 이용할 수 없습니다.
 
@@ -64,9 +99,5 @@ Commercial licensing inquiries may be directed to the repository owner.
 ## Contributions
 
 현재 이 저장소는 외부 코드·문서 기여와 Pull Request를 받지 않습니다.
-
 오류 제보와 개선 의견은 GitHub Issue로 제안할 수 있지만,
 제안된 내용을 실제 저장소에 반영할지는 저장소 소유자가 결정합니다.
-
-상업화와 라이선스 정책이 확정된 뒤 기여 정책을 다시 검토할 예정입니다.
-
