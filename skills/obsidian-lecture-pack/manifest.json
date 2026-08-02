@@ -1,20 +1,75 @@
 {
   "name": "obsidian-lecture-pack",
   "display_name": "Obsidian 일반 강의팩",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "scope": "general-lecture-only",
   "architecture": [
     "evidence-first-bookmarks",
-    "domain-isolated-sync-pack"
+    "two-mode-general-lecture",
+    "optional-domain-isolated-sync-pack",
+    "contiguous-anchor-validation"
   ],
   "default_command": "/obsidianpack",
   "aliases": [
+    "/obsidianpack-new",
+    "/obsidianpack-update",
     "/obsidian",
     "/obsidian-general",
     "/obsidianpack-general",
     "/옵시디언팩만들어줘"
   ],
   "prompt": "prompts/notebooklm-general.md",
+  "modes": {
+    "standalone": {
+      "spec": "modes/standalone.md",
+      "default": true,
+      "commands": [
+        "/obsidianpack",
+        "/obsidianpack-new"
+      ],
+      "include_sync_pack": false,
+      "delivery": "옵시디언_일반강의팩.zip"
+    },
+    "cumulative": {
+      "spec": "modes/cumulative.md",
+      "commands": [
+        "/obsidianpack-update"
+      ],
+      "auto_when_valid_same_domain_sync_pack": true,
+      "include_sync_pack": true,
+      "delivery": "옵시디언_일반강의_업데이트.zip"
+    }
+  },
+  "sync_pack": {
+    "optional": true,
+    "output_filename": "00_다음_처리에_보낼_AI동기화팩.zip",
+    "accepted_legacy_filenames": [
+      "00_매주_ChatGPT에_보낼_AI동기화팩.zip"
+    ],
+    "include": [
+      "00_AI허브.md",
+      "00_과정목차.md",
+      "강의 인덱스.md",
+      "강의/*/00_강의목차.md",
+      "강의/*/02_북마크.md",
+      "강의/*/03_최종노트.md",
+      "개념/",
+      "워크플로우/",
+      "_시스템/동기화_manifest.json"
+    ],
+    "exclude": [
+      "강의/*/01_원문전사.md",
+      "원본 자막",
+      "영상",
+      "이미지",
+      "NotebookLM 원본",
+      "검사자료",
+      ".obsidian/",
+      "SKILL.md",
+      "프롬프트",
+      "개발 문서"
+    ]
+  },
   "allowed_units": [
     "topic",
     "chapter",
@@ -33,9 +88,13 @@
     "student-assignment"
   ],
   "handoff_when": "여러 학생이 서로 다른 CG 제작 단계에서 순차적으로 피드백받는 수업이면 obsidian-lecture-pack-cg 사용",
-  "delivery": {
-    "initial": "옵시디언_일반강의팩.zip",
-    "cumulative": "옵시디언_일반강의_주간업데이트.zip"
+  "validation": {
+    "broken_links": 0,
+    "ambiguous_links": 0,
+    "student_field_contamination": 0,
+    "anchor_mismatch": 0,
+    "anchor_must_be_contiguous": true,
+    "anchor_must_stay_within_one_timestamp_segment": true
   },
   "knowledge_status": [
     "case",
