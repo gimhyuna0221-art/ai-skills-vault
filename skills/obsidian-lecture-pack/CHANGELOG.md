@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.1.1 — 2026-08-02
+
+### Added
+
+- 일반 강의와 CG 학생별 옴니버스 피드백 수업의 프롬프트 라우팅 규칙 명시
+- 학생이 없는 CG 튜토리얼은 일반 강의 프롬프트를 사용한다는 예외 규칙 추가
+- 일반 강의와 CG 옴니버스 결과 구조의 혼입 여부 검사 추가
+
+### Changed
+
+- CG 특수 프롬프트 파일명을 `notebooklm-cg-omnibus-feedback.md`로 명확화
+- 일반 강의는 `notebooklm-general.md`를 사용하도록 문서 구조 정리
+- 프롬프트 선택 기준을 강의 분야보다 강의 형식 우선으로 정리
+
+### Fixed
+
+- `notebooklm-general.md`에 남아 있던 이전 파일명
+  `notebooklm-cg-character.md` 참조를 새 파일명으로 수정
+- 일반 강의에서 학생·진도·이전 피드백 필드가 생성될 수 있는 혼동 제거
+
+
 ## 1.1.0 — 2026-08-02
 
 ### Added

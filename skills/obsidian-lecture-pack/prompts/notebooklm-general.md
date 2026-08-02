@@ -7,7 +7,7 @@
 학생, 수강생별 진도, 이전 피드백, 학생별 과제를 임의로 만들지 마.
 
 CG 캐릭터 모델링처럼 여러 학생이 서로 다른 작업 단계에서 피드백을 받는 수업은
-이 프롬프트가 아니라 `notebooklm-cg-character.md`를 사용한다.
+이 프롬프트가 아니라 `notebooklm-cg-omnibus-feedback.md`를 사용한다.
 
 ## 강의 정보
 
