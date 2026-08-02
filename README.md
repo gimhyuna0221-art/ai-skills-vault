@@ -7,35 +7,106 @@
 | 스킬 | 역할 | 상태 |
 |---|---|---|
 | [Prompt Router](skills/prompt-router/) | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
-| [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 동영상 강의를 주제·개념·절차 중심의 Obsidian 강의팩으로 변환 | stable draft |
+| [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 강의를 단독 강의팩 또는 같은 분야 누적 지식베이스로 변환 | stable draft |
 | [Obsidian Lecture Pack — CG Omnibus](skills/obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
 | [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
 
-## Obsidian 스킬 구분
+## Obsidian Lecture Pack 구조
 
-### 일반 동영상 강의
+Obsidian 강의팩은 독립 스킬 두 개로 나뉩니다.
+
+```text
+skills/
+├─ obsidian-lecture-pack/      일반 강의
+└─ obsidian-lecture-pack-cg/   CG 학생별 옴니버스 피드백
+```
+
+두 스킬은 프롬프트, 동기화팩, 학생 이력, 지식베이스를 자동 혼합하지 않습니다.
+
+### 1. 일반 강의 스킬
 
 ```text
 skills/obsidian-lecture-pack/
 ```
 
-대상: 설교, 인문학, 철학, 웹소설 작법, 일반 이론·실습·튜토리얼, 학생별 피드백이 없는 CG 튜토리얼.
+대상:
 
-호출:
+- 설교, 인문학, 철학, 웹소설 작법, 디자인, 도구 강의
+- 일반 YouTube 강의와 튜토리얼
+- 학생별 피드백이 없는 CG 튜토리얼
+
+일반 강의 스킬 안에는 두 실행 모드가 있습니다.
+
+#### 단독 모드 — 기본값
+
+한 편을 독립적으로 정리할 때 사용합니다.
 
 ```text
 /obsidianpack
-/obsidian
-/obsidian-general
+/obsidianpack-new
 ```
 
-### CG 학생별 옴니버스 피드백
+결과:
+
+```text
+옵시디언_일반강의팩.zip
+├─ 볼트에_복사/
+├─ 검사자료/
+├─ README.md
+└─ SHA256SUMS.txt
+```
+
+`AI_동기화용/`은 생성하지 않습니다.
+
+#### 누적 모드
+
+같은 분야의 일반 강의를 계속 쌓으면서 기존 개념·워크플로우·강의 인덱스와 병합할 때 사용합니다.
+
+```text
+/obsidianpack-update
+```
+
+같은 분야의 유효한 일반 강의 동기화팩이 제공되면 누적 모드를 선택할 수 있습니다.
+
+결과:
+
+```text
+옵시디언_일반강의_업데이트.zip
+├─ 볼트에_복사/
+├─ AI_동기화용/
+│  └─ 00_다음_처리에_보낼_AI동기화팩.zip
+├─ 검사자료/
+├─ README.md
+└─ SHA256SUMS.txt
+```
+
+일반 누적 동기화팩은 분야별 경량 스냅샷입니다.
+
+포함:
+
+- AI 허브, 과정목차, 강의 인덱스
+- 각 강의의 목차·북마크·최종노트
+- 일반 개념과 분야별 워크플로우
+- 동기화 manifest
+
+제외:
+
+- 과거 원문전사
+- 원본 자막·영상·이미지
+- NotebookLM 원본
+- 검사자료와 개발 문서
+
+### 2. CG 학생별 옴니버스 피드백 스킬
 
 ```text
 skills/obsidian-lecture-pack-cg/
 ```
 
-대상: 여러 학생이 서로 다른 캐릭터 제작 단계에서 순차적으로 피드백받는 수업.
+대상:
+
+- 여러 학생이 서로 다른 캐릭터 제작 단계에서 순차적으로 피드백받는 수업
+- 같은 학생이 이후 강의에 다시 등장하는 수업
+- 이전 피드백 반영 여부와 현재 제작 단계를 이어서 추적해야 하는 수업
 
 호출:
 
@@ -44,7 +115,36 @@ skills/obsidian-lecture-pack-cg/
 /obsidianpack-cg
 ```
 
-두 스킬은 프롬프트, 동기화팩, 학생 이력, 지식베이스를 자동 혼합하지 않습니다.
+CG 스킬은 기본적으로 누적형입니다.
+
+매주 최신 동기화팩을 다음 처리에 다시 제공하여 다음을 이어갑니다.
+
+- 학생별 안정적 ID와 aliases
+- 이전 피드백과 반영 여부
+- 현재 제작 단계와 다음 과제
+- 재등장 세션 연결
+- 공용 개념
+- 캐릭터 제작 11단계 통합 워크플로우
+
+결과:
+
+```text
+옵시디언_CG_주간업데이트.zip
+├─ 볼트에 덮어쓸 새 파일과 갱신 파일
+└─ 00_매주_ChatGPT에_보낼_AI동기화팩.zip
+```
+
+일반 강의 누적팩과 CG 동기화팩은 목적과 데이터 구조가 다르므로 서로 병합하지 않습니다.
+
+## 빠른 선택표
+
+| 입력 | 사용할 스킬·모드 |
+|---|---|
+| 일반 강의 한 편 | General 단독 모드 |
+| 같은 분야의 일반 강의를 계속 누적 | General 누적 모드 |
+| 학생별 피드백이 없는 CG 튜토리얼 | General 단독 또는 누적 모드 |
+| 여러 학생의 CG 작업을 순차 피드백 | CG Omnibus |
+| 동일 학생의 과거 피드백·재등장 추적 | CG Omnibus |
 
 ## 저장 원칙
 
