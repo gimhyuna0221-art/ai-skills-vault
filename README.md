@@ -6,7 +6,7 @@
 
 | 스킬 | 역할 | 상태 |
 |---|---|---|
-| [Prompt Router](skills/prompt-router/) | 요청을 분석해 적절한 사고·검증·도구 모드를 자동 선택 | stable draft |
+| [Prompt Router](skills/prompt-router/) | 요청을 분석해 사고·검증·도구·현실 판단·관계 분석 모드를 자동 선택 | stable draft |
 | [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 강의를 단독 강의팩 또는 같은 분야 누적 지식베이스로 변환 | stable draft |
 | [Obsidian Lecture Pack — CG Omnibus](skills/obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
 | [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
