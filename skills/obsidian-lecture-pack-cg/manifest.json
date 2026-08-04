@@ -25,7 +25,7 @@
       "student-history-and-workflow-cumulative-intent"
     ]
   },
-  "prompt": "08_NotebookLM_CG옴니버스_프롬프트_v4.3.md",
+  "prompt": "prompts/notebooklm-cg-omnibus-feedback.md",
   "knowledge_base_folder": "캐릭터_모델링",
   "lecture_storage": "date-scoped-immutable-records",
   "student_identity": {

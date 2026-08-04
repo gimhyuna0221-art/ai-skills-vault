@@ -30,7 +30,7 @@ triggers:
 
 학생이 없거나 학생별 진도 추적이 없는 CG 튜토리얼은 독립 스킬 `obsidian-lecture-pack`으로 넘긴다.
 
-NotebookLM에는 `08_NotebookLM_CG옴니버스_프롬프트_v4.3.md`만 사용한다.
+NotebookLM에는 `prompts/notebooklm-cg-omnibus-feedback.md`만 사용한다.
 
 ## 최종 목표
 
