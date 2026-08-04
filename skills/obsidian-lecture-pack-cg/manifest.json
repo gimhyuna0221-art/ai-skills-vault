@@ -1,12 +1,13 @@
 {
   "name": "obsidian-lecture-pack-cg",
   "display_name": "Obsidian CG 옴니버스 강의팩",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "scope": "cg-student-omnibus-only",
   "architecture": [
     "incremental-sync-pack",
-    "student-history",
-    "character-workflow"
+    "class-aware-student-history",
+    "canonical-workflow-synthesis",
+    "atomic-delivery"
   ],
   "default_command": "/obsidian-cg",
   "aliases": [
@@ -16,8 +17,26 @@
     "/obsidian-cg-lint",
     "/obsidian-cg-query"
   ],
-  "prompt": "prompts/notebooklm-cg-omnibus-feedback.md",
+  "automatic_route_when": {
+    "command": "/obsidianpack",
+    "requirements": [
+      "multi-student-cg-feedback",
+      "cg-sync-pack",
+      "student-history-and-workflow-cumulative-intent"
+    ]
+  },
+  "prompt": "08_NotebookLM_CG옴니버스_프롬프트_v4.3.md",
   "knowledge_base_folder": "캐릭터_모델링",
+  "lecture_storage": "date-scoped-immutable-records",
+  "student_identity": {
+    "key_priority": [
+      "student_id",
+      "class_group+confirmed_name",
+      "aliases+work+history"
+    ],
+    "same_name_different_class": "separate",
+    "unknown_class": "verify-before-cross-date-merge"
+  },
   "workflow_stages": [
     "레퍼런스와 기획",
     "블록아웃과 비례",
@@ -31,21 +50,26 @@
     "리깅 대응",
     "최종 검수"
   ],
-  "required_units": [
-    "student",
-    "work",
-    "production-stage",
-    "feedback-session",
-    "reappearance-session"
-  ],
-  "handoff_when": "학생이 없거나 학생별 진도 추적이 없는 CG 튜토리얼이면 obsidian-lecture-pack 사용",
+  "workflow_merge": {
+    "model": "canonical-body-rewrite",
+    "classifications": [
+      "body_integrated",
+      "evidence_only",
+      "candidate_pending",
+      "no_change"
+    ],
+    "forbid_date_append_only": true,
+    "update_master_pipeline": true,
+    "preserve_evidence_history": true
+  },
   "sync_pack": {
     "filename": "00_매주_ChatGPT에_보낼_AI동기화팩.zip",
     "rebuild_mode": "full-snapshot",
     "hash": "SHA-256"
   },
   "delivery": {
-    "cumulative": "옵시디언_CG_주간업데이트.zip"
+    "cumulative": "옵시디언_CG_주간업데이트.zip",
+    "atomic_completion": true
   },
   "knowledge_status": [
     "case",
