@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.2.3 (candidate) — 2026-08-11
+
+strict sequential stage control을 유지하면서, 명백하고 중대한
+안전·윤리·개인정보 위험을 stage progression보다 먼저 최소 범위에서
+처리하는 Safety/Ethics Interrupt를 추가함(Case 3 blocker 해결).
+
+- `SAFETY / ETHICS INTERRUPT` 절을 신설함. 권력관계로 인한 자발성
+  훼손, 식별정보-오류 연계 저장, 불필요한 민감정보 수집, 취약
+  참여자 보호, 물리적 안전, 기만·결제정보·자격증명 수집처럼
+  구체적이고 중대한 위험이 실제로 드러났을 때만 발동하며, 추상적
+  가능성만으로는 발동하지 않음
+- Interrupt는 **stage-order에 대한 제한적 예외일 뿐, downstream
+  full artifact 생성 금지의 예외가 아님**을 명문화함. 발동 중에도
+  current_stage는 바뀌지 않고, 완료·다음 단계 진행도 없으며,
+  동의서 전체·모집 공고 전체·설문 전체·세션 전체 설계·분석
+  계획·운영 일정 같은 완결된 산출물은 여전히 금지됨 — 허용되는
+  것은 위험 완화에 직접 필요한 최소 개념(자발적 참여, 동의,
+  가명처리, 철회, 접근통제, 보관/삭제 등) 언급뿐
+- 이 예외는 HARD GATE 7번(미래 단계 내용을 미리 제시하지 않는다는
+  규칙)에만 추가함. HARD GATE 4·5, RUNTIME CORE, 현재 단계 판정
+  규칙, 중간 단계 진입 처리, 출력 형식의 downstream artifact 금지는
+  전부 "예외 없음"을 그대로 유지하고, Interrupt가 여기 해당하지
+  않는다는 확인 문구만 추가해 규칙 간 모순을 없앰
+- 종료 조건에 다중 위험 처리를 명시함: 활성화된 위험이 전부
+  해소돼야 RESOLVED로 progression을 재개하고, 하나라도 남아 있으면
+  PARTIALLY RESOLVED/UNRESOLVED로 재개하지 않으며 남은 위험만 다시
+  확인함
+- 법률·규제 위반을 확정적으로 단정하지 않고("법적으로 무효다" 등
+  금지), "위험이 있다"/"검토가 필요하다"로 표현하며 모든 위험에
+  법무 검토를 일괄 강제하지 않음
+- "동의·개인정보·데이터 처리", "직원 대상 파일럿의 권력관계"
+  섹션에 Interrupt가 5단계 도달 전에도 먼저 적용된다는
+  cross-reference를 추가함
+- 비판 체크에 위험 지연 방지, downstream leakage 방지, 조기
+  RESOLVED 판정 방지 항목 3개를 추가함
+- Case 6 comparator 규칙, numeric guard, METHOD_CONFLICT, 나머지
+  v1.2.2 로직은 변경하지 않음
+
 ## 1.2.2 (후보) — 2026-08-08
 
 v1.2.1 후보를 실제 Claude Code Skill 런타임(cold-start 벤치마크
