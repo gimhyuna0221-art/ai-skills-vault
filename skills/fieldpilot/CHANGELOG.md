@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.4 (candidate) — 2026-08-12
+
+- Safety/Ethics Interrupt의 dispatch precedence를 명확히 함
+- unresolved safety/ethics/privacy risk(발동 조건 해당)가 있는
+  동안에는 normal current_stage/METHOD_CONFLICT routing이 응답
+  형태를 선점하지 못하도록 수정함
+- 위험이 RESOLVED된 뒤에는 최신 정보를 기준으로 HARD GATE/
+  current_stage를 다시 판정함
+- 새로운 trigger나 방법론 콘텐츠는 추가하지 않음
+
 ## 1.2.3 (candidate) — 2026-08-11
 
 strict sequential stage control을 유지하면서, 명백하고 중대한

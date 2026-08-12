@@ -1,6 +1,6 @@
 ---
 name: fieldpilot
-version: 1.2.3
+version: 1.2.4
 description: 외부 사용자를 대상으로 소규모 현장 파일럿 또는 사용자 연구를 설계·모집·운영·분석한다. 현장 검증, 연구 방법 선택, 사용자 모집, 온보딩, 동의·데이터 처리, 후속 데이터 수집, 개선 우선순위를 다룰 때 사용한다.
 triggers:
   - /fieldpilot
@@ -20,7 +20,11 @@ triggers:
 
 단, 사용자 입력에 구체적이고 중대한 안전·윤리·개인정보 위험이
 이미 드러나 있으면, 아래 "SAFETY / ETHICS INTERRUPT" 절의 조건과
-종료 규칙을 이 목록보다 먼저 확인한다.
+종료 규칙을 이 목록보다 먼저 확인한다. SAFETY / ETHICS INTERRUPT
+발동 조건에 해당하는 위험이 있고 그 위험이 아직 RESOLVED되지 않은
+동안에는 아래 1~8번 routing을 실행하지 않고, 그 턴의 응답은
+SAFETY / ETHICS INTERRUPT 절만 따른다. 발동 조건에 해당하지
+않는 일반 METHOD_CONFLICT에는 이 문단을 적용하지 않는다.
 
 매 사용자 턴마다 반드시 다음을 수행한다.
 
@@ -124,6 +128,9 @@ current_stage 밖에 있더라도, 지금 드러난 구체적 위험을 완화�
 - 운영 일정
 
 **공통 처리**
+- Interrupt가 적용되는 동안에는 "현재 단계: N. ..." 같은 정상
+  단계 출력 필드를 사용하지 않는다. 위험 설명과 이 절에서 이미
+  허용된 최소 risk mitigation concepts만 다룬다.
 - Interrupt는 정상 stage progression/output보다 먼저 적용된다.
 - 이미 current_stage가 존재하면, Interrupt 동안 그것을 complete로
   처리하거나 다음 단계로 진행하지 않는다.
@@ -284,6 +291,12 @@ current_stage가 된다.
 ## 현재 단계 판정 규칙
 
 판정은 추측이 아니라 아래 절차를 따른다.
+
+SAFETY / ETHICS INTERRUPT 발동 조건에 해당하는 위험이 있고 그
+위험이 아직 RESOLVED되지 않은 동안에는 이 절차(current_stage
+산출)를 실행하지 않는다. 해당 위험이 모두 RESOLVED된 뒤 HARD
+GATE를 다시 실행하여 최신 정보 기준으로 current_stage를 새로
+계산한다.
 
 1. 1~10단계를 앞에서부터 순서대로 확인한다.
 2. CONFIRMED로 실제 존재하는 정보로만 판정한다(PROPOSED/INFERRED 제외).
@@ -633,7 +646,10 @@ INTERRUPT가 발동해도 동일하다).
 참고. 위 목록은 그보다 뒤 단계에 해당할 때만 금지된다.)
 
 사용자가 특정 사실이나 개념을 묻는 단순 질문에 답하는 경우에는 위 형식을
-강제하지 않는다.
+강제하지 않는다. SAFETY / ETHICS INTERRUPT가 적용되는 경우에도 위
+형식을 강제하지 않는다(위 "SAFETY / ETHICS INTERRUPT" 절 참고).
+이는 형식(포맷) 예외일 뿐이며, 산출물 생성 금지를 해제하는 것은
+아니다.
 
 ## 비판 체크
 
