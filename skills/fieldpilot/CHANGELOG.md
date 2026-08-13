@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.5 (candidate) — 2026-08-12
+
+- unresolved Safety/Ethics Interrupt 중 output scope를 최소 위험
+  설명/확인 질문/기존 허용 완화 개념으로 명확히 제한함
+- 부분적인 연구 방법·측정·실험 설계 제안도 Interrupt 중 생성하지
+  않도록 경계를 명확히 함
+- 법률·규제의 적용/위반/의무/책임/처벌을 사실관계 미확인 상태에서
+  확정적으로 단정하지 않도록 자기점검을 강화함
+- 새로운 safety trigger나 방법론 콘텐츠는 추가하지 않음
+
 ## 1.2.4 (candidate) — 2026-08-12
 
 - Safety/Ethics Interrupt의 dispatch precedence를 명확히 함
