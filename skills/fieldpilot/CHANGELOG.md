@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.7 (candidate) — 2026-08-16
+
+- unresolved Safety/Ethics Interrupt에서 minimum mitigation concept의 허용 경계를 명확히 함
+- risk mitigation이라는 이유로 대체 연구 방법·측정·실험 설계로 확장되는 것을 차단
+- 기존 RUNTIME CORE / dispatch / legal non-certainty는 변경하지 않음
+- 새로운 safety trigger, 법률 지식, 방법론 콘텐츠는 추가하지 않음
+
 ## 1.2.6 (candidate) — 2026-08-14
 
 - v1.2.5의 unresolved Safety/Ethics Interrupt output-scope / legal non-certainty 규칙을 RUNTIME CORE 생성 전 체크에 연결
