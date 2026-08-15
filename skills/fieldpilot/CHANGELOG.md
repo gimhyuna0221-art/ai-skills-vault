@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.6 (candidate) — 2026-08-14
+
+- v1.2.5의 unresolved Safety/Ethics Interrupt output-scope / legal non-certainty 규칙을 RUNTIME CORE 생성 전 체크에 연결
+- Interrupt 중 연구 방법·측정·실험 설계 생성 금지와 legal non-certainty가 응답 생성 전에 적용되도록 우선순위 강화
+- 동의·개인정보 섹션의 legal rule을 Interrupt의 기존 non-certainty 기준에 교차참조
+- 새로운 safety trigger, 법률 지식, 방법론 콘텐츠는 추가하지 않음
+
 ## 1.2.5 (candidate) — 2026-08-12
 
 - unresolved Safety/Ethics Interrupt 중 output scope를 최소 위험
