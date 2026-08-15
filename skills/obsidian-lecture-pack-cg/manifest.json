@@ -1,12 +1,15 @@
 {
   "name": "obsidian-lecture-pack-cg",
   "display_name": "Obsidian CG 옴니버스 강의팩",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "scope": "cg-student-omnibus-only",
   "architecture": [
     "incremental-sync-pack",
     "class-aware-student-history",
     "canonical-workflow-synthesis",
+    "global-bookmark-index",
+    "safe-snapshot-delivery",
+    "repairable-vault",
     "atomic-delivery"
   ],
   "default_command": "/obsidian-cg",
@@ -15,7 +18,8 @@
     "/obsidian-cg-full",
     "/obsidian-cg-sync-rebuild",
     "/obsidian-cg-lint",
-    "/obsidian-cg-query"
+    "/obsidian-cg-query",
+    "/obsidian-cg-repair"
   ],
   "automatic_route_when": {
     "command": "/obsidianpack",
@@ -27,7 +31,21 @@
   },
   "prompt": "prompts/notebooklm-cg-omnibus-feedback.md",
   "knowledge_base_folder": "캐릭터_모델링",
-  "lecture_storage": "date-scoped-immutable-records",
+  "lecture_metadata": {
+    "primary_date": "lecture_date",
+    "upload_date": "metadata-only",
+    "user_confirmation_overrides_asr": true,
+    "path_rename_on_date_correction": true
+  },
+  "batch_ingest": {
+    "multiple_lectures": true,
+    "cross_validate": [
+      "user-order",
+      "filename-date",
+      "notebooklm-date",
+      "subtitle-content"
+    ]
+  },
   "student_identity": {
     "key_priority": [
       "student_id",
@@ -35,7 +53,9 @@
       "aliases+work+history"
     ],
     "same_name_different_class": "separate",
-    "unknown_class": "verify-before-cross-date-merge"
+    "unknown_class": "verify-before-cross-date-merge",
+    "user_confirmed_name": "highest-normalized-priority",
+    "preserve_raw_transcript": true
   },
   "workflow_stages": [
     "레퍼런스와 기획",
@@ -62,14 +82,42 @@
     "update_master_pipeline": true,
     "preserve_evidence_history": true
   },
-  "sync_pack": {
-    "filename": "00_매주_ChatGPT에_보낼_AI동기화팩.zip",
-    "rebuild_mode": "full-snapshot",
-    "hash": "SHA-256"
+  "bookmarks": {
+    "master_note": "00_통합 북마크.md",
+    "source": "강의/*/02_북마크.md",
+    "rebuild_mode": "full",
+    "dedupe_key": "youtube_id+t_seconds",
+    "views": [
+      "workflow-stage",
+      "date-class",
+      "student-session",
+      "tool-keyword"
+    ],
+    "required_in_sync_pack": true
   },
   "delivery": {
     "cumulative": "옵시디언_CG_주간업데이트.zip",
+    "student_cases": "full-snapshot",
+    "canonical_paths_only": true,
+    "forbid_collision_suffixes": true,
+    "rename_manifest_when_paths_change": true,
     "atomic_completion": true
+  },
+  "repair": {
+    "command": "/obsidian-cg-repair",
+    "baseline": "latest-valid-sync-pack",
+    "salvage": [
+      "excluded-original-transcripts",
+      "required-source-assets"
+    ],
+    "output": "clean-replacement",
+    "forbid_merge_into-corrupted-folder": true
+  },
+  "sync_pack": {
+    "filename": "00_매주_ChatGPT에_보낼_AI동기화팩.zip",
+    "rebuild_mode": "full-snapshot",
+    "stale_detection": true,
+    "hash": "SHA-256"
   },
   "knowledge_status": [
     "case",
@@ -77,6 +125,5 @@
     "principle",
     "standard"
   ],
-  "preserve_existing_paths": true,
   "preserve_stable_ids": true
 }
