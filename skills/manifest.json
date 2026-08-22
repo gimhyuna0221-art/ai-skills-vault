@@ -1,0 +1,162 @@
+{
+  "name": "obsidian-lecture-pack-cg",
+  "display_name": "Obsidian CG 옴니버스 강의팩",
+  "version": "4.5.0",
+  "scope": "cg-student-omnibus-only",
+  "architecture": [
+    "incremental-sync-pack",
+    "class-aware-student-history",
+    "canonical-workflow-synthesis",
+    "global-bookmark-index",
+    "safe-snapshot-delivery",
+    "repairable-vault",
+    "atomic-delivery",
+    "user-mistake-memory",
+    "workflow-prevention-gates",
+    "state-save-sidecars"
+  ],
+  "default_command": "/obsidian-cg",
+  "aliases": [
+    "/obsidianpack-cg",
+    "/obsidian-cg-full",
+    "/obsidian-cg-sync-rebuild",
+    "/obsidian-cg-lint",
+    "/obsidian-cg-query",
+    "/obsidian-cg-repair",
+    "/obsidian-cg-mistake"
+  ],
+  "automatic_route_when": {
+    "command": "/obsidianpack",
+    "requirements": [
+      "multi-student-cg-feedback",
+      "cg-sync-pack",
+      "student-history-and-workflow-cumulative-intent"
+    ]
+  },
+  "prompt": "prompts/notebooklm-cg-omnibus-feedback.md",
+  "knowledge_base_folder": "캐릭터_모델링",
+  "lecture_metadata": {
+    "primary_date": "lecture_date",
+    "upload_date": "metadata-only",
+    "user_confirmation_overrides_asr": true,
+    "path_rename_on_date_correction": true
+  },
+  "batch_ingest": {
+    "multiple_lectures": true,
+    "cross_validate": [
+      "user-order",
+      "filename-date",
+      "notebooklm-date",
+      "subtitle-content"
+    ]
+  },
+  "student_identity": {
+    "key_priority": [
+      "student_id",
+      "class_group+confirmed_name",
+      "aliases+work+history"
+    ],
+    "same_name_different_class": "separate",
+    "unknown_class": "verify-before-cross-date-merge",
+    "user_confirmed_name": "highest-normalized-priority",
+    "preserve_raw_transcript": true
+  },
+  "workflow_stages": [
+    "레퍼런스와 기획",
+    "블록아웃과 비례",
+    "얼굴과 인체 스컬핑",
+    "의상과 주름",
+    "헤어와 카드",
+    "하드서페이스와 장신구",
+    "리토폴로지",
+    "UV와 베이크",
+    "텍스처와 재질",
+    "리깅 대응",
+    "최종 검수"
+  ],
+  "workflow_merge": {
+    "model": "canonical-body-rewrite",
+    "classifications": [
+      "body_integrated",
+      "evidence_only",
+      "candidate_pending",
+      "no_change"
+    ],
+    "forbid_date_append_only": true,
+    "update_master_pipeline": true,
+    "preserve_evidence_history": true
+  },
+  "bookmarks": {
+    "master_note": "00_통합 북마크.md",
+    "source": "강의/*/02_북마크.md",
+    "rebuild_mode": "full",
+    "dedupe_key": "youtube_id+t_seconds",
+    "views": [
+      "workflow-stage",
+      "date-class",
+      "student-session",
+      "tool-keyword"
+    ],
+    "required_in_sync_pack": true
+  },
+  "delivery": {
+    "cumulative": "옵시디언_CG_주간업데이트.zip",
+    "student_cases": "full-snapshot",
+    "canonical_paths_only": true,
+    "forbid_collision_suffixes": true,
+    "rename_manifest_when_paths_change": true,
+    "atomic_completion": true
+  },
+  "repair": {
+    "command": "/obsidian-cg-repair",
+    "baseline": "latest-valid-sync-pack",
+    "salvage": [
+      "excluded-original-transcripts",
+      "required-source-assets"
+    ],
+    "output": "clean-replacement",
+    "forbid_merge_into-corrupted-folder": true
+  },
+  "sync_pack": {
+    "filename": "00_매주_ChatGPT에_보낼_AI동기화팩.zip",
+    "rebuild_mode": "full-snapshot",
+    "stale_detection": true,
+    "hash": "SHA-256"
+  },
+  "knowledge_status": [
+    "case",
+    "recurring",
+    "principle",
+    "standard"
+  ],
+  "preserve_stable_ids": true,
+  "workflow_schema": {
+    "add_section": "오답노트",
+    "master_note": "캐릭터 워크플로우/00_오답노트.md",
+    "user_observed_only": true,
+    "stable_error_id": "O-NNN",
+    "promote_critical_high_to_gate": true
+  },
+  "blockout_proportion_subworkflow": [
+    "RF:기준/레퍼런스",
+    "BP:파츠 베이스 제작",
+    "FiT:바디 피팅·배치",
+    "CHECK:Preflight 점검",
+    "SIL:전체 실루엣 점검",
+    "TM:Transpose Master 전체 비율 교정",
+    "RF:재피팅",
+    "LOCK:비율 확정",
+    "DT:파츠별 본작업"
+  ],
+  "save_state_gate": {
+    "zpr": "ZBrush Project + Transpose Master data",
+    "zsl": "SpotLight set",
+    "vws": "ZAppLink Properties Views",
+    "do_not_treat_zpr_as_complete_backup_for": [
+      "SpotLight",
+      "ZAppLink Views"
+    ],
+    "save_immediately_after_setup": true,
+    "verify_before_exit": true
+  }
+}
