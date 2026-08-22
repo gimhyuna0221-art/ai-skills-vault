@@ -1,7 +1,7 @@
 {
   "name": "obsidian-lecture-pack-cg",
   "display_name": "Obsidian CG 옴니버스 강의팩",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "scope": "cg-student-omnibus-only",
   "architecture": [
     "incremental-sync-pack",
@@ -10,7 +10,10 @@
     "global-bookmark-index",
     "safe-snapshot-delivery",
     "repairable-vault",
-    "atomic-delivery"
+    "atomic-delivery",
+    "user-mistake-memory",
+    "workflow-prevention-gates",
+    "state-save-sidecars"
   ],
   "default_command": "/obsidian-cg",
   "aliases": [
@@ -19,7 +22,8 @@
     "/obsidian-cg-sync-rebuild",
     "/obsidian-cg-lint",
     "/obsidian-cg-query",
-    "/obsidian-cg-repair"
+    "/obsidian-cg-repair",
+    "/obsidian-cg-mistake"
   ],
   "automatic_route_when": {
     "command": "/obsidianpack",
@@ -125,5 +129,34 @@
     "principle",
     "standard"
   ],
-  "preserve_stable_ids": true
+  "preserve_stable_ids": true,
+  "workflow_schema": {
+    "add_section": "오답노트",
+    "master_note": "캐릭터 워크플로우/00_오답노트.md",
+    "user_observed_only": true,
+    "stable_error_id": "O-NNN",
+    "promote_critical_high_to_gate": true
+  },
+  "blockout_proportion_subworkflow": [
+    "RF:기준/레퍼런스",
+    "BP:파츠 베이스 제작",
+    "FiT:바디 피팅·배치",
+    "CHECK:Preflight 점검",
+    "SIL:전체 실루엣 점검",
+    "TM:Transpose Master 전체 비율 교정",
+    "RF:재피팅",
+    "LOCK:비율 확정",
+    "DT:파츠별 본작업"
+  ],
+  "save_state_gate": {
+    "zpr": "ZBrush Project + Transpose Master data",
+    "zsl": "SpotLight set",
+    "vws": "ZAppLink Properties Views",
+    "do_not_treat_zpr_as_complete_backup_for": [
+      "SpotLight",
+      "ZAppLink Views"
+    ],
+    "save_immediately_after_setup": true,
+    "verify_before_exit": true
+  }
 }
