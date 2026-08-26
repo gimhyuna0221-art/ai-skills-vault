@@ -2,10 +2,15 @@
 
 여러 학생이 서로 다른 캐릭터 제작 단계에서 순차 피드백받는 CG 옴니버스 수업 전용 스킬입니다.
 
-현재 버전: `4.5.0`
+현재 버전: `4.6.0`
 
-## v4.5 핵심
+## v4.6 핵심
 
+- ZBrush 초기 셋업·업데이트·초기화 복구용 `환경 셋업/` 지식 계층 추가
+- Hotkey `.txt` / Custom UI `.cfg` / Material `.ZMT`를 portable backup으로 관리
+- `setup_manifest.json`에 ZBrush 버전·SHA-256·복원 검증 상태 기록
+- `/obsidian-cg-setup` 명령 추가
+- 업데이트/재설치 전 현재 설정 선백업 + 버전 변경 시 blind startup-copy 금지
 - 사용자 실제 실수·near miss를 `캐릭터 워크플로우/00_오답노트.md`에 누적
 - 각 워크플로우 단계에 `오답노트` 섹션 추가
 - critical/high 실수는 관련 단계의 예방 Gate로 승격
@@ -38,6 +43,7 @@
 /obsidian-cg-query
 /obsidian-cg-repair
 /obsidian-cg-mistake
+/obsidian-cg-setup
 ```
 
 ## 지식 구조
@@ -107,3 +113,20 @@ ZAppLink Views             → VWS
 ```
 
 ZPR 하나를 SpotLight·ZAppLink View의 완전 백업으로 간주하지 않습니다.
+
+
+## 환경 셋업
+
+```text
+캐릭터_모델링/환경 셋업/
+└─ ZBrush/
+   ├─ 00_ZBrush 초기 셋업.md
+   ├─ 01_핫키 셋업.md
+   ├─ 02_커스텀 UI 셋업.md
+   ├─ 03_셰이더·머티리얼 셋업.md
+   ├─ 04_셋업 파일 인벤토리.md
+   ├─ 05_업데이트·초기화 복구 Runbook.md
+   └─ setup_manifest.json
+```
+
+실제 export 파일이 없으면 AI는 설정을 추측해서 만들지 않고 `pending`으로 유지합니다.

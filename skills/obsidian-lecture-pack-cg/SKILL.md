@@ -1,6 +1,6 @@
 ---
 name: obsidian-lecture-pack-cg
-version: 4.5.0
+version: 4.6.0
 description: CG 학생별 옴니버스 수업을 날짜별 강의 기록·학생 이력·통합 북마크·공용 개념·11단계 캐릭터 제작 워크플로우로 누적하고, 사용자 오답노트·작업 상태 저장 게이트·메타데이터 교정·Vault 복구까지 안전하게 수행한다.
 triggers:
   - /obsidian-cg
@@ -11,10 +11,11 @@ triggers:
   - /obsidian-cg-query
   - /obsidian-cg-repair
   - /obsidian-cg-mistake
+  - /obsidian-cg-setup
   - CG 옵시디언 강의팩 만들어줘
 ---
 
-# Obsidian Lecture Pack — CG Omnibus v4.5
+# Obsidian Lecture Pack — CG Omnibus v4.6
 
 ## 역할과 경계
 
@@ -35,6 +36,7 @@ triggers:
 - Vault 패키징·복구 안전성
 - 사용자가 실제로 겪은 실수·near miss와 재발 방지 Gate
 - ZBrush 등 작업 세션에서 별도 저장이 필요한 상태 파일과 복원 조건
+- Hotkey·Custom UI·Material/MatCap 등 DCC 환경 셋업의 백업·복구 자산과 버전 호환성
 
 학생이 없거나 학생별 진도 추적이 없는 CG 튜토리얼은 독립 스킬 `obsidian-lecture-pack`으로 넘긴다.
 
@@ -51,6 +53,7 @@ CG 옴니버스 수업
 → 공용 개념
 → 날짜와 학생을 제거한 최종 11단계 워크플로우
 → 사용자 실제 실수를 재발 방지 규칙으로 누적한 오답노트
+→ 업데이트·초기화에서 재현 가능한 환경 셋업 Runbook
 → 검증 가능한 AI 동기화팩
 → 손상 시 clean rebuild 가능한 제2의 뇌
 ```
@@ -66,6 +69,7 @@ CG 옴니버스 수업
 - `/obsidian-cg-query`: 근거와 함께 지식베이스 질의
 - `/obsidian-cg-repair`: 손상된 Vault를 최신 동기화팩 기준으로 clean rebuild
 - `/obsidian-cg-mistake`: 사용자가 실제로 겪은 실수·near miss를 오답노트와 관련 워크플로우 Gate에 반영하고 동기화팩을 재생성
+- `/obsidian-cg-setup`: ZBrush 등 작업환경의 셋업 자산을 수집·감사·복원하고 환경 manifest와 동기화팩을 갱신
 
 명령이 `/obsidianpack`이어도 다인 CG 피드백 형식이고 CG 동기화팩이 첨부되면 CG로 자동 라우팅한다.
 
@@ -82,6 +86,7 @@ CG 옴니버스 수업
 7. 선택 이미지
 8. 정확한 과거 원문 비교가 필요할 때만 특정 원문전사
 9. 사용자가 직접 보고한 작업 실수·near miss·손실 경험(선택)
+10. 환경 셋업을 갱신할 때 실제 export 파일(`.txt/.cfg/.ZMT`), 기준 스크린샷, 설치 버전 정보(선택)
 
 여러 날짜를 한 번에 넣을 수 있다. 이 경우 URL·자막·NotebookLM 분석을 다음으로 교차검증한다.
 
@@ -173,7 +178,21 @@ stale 팩을 발견하면 완료 보고에 기록한다.
 
 학생·날짜를 넘어 재사용되는 도구·원리·실수·복구법.
 
-### 4. 캐릭터 워크플로우
+### 4. 환경 셋업
+
+`캐릭터_모델링/환경 셋업/`에서 DCC 프로그램의 초기 설정·백업·복원 Runbook과 실제 셋업 자산 manifest를 관리한다.
+
+현재 필수 관리 대상은 ZBrush의:
+
+- Hotkey (`.txt`)
+- Custom UI (`.cfg`)
+- Material/MatCap (`.ZMT`)
+- 기준 스크린샷
+- `setup_manifest.json`의 버전·SHA-256·검증 상태
+
+실제 파일이 없으면 AI가 placeholder 설정 파일을 만들어 `verified`로 표시하지 않는다.
+
+### 5. 캐릭터 워크플로우
 
 현재까지 확인된 최종 작업 절차.
 날짜별 `강의 반영` 부록을 계속 붙이는 방식은 금지한다.
@@ -187,11 +206,48 @@ stale 팩을 발견하면 완료 보고에 기록한다.
 각 단계 노트의 `오답노트` 섹션에는 해당 단계와 직접 관련된 항목만 요약·링크한다.
 일반 강의에서 언급된 실패 사례를 사용자의 실제 실수로 자동 승격하지 않는다.
 
-### 5. 전체 통합 북마크
+### 6. 전체 통합 북마크
 
 `캐릭터_모델링/00_통합 북마크.md`
 
 날짜를 기억하지 않아도 전체 강의에서 기술 위치를 찾기 위한 검색 인덱스다.
+
+## 환경 셋업·업데이트·초기화 복구
+
+### 공식 경로
+
+```text
+캐릭터_모델링/환경 셋업/00_환경 셋업 허브.md
+캐릭터_모델링/환경 셋업/ZBrush/00_ZBrush 초기 셋업.md
+캐릭터_모델링/환경 셋업/ZBrush/setup_manifest.json
+```
+
+### 자산 원칙
+
+- Hotkey: `Preferences > Hotkeys > Save`로 만든 휴대용 `.txt`를 canonical backup으로 보존
+- Custom UI: `Preferences > Config > Save UI`로 만든 `.cfg`를 canonical backup으로 보존
+- Material/MatCap: 실제 사용하는 항목을 `Material > Save`의 `.ZMT`로 보존
+- 화면 결과가 중요한 UI/Material은 기준 스크린샷을 함께 보존
+- 모든 실제 셋업 파일은 SHA-256, 생성/검증 ZBrush 버전, restore status를 manifest에 기록
+
+### 업데이트·재설치·Init 전 Gate
+
+1. 현재 설치 버전 확인
+2. 현재 설정이 살아 있으면 **복원 파일을 덮어쓰기 전에 현재 상태를 먼저 export**
+3. 기존 verified backup과 새 backup의 SHA-256 기록
+4. 버전이 바뀌면 startup master 파일 직접 덮어쓰기보다 ZBrush의 `Load` 기능을 우선
+5. UI → Hotkeys → Material 순으로 복원 및 테스트
+6. ZBrush 재시작 후 유지되는지 확인
+7. 실제 검증한 항목만 `verified`로 변경
+
+### ZBrush 공식 저장 기준
+
+- Startup Hotkeys: Windows `C:\Users\Public\Documents\ZBrushData\ZStartup\Hotkeys\StartupHotkeys.txt`
+- Custom UI master: Windows `C:\Users\Public\Documents\ZBrushData\ZStartup\CustomUserInterface4R8.cfg`
+- Custom Material: `.ZMT`, 반복 사용 시 `ZStartup/Materials`
+
+위 startup 경로는 **참조/자동 시작용**이다. AI 복구의 기본 백업은 사용자가 export한 portable 파일을 우선한다.
+
 
 ## 캐릭터 제작 11단계
 
@@ -340,13 +396,14 @@ SpotLight·ZAppLink Properties·Transpose Master를 사용하는 실루엣/비�
 11. 공용 개념 병합
 12. 11단계 워크플로우 기존 본문 재작성
 13. 사용자 실제 실수 입력이 있으면 `00_오답노트.md` + 관련 단계 Gate 병합
-14. `00_전체 파이프라인.md` 갱신
-15. 강의·소스 인덱스·병합 로그·지식 간극 갱신
-16. **모든 날짜별 `02_북마크.md`를 다시 읽어 `00_통합 북마크.md` 완전 재생성**
-17. AI 동기화팩 완전 재생성
-18. 사용자용 업데이트 ZIP 생성
-19. 링크·ID·북마크·학생 스냅샷·오답노트·manifest·ZIP 무결성 재검사
-20. 실제 파일 링크와 함께 완료 보고
+14. 환경 셋업 입력이 있으면 `환경 셋업/` + `setup_manifest.json` + 셋업 asset SHA-256 갱신
+15. `00_전체 파이프라인.md` 갱신
+16. 강의·소스 인덱스·병합 로그·지식 간극 갱신
+17. **모든 날짜별 `02_북마크.md`를 다시 읽어 `00_통합 북마크.md` 완전 재생성**
+18. AI 동기화팩 완전 재생성
+19. 사용자용 업데이트 ZIP 생성
+20. 링크·ID·북마크·학생 스냅샷·오답노트·환경 셋업·manifest·ZIP 무결성 재검사
+21. 실제 파일 링크와 함께 완료 보고
 
 ## 워크플로우 본문 스키마
 
@@ -459,6 +516,7 @@ youtube_id + t_seconds
 - `개념/` canonical 전체 또는 모든 변경 파일
 - `캐릭터 워크플로우/` canonical 전체 또는 모든 변경 파일
 - `캐릭터 워크플로우/00_오답노트.md`
+- `환경 셋업/` 문서 전체와 사용자가 제공한 verified 셋업 asset
 - top-level 인덱스·허브·로그·지식 간극
 - `00_통합 북마크.md`
 - 최신 AI 동기화팩
@@ -513,6 +571,7 @@ clean 복구본의 캐릭터_모델링 → Vault 최상단에 새로 배치
 - 개념 전체
 - 캐릭터 워크플로우 전체
 - 사용자 오답노트 전체
+- 환경 셋업 문서·manifest 전체와 사용자가 제공한 셋업 asset
 - 모든 강의의 목차·북마크·최종노트
 - 최신 CG SKILL·manifest·NotebookLM 프롬프트
 - 파일 목록·SHA-256 manifest
@@ -547,6 +606,9 @@ clean 복구본의 캐릭터_모델링 → Vault 최상단에 새로 배치
 - 강의의 일반 실패 사례가 사용자 오답으로 잘못 승격되지 않았는지
 - critical/high 오답의 예방 Gate가 관련 단계에 반영됐는지
 - SAVE STATE GATE가 필요한 작업에서 ZPR/ZSL/VWS 저장 역할이 혼동되지 않았는지
+- 환경 셋업 `setup_manifest.json` 존재·JSON 유효성·필수 asset 상태·SHA-256 일치
+- 실제 셋업 asset이 없는데 `verified`로 표시된 항목 0
+- ZBrush 버전 변경 시 startup master 파일을 무검증 직접 덮어쓰도록 안내하지 않았는지
 - `00_전체 파이프라인` 최신 근거
 - `(1)/(2)/(3)` 충돌 산출물
 - 일반 강의 프롬프트 혼입
@@ -582,6 +644,8 @@ stale sync: 예/아니오
 워크플로우 변경 없음: N단계
 오답노트 신규/갱신: N개
 critical/high 예방 Gate: N개
+환경 셋업 상태: ready / pending-assets / restored / partial
+환경 셋업 asset 검증: N개
 깨진 링크: 0
 모호한 링크: 0
 중복 ID: 0

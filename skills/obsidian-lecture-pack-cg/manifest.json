@@ -1,7 +1,7 @@
 {
   "name": "obsidian-lecture-pack-cg",
   "display_name": "Obsidian CG 옴니버스 강의팩",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "scope": "cg-student-omnibus-only",
   "architecture": [
     "incremental-sync-pack",
@@ -13,7 +13,10 @@
     "atomic-delivery",
     "user-mistake-memory",
     "workflow-prevention-gates",
-    "state-save-sidecars"
+    "state-save-sidecars",
+    "environment-setup-runbook",
+    "setup-asset-manifest",
+    "version-aware-setting-restore"
   ],
   "default_command": "/obsidian-cg",
   "aliases": [
@@ -23,7 +26,8 @@
     "/obsidian-cg-lint",
     "/obsidian-cg-query",
     "/obsidian-cg-repair",
-    "/obsidian-cg-mistake"
+    "/obsidian-cg-mistake",
+    "/obsidian-cg-setup"
   ],
   "automatic_route_when": {
     "command": "/obsidianpack",
@@ -105,7 +109,8 @@
     "canonical_paths_only": true,
     "forbid_collision_suffixes": true,
     "rename_manifest_when_paths_change": true,
-    "atomic_completion": true
+    "atomic_completion": true,
+    "environment_setup": "full-docs+user-provided-verified-assets"
   },
   "repair": {
     "command": "/obsidian-cg-repair",
@@ -158,5 +163,38 @@
     ],
     "save_immediately_after_setup": true,
     "verify_before_exit": true
+  },
+  "environment_setup": {
+    "folder": "환경 셋업",
+    "command": "/obsidian-cg-setup",
+    "manifest": "환경 셋업/ZBrush/setup_manifest.json",
+    "asset_policy": {
+      "backup_current_before_overwrite": true,
+      "portable_exports_are_canonical_backup": true,
+      "hash": "SHA-256",
+      "missing_assets": "never-invent-or-mark-verified",
+      "version_change": "prefer-app-load-over-blind-startup-copy",
+      "verify_after_restart": true
+    },
+    "zbrush": {
+      "hotkeys": {
+        "portable": ".txt",
+        "save": "Preferences > Hotkeys > Save",
+        "load": "Preferences > Hotkeys > Load",
+        "startup_reference": "C:\\Users\\Public\\Documents\\ZBrushData\\ZStartup\\Hotkeys\\StartupHotkeys.txt"
+      },
+      "custom_ui": {
+        "portable": ".cfg",
+        "save": "Preferences > Config > Save UI",
+        "load": "Preferences > Config > Load UI",
+        "startup_reference": "C:\\Users\\Public\\Documents\\ZBrushData\\ZStartup\\CustomUserInterface4R8.cfg"
+      },
+      "materials": {
+        "portable": ".ZMT",
+        "save": "Material > Save",
+        "load": "Material > Load",
+        "startup_reference": "ZStartup/Materials"
+      }
+    }
   }
 }

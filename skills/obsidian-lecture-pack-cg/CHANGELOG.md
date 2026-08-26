@@ -1,5 +1,32 @@
 # Changelog
 
+## 4.6.0 — 2026-08-26
+
+### Added
+
+- 독립 지식 계층 `캐릭터_모델링/환경 셋업/`
+- ZBrush Hotkey `.txt`, Custom UI `.cfg`, Material/MatCap `.ZMT` 백업·복원 Runbook
+- `setup_manifest.json` 기반 버전·SHA-256·검증 상태 관리
+- `/obsidian-cg-setup` 명령
+- 업데이트·재설치·Init 전 현재 설정 선백업 Gate
+- UI/Hotkey/Material 복원 후 재시작 스모크 테스트
+
+### Changed
+
+- 셋업 자산은 startup master 파일보다 portable export를 canonical backup으로 우선
+- 버전 변경 시 startup 파일을 무검증 직접 덮어쓰지 않고 ZBrush `Load` 기능 우선
+- AI 동기화팩과 사용자 업데이트 ZIP에 환경 셋업 문서·manifest를 필수 포함
+- 실제 셋업 파일이 없으면 `verified`를 금지하고 `pending`으로 유지
+- O-001 `reported_at`을 실제 보고일 2026-08-26로 교정
+- 동기화 manifest의 stale `skill_standard/project_standard` 필드를 최신 버전으로 교정
+
+### Official references checked
+
+- Maxon ZBrush Hotkeys: Store/Save/Load, Windows `StartupHotkeys.txt` path
+- Maxon Preferences > Config: Store Config / Save UI / Load UI, master UI config path
+- Maxon Material: Save/Load and `ZStartup/Materials` startup loading
+
+
 ## 4.5.0 — 2026-08-23
 
 ### Added
