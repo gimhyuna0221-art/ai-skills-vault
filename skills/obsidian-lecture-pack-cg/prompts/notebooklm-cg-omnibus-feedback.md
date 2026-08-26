@@ -1,5 +1,5 @@
 # NotebookLM CG Omnibus Feedback Analysis Prompt — Compact v4.4
-
+(CG 스킬 v4.6에서도 내용 변경 없음; 프롬프트 v4.4 유지)
 선택된 이번 CG 피드백 강의 소스만 근거로 분석해줘.
 다른 날짜 강의, 선택되지 않은 소스, 기존 대화, 외부 지식을 섞지 마.
 
