@@ -1,0 +1,87 @@
+name: Finalize FieldPilot v1.9.9-rc01 to main once
+
+on:
+  push:
+    branches:
+      - sync/fieldpilot-v199-rc01
+    paths:
+      - .github/workflows/finalize-fieldpilot-v199-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: sync/fieldpilot-v199-rc01
+          fetch-depth: 0
+
+      - name: Fetch exact source and prove target parity
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 \
+            'https://github.com/gimhyuna0221-art/fieldpilot-orca/archive/refs/heads/worker/fieldpilot-v199-competitive-superiority01.zip' \
+            -o /tmp/source.zip
+          rm -rf /tmp/source
+          mkdir -p /tmp/source
+          unzip -q /tmp/source.zip -d /tmp/source
+          SRC="$(find /tmp/source -mindepth 1 -maxdepth 1 -type d | head -n1)/fieldpilot"
+          test -f "$SRC/SKILL.md"
+          SRC_COUNT="$(find "$SRC" -type f | wc -l | tr -d ' ')"
+          test "$SRC_COUNT" = '62'
+
+          grep -F 'version: "1.9.9-rc01"' skills/fieldpilot/SKILL.md
+          grep -F '## 1.9.9-rc01 — 2026-09-14' skills/fieldpilot/CHANGELOG.md
+          grep -F '0c1454f483191757b1e7503b1ad4454352ff5296' skills/fieldpilot/CHANGELOG.md
+          grep -F '4a44d9379b6a0a0ea9606efb70093b6c0fcb9d42' skills/fieldpilot/CHANGELOG.md
+          grep -F 'd97ade5b08acf8e9435379e8cd4fcca2c0ca7ac5cb1cc6d09523c594dfb6d177' skills/fieldpilot/CHANGELOG.md
+
+          test "$(git hash-object skills/fieldpilot/SKILL.md)" = 'bdbe1d40246ffc3d1fa1e65830ff2d0ca7f5e9b8'
+          test "$(git hash-object skills/fieldpilot/README.md)" = 'b9c025ca344cdf97f63f9fcb43440ed965cd3da3'
+
+          test -f skills/fieldpilot/references/modules/DECISION_CONTINUITY.md
+          test -f skills/fieldpilot/references/modules/MARKET_FAVORED_PRODUCT_PATTERNS.md
+          test -f skills/fieldpilot/references/modules/PRODUCT_READINESS_AND_SIGNAL_INTEGRITY.md
+          test -f skills/fieldpilot/references/core/RUNTIME_CORE.md
+          test -f skills/fieldpilot/references/domains/CC2C_RULES.md
+          test -f skills/fieldpilot/tools/efficiency_control.py
+          test -f skills/fieldpilot/tools/render_report.py
+
+          diff -qr --exclude=CHANGELOG.md "$SRC" skills/fieldpilot
+
+          if test -f "$SRC/CHANGELOG.md"; then EXPECTED=62; else EXPECTED=63; fi
+          TARGET_COUNT="$(find skills/fieldpilot -type f | wc -l | tr -d ' ')"
+          test "$TARGET_COUNT" = "$EXPECTED"
+
+          python -m py_compile skills/fieldpilot/tools/efficiency_control.py skills/fieldpilot/tools/render_report.py
+          rm -rf skills/fieldpilot/tools/__pycache__
+          TARGET_COUNT2="$(find skills/fieldpilot -type f | wc -l | tr -d ' ')"
+          test "$TARGET_COUNT2" = "$EXPECTED"
+
+      - name: Build clean one-commit upgrade and atomically replace main
+        run: |
+          set -euo pipefail
+          EXPECTED_MAIN='f3d2eb7242fadcb1d5139d2a10b68e6a94a3ea82'
+          CLEAN_PARENT='645b1e9db4c287e6d2c83217f00cf38df7d3f893'
+          CURRENT_MAIN="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          test "$CURRENT_MAIN" = "$EXPECTED_MAIN"
+
+          rm -rf .fieldpilot-import .fieldpilot-trigger
+          rm -f .github/workflows/sync-fieldpilot-v199-once.yml
+          rm -f .github/workflows/import-fieldpilot-v199-once.yml
+          rm -f .github/workflows/validate-fieldpilot-v199-once.yml
+          rm -f .github/workflows/import-fieldpilot-v199-once-v2.yml
+          rm -f .github/workflows/finalize-fieldpilot-v199-once.yml
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          TREE="$(git write-tree)"
+          CLEAN_COMMIT="$(printf '%s\n' 'feat(fieldpilot): upgrade public vault to v1.9.9-rc01 candidate' | git commit-tree "$TREE" -p "$CLEAN_PARENT")"
+
+          git push --force-with-lease=refs/heads/main:$EXPECTED_MAIN origin "$CLEAN_COMMIT:refs/heads/main"
+          git push --force origin "$CLEAN_COMMIT:refs/heads/sync/fieldpilot-v199-rc01"
+          echo "FINAL_COMMIT=$CLEAN_COMMIT"
