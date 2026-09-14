@@ -1,0 +1,51 @@
+name: Validate FieldPilot v1.9.9-rc01 once
+
+on:
+  push:
+    branches:
+      - sync/fieldpilot-v199-rc01
+    paths:
+      - .github/workflows/validate-fieldpilot-v199-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: sync/fieldpilot-v199-rc01
+          fetch-depth: 0
+      - name: Verify materialized package
+        run: |
+          set -euo pipefail
+          grep -F 'version: "1.9.9-rc01"' skills/fieldpilot/SKILL.md
+          grep -F '## 1.9.9-rc01 — 2026-09-14' skills/fieldpilot/CHANGELOG.md
+          grep -F '0c1454f483191757b1e7503b1ad4454352ff5296' skills/fieldpilot/CHANGELOG.md
+          grep -F 'd97ade5b08acf8e9435379e8cd4fcca2c0ca7ac5cb1cc6d09523c594dfb6d177' skills/fieldpilot/CHANGELOG.md
+          test -f skills/fieldpilot/references/modules/DECISION_CONTINUITY.md
+          test -f skills/fieldpilot/references/modules/MARKET_FAVORED_PRODUCT_PATTERNS.md
+          test -f skills/fieldpilot/references/modules/PRODUCT_READINESS_AND_SIGNAL_INTEGRITY.md
+          test -f skills/fieldpilot/references/core/RUNTIME_CORE.md
+          test -f skills/fieldpilot/references/domains/CC2C_RULES.md
+          test -f skills/fieldpilot/tools/efficiency_control.py
+          test -f skills/fieldpilot/tools/render_report.py
+          python -m py_compile skills/fieldpilot/tools/efficiency_control.py skills/fieldpilot/tools/render_report.py
+          COUNT="$(find skills/fieldpilot -type f | wc -l | tr -d ' ')"
+          test "$COUNT" = '63'
+      - name: Clean staging-only files
+        run: |
+          set -euo pipefail
+          rm -rf .fieldpilot-import .fieldpilot-trigger
+          rm -f .github/workflows/import-fieldpilot-v199-once.yml
+          rm -f .github/workflows/validate-fieldpilot-v199-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'chore(fieldpilot): verify v1.9.9-rc01 vault package and clean staging'
+          git push origin HEAD:sync/fieldpilot-v199-rc01
