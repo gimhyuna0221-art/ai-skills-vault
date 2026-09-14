@@ -1,0 +1,92 @@
+name: Import FieldPilot v1.9.9-rc01 once
+
+on:
+  push:
+    branches:
+      - sync/fieldpilot-v199-rc01
+    paths:
+      - .github/workflows/import-fieldpilot-v199-once.yml
+      - .fieldpilot-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: sync/fieldpilot-v199-rc01
+          fetch-depth: 0
+
+      - name: Fetch canonical candidate branch anonymously
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 \
+            'https://github.com/gimhyuna0221-art/fieldpilot-orca/archive/refs/heads/worker/fieldpilot-v199-competitive-superiority01.zip' \
+            -o /tmp/source.zip
+          rm -rf /tmp/source
+          mkdir -p /tmp/source
+          unzip -q /tmp/source.zip -d /tmp/source
+          SRC="$(find /tmp/source -mindepth 1 -maxdepth 1 -type d | head -n1)/fieldpilot"
+          test -f "$SRC/SKILL.md"
+          grep -F 'version: "1.9.9-rc01"' "$SRC/SKILL.md"
+          COUNT="$(find "$SRC" -type f | wc -l | tr -d ' ')"
+          test "$COUNT" = '62'
+          printf '%s\n' "$SRC" > /tmp/src_path
+
+      - name: Replace old vault skill with full candidate package
+        run: |
+          set -euo pipefail
+          SRC="$(cat /tmp/src_path)"
+          cp skills/fieldpilot/CHANGELOG.md /tmp/old-changelog.md
+          rm -rf skills/fieldpilot
+          mkdir -p skills/fieldpilot
+          cp -a "$SRC"/. skills/fieldpilot/
+          cat > skills/fieldpilot/CHANGELOG.md <<'EOF'
+          # Changelog
+
+          ## 1.9.9-rc01 — 2026-09-14
+
+          - `fieldpilot-orca`의 최신 competitive-superiority 후보 패키지로 공개 vault의 구버전 FieldPilot을 교체함.
+          - Source branch: `worker/fieldpilot-v199-competitive-superiority01`.
+          - Source delivery head: `0c1454f483191757b1e7503b1ad4454352ff5296`.
+          - Runtime/source candidate commit: `4a44d9379b6a0a0ea9606efb70093b6c0fcb9d42`.
+          - Canonical package archive SHA-256: `d97ade5b08acf8e9435379e8cd4fcca2c0ca7ac5cb1cc6d09523c594dfb6d177`.
+          - Package version: `1.9.9-rc01`.
+          - AI-first market research / Market→Build decision workflow, decision continuity, competitor-recall safeguards, product-state honesty, commercial-claim ceilings, sellability/product-pattern modules, and professional-report routes are included.
+          - Status remains **RC candidate**, not stable release: supported-host install/discovery/invocation/uninstall lifecycle C14 is still externally blocked/unverified. No superiority, PMF, WTP, sales, release, or stable-host claim is implied.
+          - Full 62-file `fieldpilot/` source/package is synced rather than replacing `SKILL.md` alone, so relative module loads remain valid.
+
+          ## Historical vault lineage (pre-1.9.x)
+
+          The entries below describe the older field-pilot/fieldwork-oriented skill that previously occupied this path. They are retained only as history and do not describe the current runtime.
+
+          EOF
+          tail -n +2 /tmp/old-changelog.md >> skills/fieldpilot/CHANGELOG.md
+
+      - name: Validate materialized vault package
+        run: |
+          set -euo pipefail
+          grep -F 'version: "1.9.9-rc01"' skills/fieldpilot/SKILL.md
+          test -f skills/fieldpilot/references/modules/DECISION_CONTINUITY.md
+          test -f skills/fieldpilot/references/modules/MARKET_FAVORED_PRODUCT_PATTERNS.md
+          test -f skills/fieldpilot/references/modules/PRODUCT_READINESS_AND_SIGNAL_INTEGRITY.md
+          test -f skills/fieldpilot/references/core/RUNTIME_CORE.md
+          test -f skills/fieldpilot/tools/efficiency_control.py
+          test -f skills/fieldpilot/tools/render_report.py
+          python -m py_compile skills/fieldpilot/tools/efficiency_control.py skills/fieldpilot/tools/render_report.py
+          COUNT="$(find skills/fieldpilot -type f | wc -l | tr -d ' ')"
+          test "$COUNT" = '63'
+
+      - name: Remove staging-only files and commit
+        run: |
+          set -euo pipefail
+          rm -rf .fieldpilot-import .fieldpilot-trigger
+          rm -f .github/workflows/import-fieldpilot-v199-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'build(fieldpilot): materialize canonical v1.9.9-rc01 package'
+          git push origin HEAD:sync/fieldpilot-v199-rc01
