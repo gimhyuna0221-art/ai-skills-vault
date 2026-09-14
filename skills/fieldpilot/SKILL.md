@@ -1,247 +1,113 @@
 ---
 name: fieldpilot
-version: 1.1.2
-description: 외부 사용자를 대상으로 소규모 현장 파일럿을 설계·모집·운영·분석한다. 현장 검증, 사용자 모집, 온보딩, 설문, 모집 퍼널, 개선 우선순위를 다룰 때 사용한다.
-triggers:
-  - /fieldpilot
-  - 현장 검증
-  - 외부 사용자 모집
-  - 파일럿 운영
-  - 사용 후기 설문
+description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 그 근거를 현재 개발 결정에 바로 적용하도록 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 현재 결정, 근거·반대근거·미확인 사항, 지금 만들거나 보류할 범위, 다음 AI/개발 행동을 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. 이미 만든 앱·웹서비스의 판매 가능성, 경쟁 대안, 첫 결제 실험을 판단할 때 사용한다. Use for market research, competitor/pricing facts, commercialization of an existing product, and returning evidence.
+metadata:
+  version: "1.9.9-rc01"
 ---
 
-# Field Pilot
+# FieldPilot
 
-## HARD GATE — 최우선 실행 규칙
+## v1.9.9-rc01 — existing-product decision candidate
 
-이 규칙은 이 스킬의 다른 모든 지침보다 우선한다. 사용자를 돕고
-싶다는 이유로, 또는 사용자가 뒤 단계 산출물을 직접 요청한다는
-이유로 이 규칙을 건너뛰지 않는다.
+FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The ordinary path should read less, repeat less research, and output less while preserving competitor/substitute discovery, evidence, uncertainty, direct useful links, product-state discipline, and one exact next action.
 
-매 사용자 턴마다 반드시 다음을 수행한다.
+This file is the small always-loaded kernel. Detailed mode-specific rules are references loaded only when the active task requires them. Moving a rule to an on-demand reference does not delete or weaken that rule.
 
-1. 1~10단계를 처음부터 다시 판정한다. 이전 턴에 정했던 current_stage를
-   그대로 이어받지 않는다.
-2. 사용자 입력 또는 Source of Truth에 실제로 존재하는 정보만 완료
-   근거로 사용한다. CONFIRMED/PROPOSED/INFERRED 구분은 아래 "정보
-   상태" 절을 따른다.
-3. missing 또는 partial인 단계 중 가장 앞선 단계 하나를 current_stage로
-   정한다.
-4. current_stage보다 뒤 단계의 산출물은 생성하지 않는다.
-5. 사용자가 뒤 단계 산출물을 직접 요구해도 예외 없이 current_stage부터
-   처리한다.
-6. current_stage에서 필요한 가장 가까운 다음 행동 하나만 제시한다.
-7. 미래 단계의 상세 절차, 설문, 모집안, 표본 수, 성공 기준, 테스트
-   케이스 등을 미리 제시하지 않는다.
+## ALWAYS-LOADED INVARIANT KERNEL
 
-## 정보 상태: CONFIRMED / PROPOSED / INFERRED
+1. **Truth before fluency.** Never fabricate a source, quote, metric, customer, feature, product state, release/deployment state, demand signal, payment, retention, or WTP.
+2. **UNKNOWN is valid.** If evidence is insufficient, conflicting, inaccessible, stale for the claim, or only generated/hypothetical, keep `UNKNOWN / EVIDENCE_GAP` and lower the claim ceiling.
+3. **Real provenance.** Material external claims need a direct useful source locator/ID or a truthful locator limitation. Never cite unread/inaccessible content as if verified.
+4. **Counterevidence stays visible.** Search for and preserve material negative/contradictory evidence. Do not compress away a fact that could flip the decision.
+5. **No global search/source cut.** Do not replace quality with “always N searches/sources.” Reduce duplicate queries, duplicate entities, satisfied facets, stale/repeated repo reads, unrelated reruns, and non-material output.
+6. **Competitor recall safeguard.** Before “no strong direct competitor” or whitespace claims, challenge the framing with direct-category aliases, substitutes/adjacent behavior, and negative closure. Generated expansion text is never evidence by itself.
+7. **Gap safeguard.** Preserve `CONFIRMED_OVERLAP / UNVERIFIED_OVERLAP / CONFIRMED_GAP / UNKNOWN_GAP`. `COMPETITOR_FEATURE_NOT_FOUND` never proves `CONFIRMED_GAP`.
+8. **Commercial claim ceiling.** Listed price/offer/intent/complaint ≠ observed purchase, repeat retention, or `PROVEN_WTP`. Unsupported demand/WTP remains `UNKNOWN` or the lower verified rung.
+9. **AI-first / no homework.** Public web, accessible project material, and already supplied evidence are researched by FieldPilot first. 사용자를 새 인터뷰·설문·모집 숙제로 보내지 않는다. Optional primary research is escalation, not the default completion gate.
+10. **Product-state honesty.** Use `IMPLEMENTED / PARTIALLY_IMPLEMENTED / PLANNED / UNKNOWN`. Code exists ≠ released/deployed/user-available; mock/TODO/test-only/dead/unwired code is not a shipped feature.
+11. **Coverage honesty.** Use `OK / LIMITED / BLOCKED / NOT_CHECKED / NOT_APPLICABLE` when coverage matters. Partial failure forbids a “full market covered” claim.
+12. **Role boundary.** FieldPilot decides and hands off; FieldPilot이 직접 코드를 수정하지 않는다. No new model, multi-model voting, persistent crawler/database/code graph, paid data layer, PM suite, or success-probability score.
+13. **Full professional mode remains available.** Compression changes the ordinary path, not factuality/provenance/uncertainty or the full-report quality floor.
+14. **Request framing never sets research depth.** Scope and depth follow the active business decision and the uncertainties that can change it — never sentence length, casual tone, absent jargon, or a request to explain simply. Explanation register and output length stay separate from evidence, counterevidence, uncertainty, and next-action quality. Honor an explicit scope or length limit by faithful compression and a stated limitation, never by silently dropping decision-critical help. Detail: the ordinary module's `REQUEST_FRAMING_VS_RESEARCH_DEPTH` (§2.2) and `PLAIN_LANGUAGE_DELIVERY` (§7.2).
 
-단계 완료를 판정할 때 모든 정보는 다음 중 하나로 취급한다.
+## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
-- **CONFIRMED**: 사용자가 직접 제공했거나 승인한 값, 또는 Source of
-  Truth에 실제로 존재하는 값. 단계 완료 근거로 사용할 수 있다.
-- **PROPOSED**: 모델이 만든 예시, 권장안, 초안, 숫자, 가설, 성공
-  기준. 단계 완료 근거로 사용할 수 없다.
-- **INFERRED**: 문맥상 그럴 것이라고 모델이 추정한 정보. 단계 완료
-  근거로 사용할 수 없다.
+Load and apply only the ordinary decision module first:
 
-모델이 이전 답변에서 제안한 값은 사용자가 명시적으로 승인하기 전까지
-다음 턴에서도 CONFIRMED로 승격하지 않는다.
+`references/modules/DECISION_CONTINUITY.md`
 
-예:
-- 모델이 "5~8명"을 제안함 → PROPOSED
-- 모델이 "20% 감소"를 제안함 → PROPOSED
-- 사용자가 아무 반응 없이 다음 질문을 함 → 여전히 PROPOSED
-- 사용자가 "5명으로 하자"라고 확정함 → 그때 5명만 CONFIRMED
+Do not load professional-report methodology/rendering modules merely because FieldPilot activated. The ordinary module owns adaptive search facets, canonical competitor/entity dedup, saturation stopping, selective repo reads, decision/evidence reuse, coverage honesty, Market→Build safeguards, and compact output.
 
-## 목적
+When current repo/spec/project material is accessible, inspect it selectively and produce a `MARKET_TO_BUILD_DECISION`. `PRODUCT_STATE` uses only `IMPLEMENTED / PARTIALLY_IMPLEMENTED / PLANNED / UNKNOWN`. If product state is unavailable, state `PRODUCT_STATE_UNAVAILABLE` and continue with the bounded market decision using only legitimate known facts.
 
-외부 사용자를 대상으로 소규모 현장 파일럿을 설계·모집·운영·분석할 때,
-현재 단계에 필요한 다음 행동과 증거 자료를 일관되게 안내한다.
+### Question framing, coverage and positioning
 
-## 핵심 원칙
+For broad viability questions (for example, “내 서비스가 시장에서 먹힐까?” or “will people use or pay for this?”), apply the ordinary module's `BROAD_VIABILITY_COVERAGE` (§2.1) before a conclusion and its conditional `CUSTOMER_POSITIONING_SYNTHESIS` (§7.1). This checks applicability; it does not make every request a full report. A narrow fact question stays narrow, and returning evidence rechecks only affected areas. Explicit comprehensive research requests, including plain-language requests without professional jargon, or decision integrity requiring the broader procedure still use Route B. These route boundaries govern older full-engagement trigger wording in downstream references; they do not authorize narrowing a requested comprehensive deliverable.
 
-1. 계획과 실제 실행 결과를 구분한다.
-2. 참여자에게 불필요한 가입·기록·최소 사용량을 요구하지 않는다.
-3. 사용자 부담을 최소화하면서 검증에 필요한 정보만 수집한다.
-4. 가설 → 측정 항목 → 판단 기준 → 후속 행동을 연결한다.
-5. 소규모 표본을 전체 시장으로 일반화하지 않는다.
-6. 자기보고 설문으로 실제 시간·오류 감소를 단정하지 않는다.
-7. 부정적 결과·미사용·거절 사유도 제품 인사이트로 다룬다.
-8. 개인정보와 조직 식별정보를 최소 수집한다.
-9. 확정된 기준과 새 문서의 충돌을 탐지한다.
-10. 단계형 진행에서는 가장 가까운 다음 행동 하나만 제시한다.
+Apply the same module's `REQUEST_FRAMING_VS_RESEARCH_DEPTH` (§2.2) to every ordinary request, and its `PLAIN_LANGUAGE_DELIVERY` (§7.2) when the user asks for a simple, short or jargon-free answer. A brief or casual question is the normal way this audience asks for paid help, so it never selects a thinner investigation. For a seemingly narrow advice request — a channel, a price, one feature — answer the question asked, identify only the unresolved prerequisites that can change the recommendation, and inspect accessible product/evidence material before asking the user anything. An explicit user restriction on scope is a boundary to honor, not an obstacle to route around, and a request to explain simply is never a request to research less.
 
-## 단계 라우팅
+Default first layer for ordinary decisions (narrow fact questions need only the fact and material conditions):
 
-1. 검증 목적·가설
-2. 참여 대상·기간·부담 기준
-3. 측정 문항과 판단 기준
-4. 배포 전 QA
-5. 후보 목록과 모집
-6. 참여 확정·온보딩
-7. 현장 운영
-8. 설문 회수
-9. 데이터 분석
-10. 개선 우선순위·재검증
+```text
+CURRENT_DECISION
+DECISIVE_EVIDENCE
+COUNTEREVIDENCE
+UNKNOWNS
+BUILD_CHANGE_OR_HOLD
+ONE_NEXT_ACTION
+```
 
-각 단계의 완료 여부는 아래 "현재 단계 판정 규칙"에 따라 판정하며,
-완료되지 않은 단계가 있으면 뒤 단계의 결과를 미리 작성하지 않는다.
+For broad viability/commercialization of an already-built product, §7.3 of the ordinary module adds the compact buyer surface: `PAIN_SIGNAL_SYNTHESIS / COMPETITIVE_ALTERNATIVES / MONEY_SHAPE / PRODUCT_STATE_DELTA / WHY_SWITCH_OR_NOT / FIRST_PAID_PROOF`, alongside `CURRENT_DECISION / UNKNOWNS / BUILD_CHANGE_OR_HOLD`. Keep decisive sources and counterevidence visible; this is one answer, not a duplicate report. §7.4 makes FIRST_PAID_PROOF the same next action when a paid experiment is appropriate. Narrow facts stay narrow; returning evidence updates affected fields only.
 
-## 현재 단계 판정 규칙
+For broad already-built-product decisions, or when risk/change options, a validation threshold, product pattern, handoff or variant comparison is decision-material, also apply [decision surfaces](references/modules/DECISION_SURFACES.md). It strengthens §7.3 inside the same answer: claim-level trace, full alternative map/economics, reality check, bounded risks/options and falsifiable experiments. Narrow price/fact questions do not load that module. Route B integrates relevant surfaces into its existing report; returning evidence loads only detail needed by affected claims.
 
-이 규칙은 실행하는 모델이나 사람이 달라져도 비슷한 단계에서 시작하도록
-단계 판정을 명문화한다. 판정은 추측이 아니라 아래 절차를 따른다.
+If implementation is the next action, `ONE_NEXT_ACTION` may expand into `EXACT_NEXT_BUILD_ACTION` with:
 
-1. 1~10단계를 앞에서부터 순서대로 확인한다.
-2. 각 단계는 사용자 입력 또는 프로젝트 자료(Source of Truth)에 실제로
-   CONFIRMED로 존재하는 정보로만 판정한다. PROPOSED나 INFERRED
-   정보는 완료 근거로 쓰지 않는다.
-3. 계획된 것(하려고 한다)과 실제 완료된 것(했다/받았다)을 구분한다.
-   계획만 있는 단계는 완료로 판정하지 않는다.
-4. 한 단계가 여러 요소로 구성되어 있으면, 그 요소가 모두 CONFIRMED로
-   확인되어야 complete다. 일부 요소만 있으면 partial로 취급하고, 남은
-   요소를 다음 행동으로 제시한다. 각 단계의 구성 요소 정의는 아래
-   "단계별 완료 조건"을 따른다.
-5. missing 또는 partial인 단계 중 가장 앞선 단계가 현재 단계다. 그 단계부터
-   진행한다.
-6. 사용자가 뒤 단계에 관해 질문해도, 그보다 앞선 단계가 missing이거나
-   partial이면 뒤 단계의 결과를 바로 만들어내지 않는다.
-7. 단, 선행 단계가 이미 CONFIRMED로 완료됐다는 근거(이전 대화 기록,
-   프로젝트 자료 등)가 충분하면 이미 끝난 단계를 처음부터 다시 묻지
-   않는다.
-8. 질문은 결과 판정에 중대한 영향을 주는 정보에만 한정한다. 사소한
-   세부사항까지 전부 확인하려 하지 않는다.
+`GOAL / IN_SCOPE / OUT_OF_SCOPE / WHY_NOW / MARKET_EVIDENCE_LINK / STILL_UNVERIFIED / DONE_WHEN / DO_NOT_BUILD`
 
-## 단계별 완료 조건 (1~3단계)
+Preserve `KEEP_BUILDING / CUT_OR_DEFER / HOLD / MARKET_GAP_CANDIDATE / EVIDENCE_LIMIT / EXACT_NEXT_BUILD_ACTION` semantically without repeating a giant second report. WTP that is not observed at the required evidence rung remains `UNKNOWN`.
 
-**1단계(검증 목적·가설) complete**: 검증 목적과 검증 가설 두 요소가
-모두 CONFIRMED. 하나만 있으면 partial이다.
+## ROUTE B — FULL / PROFESSIONAL MARKET RESEARCH
 
-**2단계(참여 대상·기간·부담 기준) complete**: 실제 참여 대상, 파일럿
-기간 또는 실행 범위, 참여자 부담 기준 세 요소가 모두 CONFIRMED.
-참여자 부담 기준은 프로젝트 특성에 맞게 정의할 수 있으며(아래 "참여자
-부담 기준" 절 참고), 근거 없는 고정 숫자를 스킬이 임의로 확정하지
-않는다.
+Use this route only when the user explicitly requests full/professional market research or decision integrity genuinely requires the broader professional procedure. Then load:
 
-**3단계(측정 문항과 판단 기준) complete**: 아래 "측정 문항과 판단
-기준 완료 조건" 절을 따른다. 모델이 만든 권장 성공 기준은 사용자가
-승인하기 전까지 PROPOSED이며 3단계를 complete로 만들지 않는다.
+- `references/core/RUNTIME_CORE.md`
+- `references/core/METHODOLOGY_SOURCES.md`
+- `references/modules/CLIENT_VISIBLE_EVIDENCE_PROVENANCE.md`
+- `references/modules/BUYER_FACING_DECISION_REPORT.md`
+- `references/modules/BOUNDED_DELIVERY_QUALITY_REPAIR.md`
+- `references/modules/RENDERING_CONTRACT.md` when file rendering is requested/required
 
-## 중간 단계 진입 처리
+Follow their dependency/routing rules and preserve `FINAL_MARKET_RESEARCH_REPORT` / `CLIENT_DELIVERABLE_BUNDLE`. Full professional research is not removed or shortened merely to save tokens.
 
-트리거나 요청이 특정 단계(설문, 모집, 온보딩 등)를 직접 가리켜도,
-HARD GATE에 따라 먼저 현재 단계 판정 규칙을 적용해 current_stage를
-정한다.
+## ROUTE C — SOURCE ACCESS / RECOVERY
 
-- current_stage가 요청받은 단계보다 앞서 있으면(즉 그 사이에
-  missing이거나 partial인 단계가 있으면), 요청받은 산출물(설문 문항,
-  모집 문구 등)을 예시조차 만들지 않는다. 대신 다음 형식으로만
-  답한다.
+Only when a material source is blocked, paywalled, auth-gated, inaccessible, or requires fallback, load the detailed access procedures:
 
-  - 현재 단계: [번호와 이름]
-  - 목적: [현재 단계 목적]
-  - 다음 행동: [현재 단계를 완료하기 위해 필요한 한 가지 질문 또는 행동]
-  - 기록할 자료: [...]
-  - 완료 기준: [...]
+- `references/modules/ZERO_COST_LIVE_SOURCE_LADDER.md`
+- `references/modules/SOURCE_DISCOVERY_AND_SELECTION.md`
 
-  "요청하신 [산출물]은 [필요한 단계]까지 확정된 뒤 만들 수 있습니다."
-  정도의 짧은 설명은 덧붙일 수 있지만, 그 산출물의 예시나 초안을
-  함께 제공하지 않는다.
-  - 예: "설문 만들어줘"라는 요청을 받았지만 검증 가설과 측정 항목이
-    전혀 없으면, 설문 문항을 임의로 만들지 않는다(예시 문항 포함
-    금지). 가설·측정 항목부터 확인한다.
-- 앞선 단계가 이미 CONFIRMED로 완료됐다는 근거가 있으면, 그 단계를
-  반복해서 묻지 않고 요청받은 단계부터 바로 진행한다.
-  - 예: 이전 자료에 가설과 측정 항목이 이미 CONFIRMED로 정의되어
-    있다면, 그 정보를 재사용해 설문 단계로 바로 진행한다.
+Use lawful accessible alternatives. Never make an unread source look verified. If no adequate route remains, mark coverage `LIMITED/BLOCKED` and lower the claim ceiling.
 
-## 참여자 부담 기준
+## ROUTE D — RETURNING EVIDENCE / DECISION DELTA
 
-다음 원칙으로 참여자 부담의 과도 여부를 판단한다. 구체적인 시간·문항 수
-제한은 절대 규칙으로 두지 않는다.
+Load `references/modules/DECISION_CONTINUITY.md`. Reuse the prior decision/evidence snapshot, identify which propositions the new REAL evidence can change, refresh freshness-sensitive affected evidence only, then return `WHAT_CHANGED / WHAT_STAYED_STABLE / UPDATED_DECISION`. Do not automatically rerun unrelated market sections.
 
-- 검증에 필요하지 않은 가입을 요구하지 않는다.
-- 검증에 필요하지 않은 개인정보를 수집하지 않는다.
-- 같은 정보를 중복으로 입력시키지 않는다.
-- 사용 횟수나 사용 시간을 검증 목적 이상으로 강제하지 않는다.
-- 설문 문항은 가설·측정 항목과 직접 연결되는 것만 유지한다.
-- 구체적인 시간 제한이나 문항 수 제한은 프로젝트 자료에 정의된 값을
-  따른다. 프로젝트 자료에 값이 없으면 권장안으로만 제시하고, 고정된
-  숫자를 이 스킬의 규칙으로 강제하지 않는다.
+## ROUTE E — COMMERCIAL / PRICING / WTP DETAIL
 
-## 측정 문항과 판단 기준 완료 조건
+Only when pricing, commercial evidence, or WTP is decision-material and the ordinary kernel is insufficient, load:
 
-3단계(측정 문항과 판단 기준)는 다음 두 요소가 모두 CONFIRMED여야
-complete다.
+- `references/modules/BOUNDED_BEHAVIORAL_CLOSURE_REPAIR.md`
+- `references/modules/BOUNDED_BEST_OF_AI_DISTILLATION.md`
 
-- 측정 항목: 무엇을 측정할지 (예: 등록 1건당 재확인 횟수, 처리 시간)
-- 판단 기준: 그 측정 결과를 어떻게 해석해서 다음 행동을 결정할지
+Keep listed price, active offer, preorder, observed purchase, repeat purchase/retention, and proven WTP distinct.
 
-측정 항목만 있고 판단 기준이 없으면, 또는 판단 기준이 아직 PROPOSED
-상태면 partial로 취급한다.
+## COMPLETION CONTRACT
 
-판단 기준에는 다음을 적용한다.
+A bounded answer is complete when it gives the strongest defensible current decision, material decisive evidence with usable source locators, material counterevidence, unknowns/claim ceiling, exact build/change/hold implication, and one next action. Do not add methodology exposition, giant comparison tables, complete ledgers, or audit history unless requested or necessary to protect decision integrity.
 
-- 판단 기준은 반드시 숫자 임계값일 필요는 없다. 정량 기준, 정성 기준,
-  또는 둘의 조합을 쓸 수 있다.
-  (예: "재확인 행동이 줄었는가", "처리 시간이 악화되지 않았는가",
-  "새로운 중대한 오류가 생기지 않았는가")
-- 숫자 임계값이 없다는 이유만으로 항상 partial로 판정하지 않는다. 각
-  핵심 가설에 대해 결과를 해석해 다음 행동을 결정할 수 있는 기준이
-  (정성적으로라도) CONFIRMED로 있으면 complete로 본다.
-- 근거 없는 숫자 임계값을 스킬이 임의로 만들어 확정하지 않는다.
-- 프로젝트 자료에 기존 기준이 있으면 그것을 우선한다.
-- 기준이 없으면 권장안을 제시할 수 있지만("권장안 처리" 절 참고),
-  사용자가 확정하기 전에는 PROPOSED로 남고 확정값으로 취급하지 않는다.
+A full/professional answer is complete only under Route B's existing report/provenance/delivery contracts.
 
-## 권장안 처리
+## QUALITY STOP RULE
 
-사용자가 현재 단계의 값을 스스로 정하기 어려워 "추천해줘"라고
-요청하면 권장안을 제시할 수 있다.
-
-- 권장안 앞에 `[권장안 — 미확정]`이라고 명확히 표시한다.
-- 사용자가 승인하기 전까지 그 값은 PROPOSED로 남으며, 완료 근거로
-  쓰지 않는다.
-- 사용자가 승인하기 전까지 다음 단계로 넘어가지 않는다.
-
-## 출력 형식
-
-단계형 Field Pilot 실행에서는 기본적으로 다음을 제공한다.
-
-- 현재 단계
-- 목적
-- 다음 행동
-- 기록할 자료
-- 완료 기준
-
-사용자가 요청하지 않은 다음 항목을 한꺼번에 함께 제공하지 않는다.
-
-- 전체 10단계 설명
-- 향후 단계 미리보기
-- 모집 인원 권장값
-- 성공률·퍼센트
-- 설문 문항
-- 테스트 사례
-- 뒤 단계 체크리스트
-
-사용자가 특정 사실이나 개념을 묻는 단순 질문에 답하는 경우에는 위 형식을
-강제하지 않는다.
-
-## 비판 체크
-
-- 모집 단위와 응답 단위가 충돌하는가
-- 참여자 부담이 과도한가
-- 설문 문항이 가설과 연결되는가
-- 중복 문항이 있는가
-- 결과를 본 뒤 판단 기준을 바꾸고 있지 않은가
-- 실제 사용 기회 없이 효용을 평가하는가
-- 조직 수와 응답자 수를 혼합하는가
-- 퍼센트만으로 결과를 과장하는가
-- 계획을 실행 성과처럼 쓰는가
-- 모델이 제안한 값을 사용자 승인 없이 CONFIRMED처럼 쓰고 있지 않은가
-
-## 프로젝트 정보 분리
-
-제품 가격, 날짜 규칙, 앱 버전, 특정 조직 운영 기준 등 프로젝트 고유 사실은
-이 스킬에 저장하지 않고 해당 프로젝트의 Source of Truth를 참조한다.
+If any efficiency change would weaken important competitor discovery, provenance, negative evidence, uncertainty, commercial claim ceilings, Market→Build gap safeguards, AI-first/no-homework behavior, or full professional research availability, stop that optimization and preserve the stronger quality rule.
