@@ -1,0 +1,7 @@
+# Tested on Python 3.13.5; Linux x86_64.
+# This is an observed environment, not a claim of all-platform compatibility.
+numpy==2.3.5
+scipy==1.17.0
+Pillow==12.3.0
+shapely==2.1.2
+numba==0.65.1

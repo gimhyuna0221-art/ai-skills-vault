@@ -10,6 +10,19 @@
 | [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 강의를 단독 강의팩 또는 같은 분야 누적 지식베이스로 변환 | stable draft |
 | [Obsidian Lecture Pack — CG Omnibus](skills/obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
 | [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
+| [Rect Strip UV](skills/rect-strip-uv/) | 열린 쿼드 벨트·스트랩의 형상 보존 직사각형 UV 전개와 양 끝 연결 | stable draft |
+
+## Rect Strip UV
+
+[한국어 사용법](skills/rect-strip-uv/README_KO.md) · [벤치마킹 기록](skills/rect-strip-uv/references/BENCHMARKING.md) · [실행 검증](skills/rect-strip-uv/evidence/public_validation.json)
+
+소유자 또는 별도 사용 허가를 받은 사용자의 설치 명령:
+
+```bash
+npx skills add gimhyuna0221-art/ai-skills-vault --skill rect-strip-uv
+```
+
+Python 실행 환경과 의존성이 별도로 필요합니다. 아래 저장소 이용 조건은 그대로 적용됩니다. 이 스킬의 공개는 자유 이용 라이선스 부여나 특정 AI 플랫폼의 승인을 뜻하지 않습니다.
 
 ## Obsidian Lecture Pack 구조
 
@@ -60,7 +73,7 @@ skills/obsidian-lecture-pack/
 
 #### 누적 모드
 
-같은 분야의 일반 강의를 계속 쌓으면서 기존 개념·워크플로우·강의 인덱스와 병합할 때 사용합니다.
+같은 분야의 일반 강의를 계속 누적하면서 기존 개념·워크플로우·강의 인덱스와 병합할 때 사용합니다.
 
 ```text
 /obsidianpack-update
@@ -161,6 +174,7 @@ ai-skills-vault/
 ├─ skills/
 │  ├─ prompt-router/
 │  ├─ fieldpilot/
+│  ├─ rect-strip-uv/
 │  ├─ obsidian-lecture-pack/
 │  └─ obsidian-lecture-pack-cg/
 ├─ templates/

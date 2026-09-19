@@ -1,0 +1,6 @@
+interface:
+  display_name: "직사각형 스트립 UV"
+  short_description: "벨트·스트랩의 형상과 사각 와이어를 보존하는 타일맵 UV 전개"
+  default_prompt: "Use $rect-strip-uv to unwrap this OBJ into long rectangular body strips with attached ends. Run the bundled scripts; preserve the geometry and verify the exported files."
+policy:
+  allow_implicit_invocation: true

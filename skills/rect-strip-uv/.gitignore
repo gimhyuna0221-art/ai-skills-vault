@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.nbc
+*.nbi
+.venv/
+*.part
+run.lock
+state.json
+progress.jsonl
+demo-input/
+demo-job/
+*.obj
+*.mtl
+*.zip

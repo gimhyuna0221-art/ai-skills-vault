@@ -1,0 +1,19 @@
+test_checkpoint_tamper_guard (test_workflow.SolverTests.test_checkpoint_tamper_guard) ... ok
+test_folded_shape_unchanged (test_workflow.SolverTests.test_folded_shape_unchanged) ... ok
+test_full_cli_resume_and_source_guard (test_workflow.SolverTests.test_full_cli_resume_and_source_guard) ... ok
+test_geodesic_caps_with_explicit_endpoints (test_workflow.SolverTests.test_geodesic_caps_with_explicit_endpoints) ... ok
+test_hole_stops (test_workflow.SolverTests.test_hole_stops) ... ok
+test_inconsistent_winding_stops (test_workflow.SolverTests.test_inconsistent_winding_stops) ... ok
+test_negative_indices_normals_groups (test_workflow.SolverTests.test_negative_indices_normals_groups) ... ok
+test_no_old_uv_export (test_workflow.SolverTests.test_no_old_uv_export) ... ok
+test_nonquad_stops (test_workflow.SolverTests.test_nonquad_stops) ... ok
+test_regular_strip_rectangular_exact (test_workflow.SolverTests.test_regular_strip_rectangular_exact) ... ok
+test_reordered_faces_no_assumed_subdivision (test_workflow.SolverTests.test_reordered_faces_no_assumed_subdivision) ... ok
+test_subdivision_prolongation_preserves_all_quads (test_workflow.SolverTests.test_subdivision_prolongation_preserves_all_quads) ... ok
+test_two_components (test_workflow.SolverTests.test_two_components) ... ok
+test_uv_flip_is_not_approved (test_workflow.SolverTests.test_uv_flip_is_not_approved) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 7.709s
+
+OK

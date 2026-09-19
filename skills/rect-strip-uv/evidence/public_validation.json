@@ -1,0 +1,45 @@
+{
+  "skill": "rect-strip-uv",
+  "distribution_version": "1.0.1",
+  "core_cli_compatibility_label": "1.0.0",
+  "version_note": "The publication revision is 1.0.1. The preserved core CLI still reports its original 1.0.0 identifier; use code_sha256 below for the exact published build. Only preview layout sizing changes runtime behavior.",
+  "code_sha256": "bf1cde8c8a8319c024f37f2add6bda6edc6bea57d485164f9e55e1f250e78a53",
+  "publication_checks": {
+    "date_kst": "2026-09-20",
+    "unit_tests": {"total": 14, "passed": 14, "failed": 0, "seconds": 7.709, "log": "unit_tests.txt"},
+    "synthetic_run": {
+      "generator": "../examples/make_example.py",
+      "vertices": 441,
+      "quads": 384,
+      "uv_islands": 1,
+      "completed_stages": ["inspect", "unwrap", "export", "verify", "preview", "package"],
+      "both_tile_and_01_reloaded": true,
+      "all_geometry_normal_group_preservation_checks_passed": true,
+      "all_corners_have_valid_uv": true,
+      "nonpositive_uv_triangles": 0,
+      "nonconvex_uv_quads": 0,
+      "surface_boundary_area_gap": 0.0,
+      "tile_obj_sha256": "c16caa2a04226c8c1e3d926dc780d207cac9f7dd39550c9ccc138f9923d7febf",
+      "packed_obj_sha256": "cda83c644db01a185c67c05ef48b2a19f1f133dfe22cd5c339397f0f08c58124",
+      "visual_review": "Layout and angled/front checker pixels inspected. Straight body and connected ends visible. Header overlap found and corrected in preview only. No distortion-free claim."
+    },
+    "environment": {"python": "3.13.5", "numpy": "2.3.5", "scipy": "1.17.0", "Pillow": "12.3.0", "shapely": "2.1.2", "numba": "0.65.1"}
+  },
+  "historical_private_regression": {
+    "version": "1.0.0",
+    "rerun_during_this_publication": false,
+    "vertices": 1774646,
+    "quads": 1761632,
+    "uv_islands": 2,
+    "saved_obj_preservation_and_uv_checks_passed": true,
+    "origin": "Previous bundle validation_summary.json and full_resolution_QA.json; summarized without private model or job paths.",
+    "not_a_public_reproducible_fixture": true
+  },
+  "lower_reasoning_model_evaluation": {"executed": false, "scenarios": 12, "file": "../tests/model_evals.json"},
+  "dcc_round_trip_performed": false,
+  "npx_host_installation_executed": false,
+  "hosted_ci_result": "Consult the GitHub Actions run for the publication commit; this static local report does not certify hosted CI.",
+  "production_meshes_distributed": false,
+  "repository_status": "stable draft",
+  "timing_note": "One observed local test duration, not a runtime or cross-platform performance guarantee."
+}
