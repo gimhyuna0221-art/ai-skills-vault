@@ -1,84 +1,55 @@
-# Rect Strip UV
+# Rect Strip UV — 1.1.1
 
-**UV-only rectangular unwrapping for thin, open quad belts and straps.**
+**UV-only original, plus a checked low-poly companion when the input is dense.**
 
-[한국어 사용 설명서](README_KO.md) · [Agent instructions](SKILL.md) · [Validation](evidence/public_validation.json) · [Publishing benchmarks](references/BENCHMARKING.md)
+[한국어](README_KO.md) · [Agent instructions](SKILL.md) · [Low-poly method](references/LOWPOLY.md) · [Changelog](CHANGELOG.md)
 
-Version **1.0.1** · Repository status **stable draft**, not a general-purpose UV tool.
+The high-poly result preserves original vertex records, quad connectivity/order, normals, groups and material declarations. Bodies become long rectangular UV strips with attached ends. Dense input additionally gets a separate, strictly smaller low-poly companion; the original is never replaced.
 
-Creates a long rectangular body with connected ends, one UV island per strip. Preserves original vertex records, quad connectivity, normals, groups and material declarations. Uses local Python rather than asking an AI model to invent a new UV algorithm.
+## Install / run
 
-## Install the skill
-
-For the repository owner or separately authorized users; see [usage terms](LICENSE.txt). Public visibility does not grant an open-source license.
+For the repository owner or separately authorized users only; [existing usage terms](LICENSE.txt) remain unchanged. Public visibility is not an open-source license.
 
 ```bash
 npx skills add gimhyuna0221-art/ai-skills-vault --skill rect-strip-uv
-```
-
-List discoverable skills without installing:
-
-```bash
-npx skills add gimhyuna0221-art/ai-skills-vault --list
-```
-
-The optional installer needs Node.js and downloads the skill; it does **not** install Python dependencies. The command follows the [Vercel Skills CLI](https://github.com/vercel-labs/skills#readme). Host installation was not executed in the publishing container; a compatible folder structure is not a claim of marketplace approval.
-
-For manual Codex installation, place this entire folder at `.agents/skills/rect-strip-uv/` in a project or under your home directory. See [official skill documentation](https://developers.openai.com/codex/skills).
-
-```text
-$rect-strip-uv Unwrap this OBJ for a repeating texture. Keep the geometry and quads; use rectangular bodies and attached ends. Run the bundled scripts and inspect the exported results.
-```
-
-## Run directly
-
-From this skill folder, with Python 3.11+ and a separate job folder:
-
-```bash
 python -m pip install -r requirements.txt
 python scripts/rect_strip_uv.py doctor
 python scripts/rect_strip_uv.py run --input "belt.obj" --work "belt_uv_job"
 ```
 
-Windows Python Launcher users may replace `python` with `py -3`. Quote paths with spaces. Do not put the input inside the work directory.
+The optional installer requires Node.js and does not install Python dependencies. Manual host installation uses the entire `.agents/skills/rect-strip-uv/` folder. Installation on every agent host is not claimed. Python 3.11+, file tools and image review are required; no DCC app or API key is needed. On Windows, `py -3` may replace `python`. Keep input outside the work directory.
 
-Add `--also-01` on the first run only when a uniformly scaled 0–1 alternative is needed. Repeat UVs deliberately exceed 0–1; they are not a multi-image UDIM set. `--tile-width` means scene units per UV tile, never assumed centimeters.
+Automatic low-poly triggers at **250,000 quads or 500,000 edges**. These configurable thresholds are workflow defaults, not universal hardware limits. Default target: 40,000 quads, subject to shape/metadata gates. Use `--lowpoly off` only for an explicit UV-only override. `--also-lowpoly-auto` is a compatibility alias for the default. Optional `--also-01` adds a uniformly scaled UV alternative at each delivered resolution.
 
-Outputs: `belt_uv_job/rect_strip_uv_delivery.zip`, `delivery/belt_UV_tile.obj`, QA JSON and three preview PNGs. The optional `belt_UV_01.obj` is an alternative, not a second object to import.
+Outputs: `delivery/belt_UV_tile.obj` (original/high-poly), `delivery/belt_lowpoly_UV_tile.obj` when safely reducible, per-resolution QA, `DELIVERY.json`, previews, and `rect_strip_uv_delivery.zip`. Repeat UVs outside 0–1 are intentional, not a multi-image UDIM set. A resolution's `_tile` and `_01` outputs are alternative UV layouts.
 
-## Try a reproducible synthetic example
+## Rounded ends are not square remeshes
 
-No customer mesh or textures are included.
+Only proven original four-child subdivision blocks are coarsened. The surviving positions and UV samples come from the original; no smoothing, UV quantization, generic decimation, welding, holes, thickness or new folds. Levels are ordered full-resolution first and must decrease by a factor of four. Metadata seams cannot be crossed.
 
-```bash
-python examples/make_example.py --output "demo-input/strap.obj"
-python scripts/rect_strip_uv.py run --input "demo-input/strap.obj" --work "demo-job" --also-01
-python -m unittest discover -s tests -v
-```
+Every original boundary vertex is checked against its corresponding surviving chord. Original surface vertices are checked against hierarchical bilinear interpolation. Defaults: maximum boundary error / strip width <= 1%, surface sample error / width <= 3%. These are sampled checks, not a continuous Hausdorff guarantee. A component can retain extra density when its next candidate fails. Low-poly normals are recomputed by the importing host; original normals remain in high-poly.
 
-The generator refuses to overwrite a file. Choose fresh demo paths for a repeat run.
+If no strictly smaller safe result exists, return the high-poly output with `HIGH_POLY_VERIFIED_LOW_POLY_BLOCKED` (exit 4), never a fake low-poly duplicate. Processing failures use exit 2; missing dependencies use exit 3.
 
-## Resume instead of restarting
+## Resume / evidence
 
 ```bash
 python scripts/rect_strip_uv.py status --work "belt_uv_job"
 python scripts/rect_strip_uv.py resume --work "belt_uv_job"
 ```
 
-Stages: inspect → unwrap → export → verify → preview → package. Source, configuration and code must match. Completed checkpoints are hashed. Incomplete stages can run again; `.part` files are not final output. Check active processes before touching a lock. See [troubleshooting](references/TROUBLESHOOTING.md).
+Stages: inspect → unwrap → export → verify → preview → lowpoly → package. Source/code/config must match; completed artifacts are hashed. Changed versions need fresh work directories. Check actual process state rather than repeatedly restarting a timed-out stage.
 
-## Scope and limits
+`NUMERIC_PASS_VISUAL_REVIEW_REQUIRED` is not visual acceptance. Open the three high-poly UV previews and, when present, `LOWPOLY_checker.png`, `LOWPOLY_layout.png`, `LOWPOLY_ends.png`. Both exports are reloaded and checked independently. The ZIP contains both actual resolutions when the low-poly branch succeeds.
 
-Supported inputs are long, thin, open, consistently oriented quad disks with no holes or branches. Buckles, thick solids, triangle meshes, welded closed rings and geometry repair are out of scope. The script rejects them instead of silently changing topology.
+```bash
+python -m unittest discover -s tests -v
+python examples/make_dense_example.py --output demo-input/dense.obj
+python scripts/rect_strip_uv.py run --input demo-input/dense.obj --work dense-job
+```
 
-Default safety limits are 3 million input faces, 150,000 control vertices and 32 components; these are not performance guarantees. Ordered subdivision can reduce the UV solve while preserving every original mesh vertex and quad. End selection can be ambiguous. Curves and ends can retain local UV distortion.
+The dense synthetic rounded strap has 262,144 quads and tests the actual automatic threshold. User geometry is not published. Validate the exact commit's Actions jobs and generated CI receipt; historical `evidence/public_validation.json` is not fresh evidence for this version.
 
-A successful script reports `NUMERIC_PASS_VISUAL_REVIEW_REQUIRED`. Open `UV_layout.png`, `UV_checker.png` and `UV_checker_front.png`; numerical validation is not visual acceptance. MTL/textures are not invented or bundled.
+Scope remains thin, open, hole-free, long quad disks; buckles, solids, triangles, welded rings and repair are unsupported. Existing limits remain 3 million input faces, 150,000 control vertices and 32 components. Lower-reasoning-model performance, DCC round trips, host installation and visual review are separate from automated solver tests. Status remains `stable draft`.
 
-## Evidence and maintenance
-
-The 14 original solver/workflow tests are included. Publication checks, current synthetic results and historical high-resolution evidence are distinguished in [public validation](evidence/public_validation.json). Historical private input is not distributed. Tests of other lower-reasoning models and DCC round trips have **not** been performed. The 12 scenarios in [model_evals.json](tests/model_evals.json) are an evaluation plan, not measured model success rates.
-
-[Changelog](CHANGELOG.md) · [Method](references/METHOD.md) · [Sources](references/SOURCES.md)
-
-Report reproducible issues without uploading private production assets or credentials. Existing repository contribution and usage policies apply; no new license permissions are granted by this skill.
+[Publishing benchmarks](references/BENCHMARKING.md) · [Incident/prevention](references/INCIDENT_2026-09-20.md) · [UV method](references/METHOD.md) · [Sources](references/SOURCES.md)
