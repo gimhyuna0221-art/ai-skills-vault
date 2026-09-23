@@ -66,7 +66,15 @@ Do not invent a universal count of posts, videos, communities, contacts, days, o
 
 ## Geography adapter
 
-When geography materially changes audience access or platform usage, load the relevant local context before choosing a first route. For Korea, load `KOREA_LOCAL_DISTRIBUTION.md`. Do not treat global maker-channel defaults as geography-neutral.
+Geography can change more than channel choice: it can change the alternative set, local incumbents/manual substitutes, regulation, currency/price anchors, platform rules, and audience access.
+
+When geography materially changes any of those dimensions, load the relevant local context before finalizing the affected recommendation. For Korea:
+- load `KOREA_LOCAL_DISTRIBUTION.md`;
+- satisfy its local competition/substitute/access slots;
+- load `REGULATORY_CONTEXT_CHECK.md` when regulation is material.
+
+Do not treat global maker-channel defaults as geography-neutral.
+Do not infer the target geography from the user's language, account/current location, or a previous project. If geography is unresolved and decision-changing, ask only that one necessary question; otherwise keep the local conclusion unresolved.
 
 ### Peer-feedback guard
 
