@@ -14,6 +14,45 @@
 5. 커뮤니티 바이럴이나 실시간 인기글 유입은 `SPIKE_TRAFFIC`으로 표시하고, activation/return/payment를 별도로 본다.
 6. 플랫폼 내부 유통(App Store/Google Play/Steam/미니앱 등)은 외부 SNS와 별도 acquisition system으로 취급하며, 플랫폼 설치기반·피처링·추천 같은 advantage를 사용자 제품의 내재적 수요와 분리한다.
 
+## Korea local evidence parity contract
+
+When the frozen decision targets Korea and geography can materially change competition, regulation, pricing, or access, a global-only scan is incomplete for those affected claims. Check the applicable local slots below before finalizing the decision:
+
+```text
+LOCAL_DIRECT_COMPETITORS
+LOCAL_INDIRECT_AND_MANUAL_ALTERNATIVES
+LOCAL_REGULATORY_CONSTRAINTS
+LOCAL_DISTRIBUTION_ACCESS
+```
+
+- **LOCAL_DIRECT_COMPETITORS** — use Korean-language job/category aliases and inspect relevant domestic vendor, app/store, company or service pages. Search rank alone is not coverage.
+- **LOCAL_INDIRECT_AND_MANUAL_ALTERNATIVES** — include Korean bundled incumbents, spreadsheets/templates, manual procedures, offline service, and doing nothing when they can perform the same job.
+- **LOCAL_REGULATORY_CONSTRAINTS** — route to `REGULATORY_CONTEXT_CHECK.md`. Use current official legal/regulator sources for an actual rule. If personal data is decision-material, verify the current Korean privacy-law dimension rather than assuming that "offline", "no account" or "no stored member database" automatically means regulation is irrelevant.
+- **LOCAL_DISTRIBUTION_ACCESS** — consider NAVER, Kakao, domestic platform ecosystems and local/offline access only when the target is actually present and current participation/self-promotion rules are verified.
+
+Each material slot must end as one of:
+`CHECKED`, `SEARCHED_NOT_FOUND / COVERAGE_LIMITED`, or `NOT_APPLICABLE` with a reason.
+Do not silently replace a missing local slot with a global analogue.
+
+### Geography is not inferred
+
+Do **not** assume Korea merely because the user writes Korean, is currently located in Korea, or previously worked on a Korean project.
+
+If geography is unresolved:
+- ask once only when the answer can materially change the current decision and the user can cheaply resolve it;
+- otherwise keep geography `UNRESOLVED`, avoid Korea-specific conclusions, and state which local competition/regulation/channel claims remain unverified.
+
+### Current official verification starting points — re-check at use time
+
+These are starting points, not cached legal/platform facts:
+
+- Korean law: https://www.law.go.kr/
+- Personal Information Protection Commission: https://www.pipc.go.kr/
+- NAVER DataLab: https://datalab.naver.com/
+- KakaoTalk operating/user-safety policy: https://talksafety.kakao.com/policy
+
+Use the relevant first-party/official source for the actual claim and record the access/effective date. A platform page or law can change; the module does not freeze today's wording.
+
 ## Candidate Korean routes — conditional, not ranked
 
 ### Naver Search / DataLab / Ads Keyword Tool / Blog / Cafe / Knowledge ecosystem
