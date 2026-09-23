@@ -52,6 +52,35 @@ the correct output is **not** omission and **not** a guessed jurisdiction. It is
 - where the user can resolve geography cheaply, ask — this is a decision-changing question and
   therefore passes the existing question-economy test.
 
+## 2.1 Jurisdiction adapter — Korea
+
+When the frozen geography is Korea and regulatory context is material, use current Korean official sources rather than generic/global compliance summaries.
+
+Preferred authority path:
+1. exact current statute/decree/regulation at `law.go.kr`;
+2. the competent regulator/ministry's current guidance or notice (for privacy, `pipc.go.kr`);
+3. first-party platform/store policy when the constraint is contractual/platform-specific rather than statutory.
+
+For a product or research workflow involving personal data, first determine which privacy dimensions are actually decision-material. Candidate dimensions can include collection/use, sensitive or child data, processors/outsourcing, third-party provision, overseas transfer, notices/rights, and security measures. **This is a routing checklist, not a conclusion that every dimension applies.**
+
+Important guards:
+- `NO_PERSONAL_DATA_STORED` is a product-state fact, not by itself a legal conclusion that privacy obligations are irrelevant; collection, logs, integrations, communications or future scope can change the analysis.
+- Do not claim PIPA applicability, non-applicability, compliance, violation, required consent, or a penalty without a current source and an applicability basis.
+- When the product is in a separately regulated Korean sector, identify the competent authority and current sector rule before making the affected market-feasibility claim.
+- If the exact Korean rule cannot be verified, use `MATERIAL_BUT_NOT_VERIFIABLE_NOW`, explain the decision impact, and continue the unaffected research.
+
+Record when material:
+
+```text
+JURISDICTION: KOREA
+REGULATORY_DIMENSION
+OFFICIAL_SOURCE
+EFFECTIVE_OR_ACCESS_DATE
+APPLICABILITY_BASIS
+WHAT_IT_CHANGES
+WHAT_REMAINS_UNKNOWN
+```
+
 ## 3. What may and may not be said
 
 May:
