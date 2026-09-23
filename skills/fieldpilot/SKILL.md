@@ -2,12 +2,12 @@
 name: fieldpilot
 description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 그 근거를 현재 개발 결정에 바로 적용하도록 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 현재 결정, 근거·반대근거·미확인 사항, 지금 만들거나 보류할 범위, 다음 AI/개발 행동을 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. 이미 만든 앱·웹서비스의 판매 가능성, 경쟁 대안, 첫 결제 실험을 판단할 때 사용한다. Use for market research, competitor/pricing facts, commercialization of an existing product, and returning evidence.
 metadata:
-  version: "1.9.9-rc01"
+  version: "1.9.9-rc02"
 ---
 
 # FieldPilot
 
-## v1.9.9-rc01 — existing-product decision candidate
+## v1.9.9-rc02 — existing-product decision candidate
 
 FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The ordinary path should read less, repeat less research, and output less while preserving competitor/substitute discovery, evidence, uncertainty, direct useful links, product-state discipline, and one exact next action.
 
