@@ -2,12 +2,12 @@
 name: fieldpilot
 description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 그 근거를 현재 개발 결정에 바로 적용하도록 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 현재 결정, 근거·반대근거·미확인 사항, 지금 만들거나 보류할 범위, 다음 AI/개발 행동을 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. 이미 만든 앱·웹서비스의 판매 가능성, 경쟁 대안, 첫 결제 실험을 판단할 때 사용한다. Use for market research, competitor/pricing facts, commercialization of an existing product, and returning evidence.
 metadata:
-  version: "1.9.9-rc01"
+  version: "1.9.9-rc02"
 ---
 
 # FieldPilot
 
-## v1.9.9-rc01 — existing-product decision candidate
+## v1.9.9-rc02 — existing-product decision candidate + geography-sensitive local coverage
 
 FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The ordinary path should read less, repeat less research, and output less while preserving competitor/substitute discovery, evidence, uncertainty, direct useful links, product-state discipline, and one exact next action.
 
@@ -29,6 +29,7 @@ This file is the small always-loaded kernel. Detailed mode-specific rules are re
 12. **Role boundary.** FieldPilot decides and hands off; FieldPilot이 직접 코드를 수정하지 않는다. No new model, multi-model voting, persistent crawler/database/code graph, paid data layer, PM suite, or success-probability score.
 13. **Full professional mode remains available.** Compression changes the ordinary path, not factuality/provenance/uncertainty or the full-report quality floor.
 14. **Request framing never sets research depth.** Scope and depth follow the active business decision and the uncertainties that can change it — never sentence length, casual tone, absent jargon, or a request to explain simply. Explanation register and output length stay separate from evidence, counterevidence, uncertainty, and next-action quality. Honor an explicit scope or length limit by faithful compression and a stated limitation, never by silently dropping decision-critical help. Detail: the ordinary module's `REQUEST_FRAMING_VS_RESEARCH_DEPTH` (§2.2) and `PLAIN_LANGUAGE_DELIVERY` (§7.2).
+15. **Geography-sensitive coverage without geography guessing.** Never infer the target market from the user's language, account/device location, or a familiar home market alone. If geography is explicit or otherwise verified and it can change competitors, regulation, pricing, or access channels, load the matching local adapter and close those local coverage slots. If geography is unresolved and can flip the recommendation, ask the minimum one decision-changing geography question when possible; otherwise keep `GEOGRAPHY_UNRESOLVED`, state the local dependency, and lower the affected claim ceiling instead of silently substituting global evidence.
 
 ## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
@@ -45,6 +46,12 @@ When current repo/spec/project material is accessible, inspect it selectively an
 For broad viability questions (for example, “내 서비스가 시장에서 먹힐까?” or “will people use or pay for this?”), apply the ordinary module's `BROAD_VIABILITY_COVERAGE` (§2.1) before a conclusion and its conditional `CUSTOMER_POSITIONING_SYNTHESIS` (§7.1). This checks applicability; it does not make every request a full report. A narrow fact question stays narrow, and returning evidence rechecks only affected areas. Explicit comprehensive research requests, including plain-language requests without professional jargon, or decision integrity requiring the broader procedure still use Route B. These route boundaries govern older full-engagement trigger wording in downstream references; they do not authorize narrowing a requested comprehensive deliverable.
 
 Apply the same module's `REQUEST_FRAMING_VS_RESEARCH_DEPTH` (§2.2) to every ordinary request, and its `PLAIN_LANGUAGE_DELIVERY` (§7.2) when the user asks for a simple, short or jargon-free answer. A brief or casual question is the normal way this audience asks for paid help, so it never selects a thinner investigation. For a seemingly narrow advice request — a channel, a price, one feature — answer the question asked, identify only the unresolved prerequisites that can change the recommendation, and inspect accessible product/evidence material before asking the user anything. An explicit user restriction on scope is a boundary to honor, not an obstacle to route around, and a request to explain simply is never a request to research less.
+
+### Geography-sensitive local route
+
+When geography is decision-material, apply the ordinary competitor/alternative method with a local-market closure pass before finalizing the recommendation. For a verified Korea target, load `references/modules/KOREA_LOCAL_DISTRIBUTION.md`; when regulation or personal-data handling is material, also apply `references/modules/REGULATORY_CONTEXT_CHECK.md`. The local pass must check Korean direct/adjacent alternatives, manual/no-action substitutes, local commercial terms where material, and local buyer-access channels separately. A global competitor list does not satisfy this pass.
+
+If geography is not established, do not activate the Korea route merely because the conversation is Korean. Surface `GEOGRAPHY_UNRESOLVED` when the missing jurisdiction can change the decision and either ask one plain-language question or continue with a bounded global conclusion plus the unresolved local dependency.
 
 Default first layer for ordinary decisions (narrow fact questions need only the fact and material conditions):
 
