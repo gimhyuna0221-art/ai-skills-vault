@@ -42,6 +42,20 @@ Cards implement the Section 10.4 contract. Version `1.5.0`. Route through `../ME
 - **domain_adapter_hooks:** B2B incumbent/procurement/renewal roles, physical/local channel and switching, marketplace side alternatives, unfamiliar-industry workarounds.
 - **rule_and_source_ids:** `R-COMP-01`, `R-COMP-02`, `R-DESK-01`, `R-NUMERIC-01`.
 
+### Local-market parity guard
+
+When target geography is known and can materially change the available alternatives, the Alternative Map is incomplete until local evidence is checked proportionately.
+
+Required behavior:
+- search local-language job/category aliases, not only translated global brand names;
+- check local direct providers/products and locally dominant bundled incumbents where relevant;
+- include local indirect/manual/offline substitutes and doing-nothing workflows;
+- preserve price/currency/date and vendor-control status for local commercial facts;
+- if a material local class is not found, record `SEARCHED_NOT_FOUND / COVERAGE_LIMITED`; do not substitute a global result and call coverage complete.
+
+For Korea, load `../modules/KOREA_LOCAL_DISTRIBUTION.md` and satisfy its local evidence parity contract.
+Do not infer Korea from the user's language or current location alone.
+
 **Escalate/stop:** if the active decision depends on why targets choose/switch, route complementary direct human/behavior/transaction evidence. If the map omits a decision-relevant alternative class, mark it incomplete for this proposition rather than universally invalid.
 
 **v1.9.4:** before asserting the forbidden-pattern-adjacent claim "there are no competitors," "no strong
