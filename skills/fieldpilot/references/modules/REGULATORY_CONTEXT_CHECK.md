@@ -92,3 +92,69 @@ see that the question was asked and answered rather than skipped.
 - A confidently cited article number that no source in the run supports.
 - "No regulation was found" presented as "there is no regulation".
 - A legal opinion delivered inside a market-research report.
+
+## 6. Korea privacy / data route — v1.9.9-rc02 bounded extension
+
+Activate this subsection only when:
+- the target geography/jurisdiction is Korea; and
+- personal-data handling, privacy positioning, cloud/analytics/API use, or another data-flow question can change feasibility, cost, claims, or go-to-market.
+
+This is a **regulatory research route**, not legal advice and not a compliance certificate.
+
+### Korea privacy coverage contract
+
+First establish the product fact pattern. Do not assume a privacy obligation merely from the product category, and do not accept a privacy marketing claim merely because the user says "no personal data."
+
+Check only the dimensions made material by the actual architecture and decision:
+
+```text
+KOREA_DATA_FACT_PATTERN
+  what personal data, if any, is collected/created/read/stored/transmitted;
+  actor roles and data flows;
+  whether the "no personal data" claim is actually supported by product evidence
+
+KOREA_PROCESSING_OR_ENTRUSTMENT
+  whether a third-party/cloud/analytics/API/service provider processes data
+  on the business's behalf; if material, verify current official requirements
+
+KOREA_OVERSEAS_TRANSFER
+  whether data is provided, entrusted, stored, or otherwise transferred abroad;
+  if material, verify current official requirements and exceptions
+
+KOREA_SENSITIVE_OR_SPECIAL_CASE
+  sensitive/unique identifiers, children/minors, health, finance, location,
+  video/biometric or other sector-specific data only when actually present
+
+KOREA_NOTICE_RETENTION_SECURITY
+  privacy notice, retention/deletion, security, disclosure/third-party or
+  other duties only to the extent current official sources make them material
+
+KOREA_SECTOR_OVERLAY
+  separate laws/rules for health, education, finance, location information,
+  communications, employment or other regulated sectors when applicable
+```
+
+### Source priority
+
+For current Korean legal requirements, resolve the current text at decision time from official primary sources first:
+1. 국가법령정보센터 (law.go.kr) — current statute/enforcement decree and effective date.
+2. 개인정보보호위원회 (pipc.go.kr) — current official guidance/interpretation and overseas-transfer/privacy-policy resources.
+3. Sector regulator/official platform documentation when a sector or platform overlay is material.
+
+As verified during the 2026-09-24 patch research, the then-current Personal Information Protection Act was effective 2026-09-11; Article 26 covered entrusted processing and Article 28-8 covered overseas transfer. These article references are **freshness anchors, not permanent memory**: re-resolve the current law/effective date before relying on them in a live decision.
+
+### Claim ceiling
+
+Allowed:
+- "This data flow makes Korean privacy obligations decision-relevant; current official sources need to be checked."
+- "Official source S, effective/accessed on date T, states requirement X for the described fact pattern."
+- "The product evidence supports/does not yet support the factual claim that it stores no personal data."
+
+Forbidden:
+- "PIPA does not apply" solely because a product is offline or stores no account database.
+- "This product is compliant with Korean privacy law."
+- "No consent/privacy policy/contract is needed" without a current source and fact-specific legal basis.
+- importing a foreign privacy rule as if it were Korean law.
+
+If the product's privacy architecture is a commercial differentiator, verify the factual architecture separately from the legal conclusion. A verified "no personal-data storage" fact may narrow risk and migration burden; it does not by itself prove legal compliance or customer preference.
+

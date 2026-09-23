@@ -49,3 +49,24 @@ direct competitor," or "white space," run `DIRECT_COMPETITOR_RECALL_CLOSURE`
 (`references/modules/BOUNDED_BEHAVIORAL_CLOSURE_REPAIR.md` §2). A near-exact candidate surfaced by that
 closure search must enter the Alternative Map before the claim ships; an incomplete closure search
 downgrades the claim to `SEARCHED_NOT_FOUND` / `COVERAGE_INCOMPLETE` rather than a bare absence claim.
+
+### v1.9.9-rc02 — LOCAL_GEOGRAPHY_CLOSURE
+
+When geography is established and materially changes the buyer's alternatives, the `COMPETITOR_ALTERNATIVE` map must not be satisfied by a global-only search.
+
+For the active geography, proportionately close the relevant classes:
+- local direct competitors;
+- local adjacent/bundled incumbents or services;
+- local manual/internal workarounds;
+- do-nothing/tolerance;
+- local pricing/terms/switching conditions when decision-material.
+
+For Korea, route the local source/channel details through `../modules/KOREA_LOCAL_DISTRIBUTION.md`.
+
+If geography is unresolved:
+- do not infer it from conversation language or owner location;
+- mark the affected competitor coverage `LOCAL_GEOGRAPHY_NOT_CHECKED` or `GEOGRAPHY_UNRESOLVED`;
+- if the missing geography can change the recommendation, ask the minimum one question or lower the claim ceiling.
+
+A local search miss is `LOCAL_DIRECT_SEARCHED_NOT_FOUND`, not "no local competitor" and not `CONFIRMED_GAP`.
+

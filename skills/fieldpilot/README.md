@@ -1,6 +1,6 @@
 # FieldPilot
 
-**v1.9.9-rc01 — AI-First Market Research + Product Decision Continuity**
+**v1.9.9-rc02 — AI-First Market Research + Product Decision Continuity + Local Coverage**
 
 FieldPilot은 바이브코더와 AI-assisted builder가 이미 쓰는 AI 안에서 시장조사를 가능한 한 대신 수행하고, 그 근거를 지금 무엇을 만들고·바꾸고·보류할지 결정하는 데 연결하는 Agent Skill입니다.
 
@@ -12,6 +12,7 @@ FieldPilot은 바이브코더와 AI-assisted builder가 이미 쓰는 AI 안에�
 - 근거가 충분하면 만들 범위와 만들지 말아야 할 범위를 구체화합니다.
 - 사용자가 이미 가진 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 업데이트합니다.
 - 명시적인 전체 시장조사 요청에는 기존 전문 보고서 경로를 유지합니다.
+- 타깃 지역이 의사결정을 바꾸는 경우 글로벌 결과만으로 끝내지 않습니다. 한국이 명시되면 국내 경쟁·대체재·규제·접근 채널을 조건부로 점검하고, 지역이 미상일 때는 한국으로 추측하지 않습니다.
 
 ## 빠른 사용
 
@@ -59,7 +60,7 @@ fieldpilot/
 ## 버전
 
 - Skill name: `fieldpilot`
-- Runtime version: `1.9.9-rc01`
+- Runtime version: `1.9.9-rc02`
 - Primary invocation: `/fieldpilot`
 
 ## 판매 판단 예시

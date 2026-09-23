@@ -65,3 +65,77 @@ FAILURE_INTERPRETATION
 ```
 
 A response should prefer a Korean route only because the evidence and user constraints make it more informative or feasible — not because it is Korean by default.
+
+## Korea local market coverage — v1.9.9-rc02 bounded extension
+
+This section closes a failure mode observed in an internal blind benchmark: a globally disciplined report can still miss decision-relevant Korean competitors, regulation, or access channels when the target geography is Korea.
+
+### Activation and non-assumption rule
+
+Activate this local coverage only when Korea is established by the user, product/store/contract scope, verified target-market evidence, or another explicit project fact.
+
+Do **not** infer Korea merely from:
+- Korean-language conversation;
+- the owner's current physical/device/account location;
+- KRW appearing in an unrelated context;
+- the model's prior knowledge of the owner.
+
+If geography is unknown and can change the recommendation, return `GEOGRAPHY_UNRESOLVED` and either ask one decision-changing geography question or continue with a bounded global conclusion plus the named local dependency.
+
+### LOCAL_COMPETITOR_COVERAGE
+
+For a Korea-targeted commercialization or broad viability decision, the Alternative Map is incomplete until the search has proportionately checked the decision-relevant local classes below:
+
+```text
+KOREA_LOCAL_DIRECT
+  same job/category in Korea or explicitly serving Korean buyers
+
+KOREA_LOCAL_ADJACENT_OR_BUNDLED
+  broader Korean incumbent/SaaS/platform/service that absorbs the job
+
+KOREA_LOCAL_MANUAL_OR_INTERNAL
+  spreadsheet, calculator, paper, messaging, staff procedure, agency/service,
+  or other non-product workaround actually plausible in the Korean context
+
+KOREA_LOCAL_DO_NOTHING
+  tolerate the current friction / keep the incumbent process
+
+KOREA_LOCAL_PRICE_AND_TERMS
+  current Korean pricing, contract, billing, refund, procurement or platform
+  terms only when they change the decision
+```
+
+Search by the buyer's Korean job/problem language and Korean category aliases, not by translated product names alone. Prefer current first-party product/store/company material for offer and pricing facts; use local community or marketplace material as discovery/experience evidence with the existing source-class caveats.
+
+If no local direct competitor is found, record:
+`LOCAL_DIRECT_SEARCHED_NOT_FOUND`
+with the query families/source classes actually checked. It is not proof that none exists and must not be upgraded to `CONFIRMED_GAP`.
+
+### LOCAL_CHANNEL_COVERAGE
+
+Naver Search/DataLab/Ads, Naver Cafe, Kakao Open Chat/local messaging, Disquiet, Blind, hobby/professional communities, app stores and direct/offline outreach are candidate access surfaces — not a mandatory channel list.
+
+For a named channel:
+- verify the target audience is actually there;
+- verify current participation/self-promotion/research rules when material;
+- separate access from demand;
+- treat comments/likes/replies as selected-audience evidence, not payment or prevalence;
+- prefer one evidence-backed first route plus one fallback rather than a generic channel menu.
+
+### LOCALIZATION_DELTA
+
+When this module materially changes an ordinary decision, preserve a compact delta:
+
+```text
+GEOGRAPHY: KOREA
+LOCAL_DIRECT_AND_ADJACENT
+LOCAL_MANUAL_AND_NO_ACTION
+LOCAL_REGULATORY_DEPENDENCY
+LOCAL_BUYER_ACCESS
+LOCAL_PRICE_OR_TERMS_IF_MATERIAL
+WHAT_CHANGED_VS_GLOBAL_VIEW
+WHAT_REMAINS_UNKNOWN
+```
+
+The purpose is not to make every Korean report longer. Load and render only the local facts that can change the active decision.
+
