@@ -64,6 +64,40 @@ FieldPilot's users build with AI and are usually not market researchers. A short
 
 **Efficiency boundary.** Efficiency is bought by removing duplicated queries, repeated entities, re-reads of unchanged files and analysis irrelevant to this decision (§3, §4, §9). Novice phrasing is not a source of efficiency and does not lower the evidence bar for the current decision. Existing cost, publication, direct-customer-contact and approval boundaries are unchanged here, and no success probability, guaranteed outcome, fabricated customer response or false precision may be introduced.
 
+### 2.3 GEOGRAPHY_AND_LOCAL_CONTEXT_GATE — local context is a decision variable
+
+Use this gate before a competitor, channel, pricing, regulation or go-to-market conclusion when location could change the answer. Geography is not decoration: it can change the competitor set, substitutes, buyer access, platform/channel feasibility, currency/price interpretation and applicable legal constraints.
+
+**Resolve without guessing.**
+
+1. Read accessible user/project/product evidence first for an explicit target geography.
+2. Do **not** infer Korea solely from Korean language, the user's locale, account metadata, model location, or the language of the request.
+3. If geography is known and material, load the matching local adapter before closing the affected conclusion. For Korea, load `references/modules/KOREA_LOCAL_DISTRIBUTION.md`.
+4. If geography is unknown but can flip the decision:
+   - keep `GEOGRAPHY_UNKNOWN`;
+   - do the geography-neutral portion that remains defensible;
+   - mark local competitor/channel/regulatory coverage `NOT_CHECKED` or `UNKNOWN`;
+   - ask at most one plain-language geography question when the answer is required to choose among materially different conclusions.
+5. If geography is unknown and does **not** change the requested decision, do not ask merely to complete a template.
+6. A local adapter adds evidence requirements; it never authorizes assumptions about demand, compliance, channel access or buyer behavior.
+
+**When geography is material, local coverage is part of competitor recall.** Add only the facets that can change the active decision:
+
+```text
+LOCAL_DIRECT_CATEGORY
+LOCAL_SUBSTITUTE_OR_WORKAROUND
+LOCAL_DISTRIBUTION_OR_ACCESS
+LOCAL_REGULATORY_CONSTRAINT
+```
+
+For a known Korea target:
+- `LOCAL_DIRECT_CATEGORY` checks Korean-market direct competitors and locally available global competitors through current official/product/marketplace sources.
+- `LOCAL_SUBSTITUTE_OR_WORKAROUND` checks local SaaS, spreadsheet/manual/service/do-nothing alternatives when decision-relevant.
+- `LOCAL_DISTRIBUTION_OR_ACCESS` uses the Korea adapter and verifies current channel/community/platform rules before recommending a named route.
+- `LOCAL_REGULATORY_CONSTRAINT` first decides applicability from actual product behavior, then checks current official Korean sources. Do not pad a report with law merely because the target is Korean.
+
+A broad viability answer cannot imply full competitor/channel/regulatory coverage if a decision-material local facet is `LIMITED / BLOCKED / NOT_CHECKED / UNKNOWN`. Preserve the limit in §10 and in the buyer decision surface.
+
 ## 3. High-recall competitor/substitute discovery with bounded work
 
 No universal search-count or source-count cap is allowed. The unit to reduce is redundancy, not coverage.
