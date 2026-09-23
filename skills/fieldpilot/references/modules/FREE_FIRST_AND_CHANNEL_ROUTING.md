@@ -66,7 +66,9 @@ Do not invent a universal count of posts, videos, communities, contacts, days, o
 
 ## Geography adapter
 
-When geography materially changes audience access or platform usage, load the relevant local context before choosing a first route. For Korea, load `KOREA_LOCAL_DISTRIBUTION.md`. Do not treat global maker-channel defaults as geography-neutral.
+Resolve geography under `DECISION_CONTINUITY.md` §2.3 before choosing a location-sensitive channel. When geography materially changes audience access or platform usage and Korea is supported by user/project evidence, load `KOREA_LOCAL_DISTRIBUTION.md`. Do not treat global maker-channel defaults as geography-neutral, and do not infer Korea from Korean-language input alone.
+
+If geography is unknown and would materially change the first route, keep `GEOGRAPHY_UNKNOWN`, complete only the geography-neutral advice that remains defensible, and ask the minimum location question only when needed to choose among materially different routes. A named Naver/Kakao/community route still requires current relevance and participation-rule verification.
 
 ### Peer-feedback guard
 
