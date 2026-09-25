@@ -77,8 +77,9 @@ class GraderUnitTests(unittest.TestCase):
     def test_ask_first_hard_case_requires_an_example_answer(self):
         good = "어떤 제품인지 한 줄만 알려주세요. 예: '헬스장 프론트용 회원권 계산 앱'. 링크나 파일도 좋아요."
         bad = "어떤 제품인가요? 타깃은 누구인가요? 가격은요? 지역은요?"
-        g_good = graders.grade(good, {"blocking_allowed": True, "max_user_questions": 2})
-        g_bad = graders.grade(bad, {"blocking_allowed": True, "max_user_questions": 2})
+        exp = {"blocking_allowed": True, "max_user_questions": 2, "requires_example_answer": True}
+        g_good = graders.grade(good, exp)
+        g_bad = graders.grade(bad, exp)
         self.assertTrue(g_good.blocking)
         self.assertEqual(g_good.violations, [])
         self.assertIn("TOO_MANY_QUESTIONS", g_bad.violations)
@@ -96,6 +97,27 @@ class GraderUnitTests(unittest.TestCase):
         qs = graders.user_directed_questions(reply)
         self.assertEqual(len(qs), 1, qs)
         self.assertIn("어느 나라", qs[0])
+
+    def test_blockquote_drafts_tables_offers_and_meta_questions_are_not_asks(self):
+        reply = ("- **Message to copy**:\n  > Hi [name], how do you track passes today? Tell me your rules.\n"
+                 "- **Record in a sheet:** studio | replied? | paid? | refunded?\n"
+                 "The question it answers: will one real customer pay anything?\n"
+                 "If you'd like a full report with a source table, say so.\n"
+                 "원하시면 출처까지 붙인 전체 보고서로 정리해 드릴게요.\n"
+                 "## 망한 걸까요?\n"
+                 "1. **Which country are the studios in?** It decides local competitors.\n")
+        qs = graders.user_directed_questions(reply)
+        self.assertEqual(len(qs), 1, qs)
+        self.assertIn("Which country", qs[0])
+
+    def test_bold_directed_question_counts(self):
+        reply = "지금은 무엇인지 몰라요.\n\n**무엇을 파실 건가요?**\n\n예: '헬스장 회원권 계산 앱'"
+        self.assertEqual(len(graders.user_directed_questions(reply)), 1)
+        self.assertTrue(graders.blocks_before_answer(reply))
+
+    def test_language_mentions_are_not_market_claims(self):
+        self.assertFalse(graders.unconditioned_market_claims("영문·한국어 공식 페이지 모두 US$로 표시돼요."))
+        self.assertFalse(graders.unconditioned_market_claims("(예: 한국 / 영어권 / 아직 안 정함) 답해 주시면 확정할게요."))
 
     def test_explicitly_unassumed_market_is_not_flagged(self):
         self.assertFalse(graders.unconditioned_market_claims("한국어로 말씀하셨어도 그걸로 정하진 않았어요."))

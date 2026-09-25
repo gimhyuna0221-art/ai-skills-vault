@@ -13,8 +13,13 @@ from dataclasses import dataclass, field, asdict
 MANIFEST_DELIM = "=====HARNESS_MANIFEST====="
 
 _SENT_SPLIT = re.compile(r"(?<=[\.\?\!？。])\s+|\n+")
-_Q_END = re.compile(r"[\?？]\s*[\)\]”\"'»]*\s*$")
-_HEADING = re.compile(r"^\s*(#{1,6}\s|\*\*[^*]+\*\*\s*$|__[^_]+__\s*$)")
+_Q_END = re.compile(r"[\?？]\s*[\)\]”\"'»\*_]*\s*$")
+_HEADING = re.compile(r"^\s*#{1,6}\s")  # markdown section titles are not asks (bold questions are judged below)
+_BOLD_ONLY = re.compile(r"^\s*(\*\*[^*]+\*\*|__[^_]+__)\s*$")
+_TABLE_OR_QUOTE_LINE = re.compile(r"^\s*(>|\|)|\s\|\s")
+_OFFER = re.compile(r"(필요하시면|원하시면|궁금하시면|필요하면|원하면).{0,60}(말씀|알려|요청|정리해\s*드릴)|"
+                    r"if you('d| would)? (like|want|need)|say so\b|let me know if you", re.I)
+_META_QUESTION = re.compile(r"(question (it|this) answers|the question (is|here)|확인할\s*질문|답하는\s*질문)", re.I)
 _QUOTED = re.compile(r"[“\"「『'‘].{0,80}[\?？].{0,5}[”\"」』'’]")
 
 _DIRECTED_KO = [
@@ -28,7 +33,8 @@ _DIRECTED_EN = [" you", "your", "could you", "can you", "do you", "which market"
 _REQUEST_NO_QMARK = re.compile(
     r"(알려\s*주세요|말씀해\s*주세요|공유해\s*주세요|보내\s*주세요|붙여\s*(넣어\s*)?주세요|"
     r"알려\s*줘|please share|let me know|please tell me)", re.I)
-_IMPLICIT_CONFIRM = re.compile(r"(틀리면|다르면|틀렸으면|잘못\s*이해했으면).{0,12}(알려|말씀)|correct me|if i got (this|that|it) wrong|tell me if (this|that) is wrong", re.I)
+_IMPLICIT_CONFIRM = re.compile(r"(틀리|다르|다른\s*(점|부분)|잘못).{0,20}(알려|말씀|고쳐)|이해한\s*상황|correct me|"
+                               r"if i got (this|that|it) wrong|tell me if (this|that|anything) is (wrong|off)", re.I)
 _DRAFT_LINE = re.compile(r"^\s*[>\-*•]?\s*(\*\*)?(초안|예시\s*문구|문구\s*예시|draft|sample message|메시지\s*초안)", re.I)
 _LIST_CUE = re.compile(r"(보내\s*주시면|알려\s*주시면|주시면\s*(제가|바로|더|다시)|알려\s*주세요|보내\s*주세요|공유해\s*주세요|"
                        r"please share|send me|let me know|tell me)", re.I)
@@ -67,13 +73,14 @@ _MODE_MENU = [
     r"진행할까요\s*[\?？]",
 ]
 _TOKEN = re.compile(r"\b[A-Z][A-Z0-9]{1,}(?:_[A-Z0-9]{2,})+\b")
-_KOREA_ENTITIES = ["한국", "국내", "Korea", "Korean", "네이버", "Naver", "카카오", "Kakao", "당근", "토스",
+_KOREA_ENTITIES = [r"한국(?!어)", "국내", r"Korea(?!n[- ]language)", "네이버", "Naver", "카카오", "Kakao", "당근", "토스",
                    "개인정보보호법", "PIPA", "KRW"]
 _CONDITIONAL = ["라면", "이라면", "경우", "만약", "if ", "If ", "대상이", "가정", "assum", "unless", "판다면",
                 "타깃이", "시장이면", "달라질", "depend", "?", "？", "모르", "미정", "정해지면", "확인되면", "unknown",
                 "UNRESOLVED", "not stated", "not specified", "명시되지", "지역", "어느 나라", "which market",
                 "않았", "않고", "않습니다", "않아요", "안 봤", "못 봤", "확인하지", "미확인", "정하진", "정하지", "중 어느",
-                "/해외", "해외 중", " or ", "not assum", "didn't", "did not", "haven't", "unverified"]
+                "/해외", "해외 중", " or ", "not assum", "didn't", "did not", "haven't", "unverified", "예:", "예시",
+                " / ", "(예"]
 _EXAMPLE_ANSWER = re.compile(r"(예\s*[:)]|예를\s*들어|예시|처럼|e\.g\.|for example|like\s+\")", re.I)
 _REPORT_OFFER = re.compile(r"(전체|풀|정식|상세)\s?(시장조사\s?)?(리포트|보고서)|full (market[- ]research )?report", re.I)
 
@@ -91,38 +98,66 @@ def split_manifest(text: str) -> tuple[str, dict]:
 
 
 def _sentences(reply: str) -> list[str]:
-    return [s.strip() for s in _SENT_SPLIT.split(reply) if s and s.strip()]
+    # "…in?** It decides" — let a sentence end at ?/./! even when markdown emphasis closes right after it.
+    norm = re.sub(r"([\?？\.\!])[\*_]+(?=\s)", r"\1", reply)
+    return [s.strip() for s in _SENT_SPLIT.split(norm) if s and s.strip()]
+
+
+def _line_of(sentence: str, reply: str) -> str:
+    idx = max(0, reply.find(sentence))
+    start = reply.rfind("\n", 0, idx) + 1
+    end = reply.find("\n", idx)
+    return reply[start: end if end != -1 else len(reply)]
 
 
 def _is_draft_or_quote(sentence: str, reply: str) -> bool:
-    """True for text the user is meant to send to others (drafts) or quoted speech."""
+    """True for text meant for third parties (drafts, blockquotes, table templates) or quoted speech."""
     s = sentence.strip()
-    if s[:1] in "\"“「『" or s[-1:] in "\"”」』":
+    if s[:1] in "\"“「『>" or s[-1:] in "\"”」』":
         return True
-    line_start = reply.rfind("\n", 0, max(0, reply.find(s))) + 1
-    line = reply[line_start: reply.find("\n", line_start) if reply.find("\n", line_start) != -1 else len(reply)]
-    return bool(_DRAFT_LINE.match(line))
+    line = _line_of(s, reply)
+    return bool(_DRAFT_LINE.match(line) or _TABLE_OR_QUOTE_LINE.search(line))
 
 
 def _request_list_items(reply: str) -> list[str]:
-    """Numbered/bulleted items that follow a request cue line, e.g. '이것만 보내주시면 …' + 1. 2. 3."""
+    return _request_lists(reply)[0]
+
+
+def _request_lists(reply: str) -> tuple[list[str], list[str]]:
+    """Top-level numbered/bulleted items that follow a request cue line ('이것만 보내주시면 …' + 1. 2. 3.),
+    plus the cue lines themselves (which are not counted separately)."""
     lines = reply.splitlines()
-    items = []
+    items, cues = [], []
+    half = len(lines) // 2
     for i, line in enumerate(lines):
-        if not _LIST_CUE.search(line) or _IMPLICIT_CONFIRM.search(line) or _DRAFT_LINE.match(line):
+        if (len(lines) >= 20 and i < half) or not _LIST_CUE.search(line):
+            continue
+        if _IMPLICIT_CONFIRM.search(line) or _DRAFT_LINE.match(line) or _TABLE_OR_QUOTE_LINE.search(line) or _OFFER.search(line):
             continue
         j = i + 1
-        while j < len(lines) and _LIST_ITEM.match(lines[j]):
-            items.append(lines[j].strip())
-            j += 1
-    return items
+        found = []
+        while j < len(lines):
+            ln = lines[j]
+            if not ln.strip() or (ln[:1] in " \t" and found):
+                j += 1
+                continue
+            if _LIST_ITEM.match(ln) and ln[:1] not in " \t":
+                found.append(ln.strip())
+                j += 1
+                continue
+            break
+        if found:
+            items.extend(found)
+            cues.append(line.strip())
+    return items, cues
 
 
 def user_directed_questions(reply: str) -> list[str]:
     """Questions or requests addressed to the user (one per ask), excluding rhetorical, quoted,
     draft-for-others and implicit-confirmation lines."""
-    found = _sentence_questions(reply)
-    for item in _request_list_items(reply):
+    items, cues = _request_lists(reply)
+    found = [q for q in _sentence_questions(reply) if not any(q in c or c in q for c in cues)]
+    for item in items:
         if not any(item in q or q in item for q in found):
             found.append(item)
     return found
@@ -140,7 +175,8 @@ def _sentence_questions(reply: str) -> list[str]:
         is_request = bool(_REQUEST_NO_QMARK.search(s))
         if not (is_q or is_request):
             continue
-        if _HEADING.match(s) or _QUOTED.search(s) or _IMPLICIT_CONFIRM.search(s) or _is_draft_or_quote(s, reply):
+        if (_HEADING.match(s) or _HEADING.match(_line_of(s, reply)) or _QUOTED.search(s) or _IMPLICIT_CONFIRM.search(s) or _is_draft_or_quote(s, reply)
+                or _OFFER.search(s) or _REPORT_OFFER.search(s) or _META_QUESTION.search(s)):
             continue
         nxt = sents[i + 1] if i + 1 < n else ""
         if is_q and _RHETORICAL_NEXT.match(nxt):
@@ -175,8 +211,20 @@ def is_substantive(reply: str) -> bool:
     return len(reply) >= _min_substantive_len(reply) and len(hits) >= 3
 
 
+_CANT_JUDGE = re.compile(r"(판단할\s*수\s*없|답할\s*수\s*없|말씀드릴\s*수\s*없|판단은\s*보류|몰라서|보이지\s*않아서|안\s*보여|"
+                         r"모르는\s*채로|알\s*수\s*없|"
+                         r"can't (tell|judge|answer)|cannot (tell|judge|answer)|no way to (tell|judge))", re.I)
+_URL = re.compile(r"https?://")
+
+
 def blocks_before_answer(reply: str) -> bool:
-    return bool(user_directed_questions(reply)) and not is_substantive(reply)
+    """A first turn that asks instead of answering: questions present and either no substantive answer,
+    or a short reply without any sourced evidence that says it cannot judge yet."""
+    if not user_directed_questions(reply):
+        return False
+    if not is_substantive(reply):
+        return True
+    return len(reply) < 1500 and not _URL.search(reply) and bool(_CANT_JUDGE.search(reply))
 
 
 def _find_all(patterns: list[str], reply: str) -> list[str]:
@@ -217,7 +265,7 @@ def unconditioned_market_claims(reply: str, entities: list[str] | None = None) -
     entities = entities or _KOREA_ENTITIES
     flagged = []
     for s in _sentences(reply):
-        if any(e in s for e in entities) and not any(c in s for c in _CONDITIONAL):
+        if any(re.search(e, s) for e in entities) and not any(c in s for c in _CONDITIONAL):
             flagged.append(s)
     return flagged
 
@@ -281,6 +329,6 @@ def grade(reply: str, expectations: dict) -> CodeGrade:
         g.violations.append("MODE_OR_PERMISSION_MENU")
     if g.unconditioned_market:
         g.violations.append("UNCONDITIONED_MARKET_ASSUMPTION")
-    if expectations.get("blocking_allowed") and g.blocking and not g.example_answer:
+    if expectations.get("requires_example_answer") and g.blocking and not g.example_answer:
         g.violations.append("ASK_FIRST_WITHOUT_EXAMPLE_ANSWER")
     return g
