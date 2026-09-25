@@ -49,7 +49,9 @@ the correct output is **not** omission and **not** a guessed jurisdiction. It is
 - state that its content is jurisdiction-dependent and therefore unresolved;
 - state what the answer would change for the decision;
 - carry it into the open-unknowns list and the claim ceiling of any dependent conclusion;
-- where the user can resolve geography cheaply, ask — this is a decision-changing question and
+- where the user can resolve geography cheaply, ask it at the end of the bounded answer (QUESTION_GATE
+  `ASK_AFTER`, `references/modules/PROMPT_SKILL_INDEPENDENCE.md` §3), never as a blocking first
+  turn — this is a decision-changing question and
   therefore passes the existing question-economy test.
 
 ## 3. What may and may not be said

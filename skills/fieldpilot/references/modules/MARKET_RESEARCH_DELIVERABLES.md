@@ -14,9 +14,9 @@ Decision support, development-priority advice, commitment ceilings, and next act
 
 ## 2. Full-research trigger
 
-Activate this contract when the user asks for the market to be researched for their service/product, asks for a comprehensive competitor/customer/market assessment, requests a final market-research report, **or asks in ordinary language for a broad judgment about whether people will use or pay for the product, who the customers are, whether it can be sold, or whether it has a viable market**. Full-engagement routing is semantic; it must not depend on the user knowing research vocabulary.
+Activate this contract when the user asks for the market to be researched for their service/product, asks for a comprehensive competitor/customer/market assessment, or requests a final market-research report — in any wording ("시장조사 해줘", "다 조사해줘", "보고서로 줘"). Full-engagement routing is semantic; it must not depend on the user knowing research vocabulary, and research vocabulary alone ("analysis", "assessment", "viability") does not trigger it. **A broad judgment asked in ordinary language — whether people will use or pay for the product, who the customers are, whether it can be sold, whether it has a viable market — is answered through the kernel's ordinary broad-viability route (`SKILL.md` Route A, `DECISION_CONTINUITY.md` §2.1/§7.3) with the same decision-critical evidence floor, and that answer offers this full deliverable in one line.** The kernel's route boundary governs; this contract never narrows a requested comprehensive deliverable.
 
-If a missing scope field would materially change the decision or research boundary, ask the minimum decision-changing questions in one short batch. If work can proceed safely, record a labeled `PROVISIONAL_SCOPE`, expose the assumption and its consequence, and continue instead of turning the engagement into an intake interview.
+If a missing scope field would materially change the decision or research boundary, apply the QUESTION_GATE (`references/modules/PROMPT_SKILL_INDEPENDENCE.md` §3). Whenever work can proceed safely — the normal case — record a labeled `PROVISIONAL_SCOPE`, expose the assumption and its consequence, continue, and put at most two scope questions at the end instead of turning the engagement into an intake interview. Ask before starting only when the product or case cannot be identified at all.
 
 Do not force this contract for a bounded question such as one competitor fact, one channel choice, one failed campaign diagnosis, or one pricing-method question unless the user asks to expand into a full research engagement.
 
@@ -108,7 +108,7 @@ NON-REPLICABLE ASSETS / ADVANTAGES
 UNVERIFIED PRODUCT-SPECIFIC QUESTIONS
 ```
 
-Every material strength or weakness must be tied to an observable service attribute plus market/competitor/customer evidence. If the user's product facts are missing, ask only the minimum clarifying questions needed or mark the comparison as unavailable; do not invent the product.
+Every material strength or weakness must be tied to an observable service attribute plus market/competitor/customer evidence. If the user's product facts are missing, read accessible product material first, then mark the comparison as unavailable/UNKNOWN and continue; ask only through the QUESTION_GATE (before answering only when the product cannot be identified at all). Do not invent the product.
 
 ### Product-fact provenance firewall
 
@@ -161,7 +161,7 @@ EVIDENCE GAP
 → CUSTOM KIT (only for selected method(s))
 ```
 
-Requesting a final report is not itself a `SKIP` choice. `SKIP` remains valid at the method-choice stage and must not block the final market-research report. The user may skip because of access, time, cost, safety, privacy, inability to recruit, or personal preference. Do not shame or block the user solely for skipping.
+Requesting a final report is not itself a `SKIP` choice. `SKIP` remains valid at the method-choice stage and must not block the final market-research report. The method choice is offered after the delivered answer or report, never asked before it (QUESTION_GATE); if the user does not respond, `direct_research_status` stays not tested, which is not negative evidence. The user may skip because of access, time, cost, safety, privacy, inability to recruit, or personal preference. Do not shame or block the user solely for skipping.
 
 ### Execution and return boundary
 

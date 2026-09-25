@@ -265,8 +265,10 @@ Rules:
   `WEAKNESS`. It is at most `UNKNOWN_NEEDS_TEST`.
 - An unresolved `UNKNOWN_NEEDS_TEST` may **not** later be silently re-labelled `WEAKNESS` or
   `DIFFERENTIATOR`. Reclassification requires the named evidence to actually arrive.
-- If the user's product facts are missing, ask only the minimum clarifying questions or mark the
-  row unavailable. Do not invent the product. The product-fact provenance firewall in
+- If the user's product facts are missing, read accessible product material first, then mark the
+  row unavailable/UNKNOWN and continue; ask only through the QUESTION_GATE
+  (`references/modules/PROMPT_SKILL_INDEPENDENCE.md` §3 — before answering only when the product
+  cannot be identified at all). Do not invent the product. The product-fact provenance firewall in
   `references/modules/MARKET_RESEARCH_DELIVERABLES.md` section 4 continues to apply.
 
 ### Routing UNKNOWN_NEEDS_TEST — one path only

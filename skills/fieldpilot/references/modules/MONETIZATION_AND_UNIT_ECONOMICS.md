@@ -120,7 +120,7 @@ WHAT_NEGATIVE_RESULT_DOES_NOT_PROVE
 FALLBACK_MODEL_OR_NEXT_TEST
 ```
 
-If product facts are insufficient, ask only the minimum questions that materially change routing (for example usage frequency, marginal/API cost, who pays, and whether the job recurs).
+If product facts are insufficient, first find or infer them from accessible product material and category evidence: usage frequency, whether the job recurs and who typically pays are usually researchable or defensibly inferable — show them as labeled assumptions rather than asking. Ask only for genuinely user-owned facts that change routing, such as the product's actual marginal/API cost when it cannot be estimated, and ask them through the QUESTION_GATE (`PROMPT_SKILL_INDEPENDENCE.md` §3: after a bounded answer unless no useful answer is possible).
 
 ## Unit-economics guard
 

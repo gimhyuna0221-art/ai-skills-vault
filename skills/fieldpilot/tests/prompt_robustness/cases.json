@@ -1,0 +1,172 @@
+{
+  "suite": "fieldpilot-prompt-robustness",
+  "version": "1.0",
+  "target": "FieldPilot v1.9.9-rc04 candidate (compare against v1.9.9-rc03 main)",
+  "method_note": "CheckList-style behavioral testing: INV = same case, different wording (floor must not drop); DIR = adding/removing one fact changes only the dependent part; MFT = minimum functionality for hard cases. All products are fictional and deliberately different from the frozen LockerDesk benchmark case so that no rc04 output can mix with the rc03 paid-competitor benchmark.",
+  "floor_rows": {
+    "U": ["DIRECT_ANSWER", "CURRENT_JUDGMENT", "EVIDENCE", "COUNTEREVIDENCE", "UNKNOWNS_AND_CEILING", "BUILD_CHANGE_OR_HOLD", "ONE_NEXT_ACTION"],
+    "case_rows": ["ALTERNATIVES", "PRODUCT_STATE", "MONEY", "POST_LAUNCH", "PAYMENT", "CHANNEL", "LOCAL", "DELTA", "NARROW", "FULL"]
+  },
+  "cases": [
+    {
+      "id": "F1_QUOTE",
+      "family": "F1_SAME_INTENT_DIFFERENT_LANGUAGE",
+      "test_type": "INV",
+      "case_facts": "QuoteMate: web app that turns a freelancer's project brief into a client-ready price quote. Launched 3 weeks ago; posted twice in online communities; about 40 visits, 3 signups, 0 paying users; planned price USD 9/month. Geography not stated. No repo or site link given.",
+      "expected_floor": ["U", "ALTERNATIVES", "PRODUCT_STATE", "MONEY", "POST_LAUNCH"],
+      "expectations": {
+        "blocking_allowed": false,
+        "max_user_questions": 2,
+        "geography": "UNRESOLVED_NO_GUESS",
+        "must": ["answers every literal question", "post-launch causes separated (reach, message, activation, payment, measurement are not collapsed)", "alternatives include direct tools and substitutes such as templates/spreadsheets/general AI chat/doing nothing", "WTP stays unknown (0 payments)", "product state limited to the user's description", "one next action with what to measure"],
+        "must_not": ["certified 대박/망함 label", "tells the user to research competitors or market size", "asks for analysis mode or format", "recommends ad spend before diagnosing the funnel"]
+      },
+      "variants": [
+        {"id": "A_expert_en", "register": "expert", "prompt": "Please conduct a commercial viability analysis of QuoteMate, a web app that generates client-ready price quotes from a freelancer's project brief. We launched three weeks ago and posted twice in online communities: about 40 visits, 3 signups, 0 paying users. Planned price is USD 9/month. Assess willingness to pay against competitive alternatives, identify which funnel stage is failing, and recommend whether to build, change or hold, with one next action."},
+        {"id": "B_short_ko", "register": "novice_short", "prompt": "프리랜서 견적서 만들어주는 웹앱 만들었는데 이거 팔릴까? 3주 전에 커뮤니티 두 군데 올렸고 방문 40명, 가입 3명, 결제 0명이야. 월 9달러 받으려고."},
+        {"id": "C_messy_ko", "register": "novice_messy", "prompt": "견적서 자동으로 만들어주는 사이트 만들긴 했는데 아무도 안 씀 ㅋㅋ 3주 전에 커뮤에 두번 올렸고 40명 들어와서 3명 가입함 돈낸사람 0 월9달러 받을라했는데 뭐해야됨"},
+        {"id": "D_solution_ko", "register": "novice_solution_questions", "prompt": "프리랜서용 견적서 생성 웹앱 3주 전에 오픈했어. 커뮤니티 두 곳에 올렸고 방문 40, 가입 3, 결제 0. 광고해야 돼? 아니면 기능 더 넣어야 돼? 월 9달러 받을 생각이었어."},
+        {"id": "E_typo_ko", "register": "novice_typos", "prompt": "프리렌서 견적서 만들어주는 웹앱 3주전에 오픈햇는데 커뮤 두군데 올리고 방문40 가입3 결재0 이에여.. 망한건가요? 광고를 해야할지 기능을 더추가 해야하는지 홍보문젠지 모르겟어요 월9달러 생각중"}
+      ]
+    },
+    {
+      "id": "F2_GEO",
+      "family": "F2_MISSING_CONTEXT",
+      "test_type": "MFT+variance",
+      "case_facts": "StudioTally: offline Android app for small independent dance studios (class-pass expiry, remaining sessions, make-up credits, renewal dates). No personal data. Piloted by one studio. No payments or repeat users. Geography NOT stated. Structurally isomorphic to the rc03 RUN-1/RUN-2 geography divergence, but a different product.",
+      "expected_floor": ["U", "ALTERNATIVES", "PRODUCT_STATE", "MONEY"],
+      "expectations": {
+        "blocking_allowed": false,
+        "max_user_questions": 2,
+        "geography": "UNRESOLVED_NO_GUESS_NO_BLOCK",
+        "must": ["complete bounded answer in the first reply", "geography stated as unknown and which conclusions it limits", "geography question, if asked, only at the end"],
+        "must_not": ["first reply is only a geography/market question", "assumes Korea or any market as fact"]
+      },
+      "samples_per_arm": 3,
+      "variants": [
+        {"id": "EN", "register": "expert", "prompt": "StudioTally is an offline Android app for small independent dance studios. Front-desk staff use it to calculate class-pass expiry dates, remaining sessions, make-up class credits and renewal dates. It stores no personal data and is being piloted by one studio. The builder wants to know whether to sell it to other studios, what studios use today, who would pay, what would make them switch, and one next step to test before adding features. There are no payments or repeat users yet."}
+      ]
+    },
+    {
+      "id": "F2_GEO_KO",
+      "family": "F2_MISSING_CONTEXT",
+      "test_type": "MFT",
+      "case_facts": "Same StudioTally case asked in Korean; geography NOT stated. Korean language must not establish Korea.",
+      "expected_floor": ["U", "ALTERNATIVES", "PRODUCT_STATE", "MONEY"],
+      "expectations": {
+        "blocking_allowed": false,
+        "max_user_questions": 2,
+        "geography": "UNRESOLVED_NO_GUESS_NO_BLOCK",
+        "must": ["complete bounded answer", "does not treat Korea as established", "geography question at the end if material"],
+        "must_not": ["Korea-specific competitors/channels/law presented as applying without a stated condition", "first reply is only a question"]
+      },
+      "variants": [
+        {"id": "KO", "register": "novice_short", "prompt": "소규모 댄스학원용 오프라인 안드로이드 앱 만들었어. 수강권 만료일, 남은 횟수, 보강 크레딧, 재등록일 계산해줘. 개인정보는 저장 안 하고 학원 한 곳에서 시범으로 쓰는 중. 다른 학원에 팔아도 될까? 결제나 재사용은 아직 없어."}
+      ]
+    },
+    {
+      "id": "F2_NOPRICE",
+      "family": "F2_MISSING_CONTEXT",
+      "test_type": "MFT",
+      "case_facts": "Chrome extension that summarizes meeting notes with AI. No price, buyer, stage metrics or geography given.",
+      "expected_floor": ["U", "ALTERNATIVES", "MONEY"],
+      "expectations": {
+        "blocking_allowed": false,
+        "max_user_questions": 2,
+        "must": ["researched price anchors of alternatives with conditions", "labeled price hypothesis or pricing question, not an invented market price", "B2B vs B2C or payer difference handled by assumption/branch"],
+        "must_not": ["asks the user for competitor prices", "refuses to answer until buyer is defined"]
+      },
+      "variants": [
+        {"id": "KO", "register": "novice_short", "prompt": "AI로 회의록 정리해주는 크롬 확장 만들었어. 얼마 받아야 돼?"}
+      ]
+    },
+    {
+      "id": "F2_NOREPO",
+      "family": "F2_MISSING_CONTEXT",
+      "test_type": "MFT",
+      "case_facts": "Habit-tracking app for night-shift nurses; description only, no repo/link; asks what to build next.",
+      "expected_floor": ["U", "PRODUCT_STATE", "ALTERNATIVES"],
+      "expectations": {
+        "blocking_allowed": false,
+        "max_user_questions": 2,
+        "must": ["product state limited to the description (not claimed as verified)", "next-build decision tied to alternatives/market evidence", "a non-feature action is allowed"],
+        "must_not": ["requires the repo before answering", "invents implemented features"]
+      },
+      "variants": [
+        {"id": "KO", "register": "novice_short", "prompt": "야간 근무 간호사용 수면·습관 기록 앱 만들고 있어. 지금은 근무표 입력이랑 수면 기록만 돼. 기능 뭐 더 만들어야 돼?"}
+      ]
+    },
+    {
+      "id": "F3_COMPETITORS",
+      "family": "F3_USER_BURDEN",
+      "test_type": "MFT",
+      "case_facts": "Idea: app that turns pet photos into merchandise. Asks for competitor analysis without naming competitors.",
+      "expected_floor": ["U", "ALTERNATIVES"],
+      "expectations": {"blocking_allowed": false, "max_user_questions": 2, "must": ["FieldPilot finds competitors/substitutes itself"], "must_not": ["asks the user to list competitors", "asks for analysis mode"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "반려동물 사진으로 굿즈 만들어주는 앱 아이디어 있는데 경쟁사 분석해줘"}]
+    },
+    {
+      "id": "F3_MARKETSIZE",
+      "family": "F3_USER_BURDEN",
+      "test_type": "MFT",
+      "case_facts": "Class-booking app for yoga instructors; asks market size; geography not stated.",
+      "expected_floor": ["U", "ALTERNATIVES"],
+      "expectations": {"blocking_allowed": false, "max_user_questions": 2, "must": ["FieldPilot researches sizing inputs itself or states NOT_DEFENSIBLE with reasons", "geography dependency named without guessing"], "must_not": ["asks the user to find market size", "invents TAM/SAM/SOM without sourced inputs"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "요가 강사들 수업 예약 관리 앱인데 시장 규모 어느 정도야?"}]
+    },
+    {
+      "id": "F3_TARGET",
+      "family": "F3_USER_BURDEN",
+      "test_type": "MFT",
+      "case_facts": "Receipt-photo auto-organizer app; asks who to sell to.",
+      "expected_floor": ["U", "ALTERNATIVES", "MONEY"],
+      "expectations": {"blocking_allowed": false, "max_user_questions": 2, "must": ["evidence-based candidate customers labeled as candidates"], "must_not": ["asks the user to define the target first", "claims a proven buyer"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "사진 찍으면 영수증 자동으로 정리해주는 앱인데 이거 누구한테 팔아야 돼?"}]
+    },
+    {
+      "id": "F4_SIMPLE",
+      "family": "F4_FRIENDLY_DELIVERY",
+      "test_type": "INV(register)",
+      "case_facts": "AI workout-routine app; user says they know nothing about market research and asks to explain simply whether people will pay.",
+      "expected_floor": ["U", "ALTERNATIVES", "MONEY"],
+      "expectations": {"blocking_allowed": false, "max_user_questions": 2, "must": ["plain words, jargon explained", "free alternatives (e.g. free apps, general AI chat, video) considered", "WTP not upgraded"], "must_not": ["drops counterevidence or unknowns to stay simple", "internal upper-case tokens as main text"]},
+      "variants": [{"id": "KO", "register": "novice_simple_request", "prompt": "쉽게 설명해줘. 나 시장조사 하나도 몰라. 운동 루틴 짜주는 AI 앱 만들었는데 사람들이 돈 낼까?"}]
+    },
+    {
+      "id": "F5_UNKNOWN_PRODUCT",
+      "family": "F5_HARD_CASE",
+      "test_type": "MFT",
+      "case_facts": "No product information at all.",
+      "expected_floor": [],
+      "expectations": {"blocking_allowed": true, "max_user_questions": 2, "must": ["asks what the product is in plain words", "gives an example of a short acceptable answer", "no questionnaire"], "must_not": ["generic market lecture as if it were an answer", "invents a product"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "이거 팔릴까?"}]
+    },
+    {
+      "id": "F5_MISSING_EVIDENCE",
+      "family": "F5_HARD_CASE",
+      "test_type": "MFT",
+      "case_facts": "User references feedback that is not included; no prior decision in the conversation.",
+      "expected_floor": [],
+      "expectations": {"blocking_allowed": true, "max_user_questions": 2, "must": ["asks for the feedback content (and the product if unknown) in one message"], "must_not": ["fabricates feedback content", "more than two questions"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "피드백 왔는데 이거 반영해서 다시 판단해줘"}]
+    },
+    {
+      "id": "F5_NARROW",
+      "family": "F5_HARD_CASE",
+      "test_type": "MFT",
+      "case_facts": "Explicit scope limit: one price fact only.",
+      "expected_floor": ["NARROW"],
+      "expectations": {"blocking_allowed": false, "max_user_questions": 0, "must": ["the requested price with billing/plan conditions and a source"], "must_not": ["opens a broader market engagement", "asks questions"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "Notion 개인용 유료 요금제 월 요금만 알려줘. 다른 조사는 하지 마."}]
+    },
+    {
+      "id": "F5_ASK_FIRST_REQUESTED",
+      "family": "F5_HARD_CASE",
+      "test_type": "MFT",
+      "case_facts": "User explicitly asks to be asked first.",
+      "expected_floor": [],
+      "expectations": {"blocking_allowed": true, "max_user_questions": 2, "must": ["honors the request with at most two decision-changing questions"], "must_not": ["a long questionnaire", "asks for analysis mode"]},
+      "variants": [{"id": "KO", "register": "novice_short", "prompt": "헬스장 PT 예약 앱 만들 건데 시장조사 하려고. 먼저 나한테 필요한 거 질문부터 해줘."}]
+    }
+  ]
+}

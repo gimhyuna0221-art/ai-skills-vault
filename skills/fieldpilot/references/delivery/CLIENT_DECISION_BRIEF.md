@@ -102,6 +102,13 @@ Ask the user only when **all** of these hold for the missing field:
 
 If a missing value would not change the work, adopt a labeled `ASSUMED`/`INFERRED` default and proceed.
 
+Timing (v1.9.9-rc04 QUESTION_GATE, `references/modules/PROMPT_SKILL_INDEPENDENCE.md` §3): even when
+all three conditions hold, answer first whenever a useful bounded answer is possible — keep the field
+`UNRESOLVED`, show its effect on the claim ceiling, and put the question at the end (`ASK_AFTER`). Ask
+before answering (`ASK_FIRST`) only when the product or case cannot be identified, referenced evidence
+is missing, or the user asked to be asked first. Never ask a field FieldPilot can find or defensibly
+infer.
+
 Batch all genuinely necessary questions into one short block. Do not serialize clarification across
 several turns. A simple bounded request must not be converted into an intake interview: for a short
 single question, the brief may be compiled internally in compact form and surfaced only as the scope and

@@ -80,7 +80,7 @@ Do **not** infer Korea merely from:
 - KRW appearing in an unrelated context;
 - the model's prior knowledge of the owner.
 
-If geography is unknown and can change the recommendation, return `GEOGRAPHY_UNRESOLVED` and either ask one decision-changing geography question or continue with a bounded global conclusion plus the named local dependency.
+If geography is unknown and can change the recommendation, return `GEOGRAPHY_UNRESOLVED`, give the bounded global conclusion with the named local dependency and the conclusions it limits, and end that answer with one decision-changing geography question (QUESTION_GATE `ASK_AFTER` in `PROMPT_SKILL_INDEPENDENCE.md`). Geography alone never blocks the first answer, and Korean-language conversation still never establishes Korea. When the user later confirms Korea, run this local coverage as a returning-evidence delta.
 
 ### LOCAL_COMPETITOR_COVERAGE
 

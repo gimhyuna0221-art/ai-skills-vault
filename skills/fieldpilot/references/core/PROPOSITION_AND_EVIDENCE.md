@@ -63,13 +63,17 @@ uncertainty:
   resolution_status: OPEN
 ```
 
-Ask, in plain language:
+Infer these from the request, earlier turns and accessible material, and show the inferred values
+to the user in plain language as labeled assumptions they can correct (v1.9.9-rc04,
+`references/modules/PROMPT_SKILL_INDEPENDENCE.md`):
 
 1. What decision will this research change, and what realistic options exist?
 2. What is the most decision-relevant unknown, who owns the decision, and by when?
 
-Ask at most two tightly linked questions per turn unless a safety/ethics interrupt requires
-more. If the user starts with “run a survey” or another method, store that as a preference;
+Do not ask the user to formulate these research objects; a beginner cannot be expected to know
+them, and asking them tests the user instead of serving them. Ask only a genuinely user-owned fact,
+through the QUESTION_GATE (after a bounded answer unless no useful answer is possible), and ask at
+most two tightly linked questions per turn unless a safety/ethics interrupt requires more. If the user starts with “run a survey” or another method, store that as a preference;
 do not let it bypass proposition and evidence compilation.
 
 The optional uncertainty priority aid is:
@@ -108,8 +112,10 @@ proposition:
 ```
 
 Never silently infer population, geography, timeframe, comparator, causal force, or the
-meaning of “validated.” If a term is material and ambiguous, preserve it as unknown and
-ask the nearest useful question.
+meaning of “validated.” A visible, labeled, defensible inference is allowed (geography never from
+conversation language or owner location). If a term is material and ambiguous, preserve it as
+unknown, bound the dependent claims, and ask the nearest useful question through the
+QUESTION_GATE — normally at the end of the bounded answer.
 
 ### 2.3 Proposition taxonomy
 
