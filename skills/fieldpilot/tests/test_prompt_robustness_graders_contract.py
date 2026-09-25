@@ -84,6 +84,24 @@ class GraderUnitTests(unittest.TestCase):
         self.assertIn("TOO_MANY_QUESTIONS", g_bad.violations)
         self.assertIn("ASK_FIRST_WITHOUT_EXAMPLE_ANSWER", g_bad.violations)
 
+    def test_request_lists_count_each_item_as_an_ask(self):
+        reply = ("분석 본문입니다.\n**이것만 보내주시면 제가 더 좁혀드릴게요**\n"
+                 "1. 사이트 주소: 첫 화면을 봐요.\n2. 올린 글 링크: 반응을 봐요.\n3. 어느 나라 고객인지: 경쟁이 달라져요.\n")
+        self.assertEqual(len(graders.user_directed_questions(reply)), 3)
+
+    def test_implicit_confirmation_and_drafts_are_not_asks(self):
+        reply = ("**제가 이해한 상황** (틀리면 알려주세요)\n견적서 웹앱으로 봤어요.\n"
+                 "초안: \"[직군] 분들, 써보시고 막히는 곳 하나만 알려주세요.\"\n"
+                 "끝으로 하나만: 어느 나라 고객을 대상으로 하시나요?")
+        qs = graders.user_directed_questions(reply)
+        self.assertEqual(len(qs), 1, qs)
+        self.assertIn("어느 나라", qs[0])
+
+    def test_explicitly_unassumed_market_is_not_flagged(self):
+        self.assertFalse(graders.unconditioned_market_claims("한국어로 말씀하셨어도 그걸로 정하진 않았어요."))
+        self.assertFalse(graders.unconditioned_market_claims("한국 쪽 경쟁·가격 감각은 안 봤고, 달라질 수 있어요."))
+        self.assertTrue(graders.unconditioned_market_claims("한국 댄스학원은 카카오 오픈채팅으로 모집하세요."))
+
     def test_manifest_is_split_from_the_reply(self):
         reply, manifest = graders.split_manifest("답변 본문\n=====HARNESS_MANIFEST=====\nFILES_READ: SKILL.md\nWEB_SEARCHES: 3")
         self.assertEqual(reply, "답변 본문")

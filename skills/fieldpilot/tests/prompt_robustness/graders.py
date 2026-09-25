@@ -28,6 +28,11 @@ _DIRECTED_EN = [" you", "your", "could you", "can you", "do you", "which market"
 _REQUEST_NO_QMARK = re.compile(
     r"(알려\s*주세요|말씀해\s*주세요|공유해\s*주세요|보내\s*주세요|붙여\s*(넣어\s*)?주세요|"
     r"알려\s*줘|please share|let me know|please tell me)", re.I)
+_IMPLICIT_CONFIRM = re.compile(r"(틀리면|다르면|틀렸으면|잘못\s*이해했으면).{0,12}(알려|말씀)|correct me|if i got (this|that|it) wrong|tell me if (this|that) is wrong", re.I)
+_DRAFT_LINE = re.compile(r"^\s*[>\-*•]?\s*(\*\*)?(초안|예시\s*문구|문구\s*예시|draft|sample message|메시지\s*초안)", re.I)
+_LIST_CUE = re.compile(r"(보내\s*주시면|알려\s*주시면|주시면\s*(제가|바로|더|다시)|알려\s*주세요|보내\s*주세요|공유해\s*주세요|"
+                       r"please share|send me|let me know|tell me)", re.I)
+_LIST_ITEM = re.compile(r"^\s*(\d+[\.\)]|[-*•])\s+\S")
 _RHETORICAL_NEXT = re.compile(r"^\s*(아니요|아닙니다|아니에요|아뇨|네[,\.\s]|맞습니다|아직|짧게 말하면|결론부터|No[,\.\s]|Yes[,\.\s]|Not yet|Short answer)", re.I)
 
 _DECISION_MARKERS = [
@@ -66,7 +71,9 @@ _KOREA_ENTITIES = ["한국", "국내", "Korea", "Korean", "네이버", "Naver", 
                    "개인정보보호법", "PIPA", "KRW"]
 _CONDITIONAL = ["라면", "이라면", "경우", "만약", "if ", "If ", "대상이", "가정", "assum", "unless", "판다면",
                 "타깃이", "시장이면", "달라질", "depend", "?", "？", "모르", "미정", "정해지면", "확인되면", "unknown",
-                "UNRESOLVED", "not stated", "not specified", "명시되지", "지역", "어느 나라", "which market"]
+                "UNRESOLVED", "not stated", "not specified", "명시되지", "지역", "어느 나라", "which market",
+                "않았", "않고", "않습니다", "않아요", "안 봤", "못 봤", "확인하지", "미확인", "정하진", "정하지", "중 어느",
+                "/해외", "해외 중", " or ", "not assum", "didn't", "did not", "haven't", "unverified"]
 _EXAMPLE_ANSWER = re.compile(r"(예\s*[:)]|예를\s*들어|예시|처럼|e\.g\.|for example|like\s+\")", re.I)
 _REPORT_OFFER = re.compile(r"(전체|풀|정식|상세)\s?(시장조사\s?)?(리포트|보고서)|full (market[- ]research )?report", re.I)
 
@@ -87,8 +94,41 @@ def _sentences(reply: str) -> list[str]:
     return [s.strip() for s in _SENT_SPLIT.split(reply) if s and s.strip()]
 
 
+def _is_draft_or_quote(sentence: str, reply: str) -> bool:
+    """True for text the user is meant to send to others (drafts) or quoted speech."""
+    s = sentence.strip()
+    if s[:1] in "\"“「『" or s[-1:] in "\"”」』":
+        return True
+    line_start = reply.rfind("\n", 0, max(0, reply.find(s))) + 1
+    line = reply[line_start: reply.find("\n", line_start) if reply.find("\n", line_start) != -1 else len(reply)]
+    return bool(_DRAFT_LINE.match(line))
+
+
+def _request_list_items(reply: str) -> list[str]:
+    """Numbered/bulleted items that follow a request cue line, e.g. '이것만 보내주시면 …' + 1. 2. 3."""
+    lines = reply.splitlines()
+    items = []
+    for i, line in enumerate(lines):
+        if not _LIST_CUE.search(line) or _IMPLICIT_CONFIRM.search(line) or _DRAFT_LINE.match(line):
+            continue
+        j = i + 1
+        while j < len(lines) and _LIST_ITEM.match(lines[j]):
+            items.append(lines[j].strip())
+            j += 1
+    return items
+
+
 def user_directed_questions(reply: str) -> list[str]:
-    """Questions (or question-like requests) addressed to the user, excluding rhetorical/quoted ones."""
+    """Questions or requests addressed to the user (one per ask), excluding rhetorical, quoted,
+    draft-for-others and implicit-confirmation lines."""
+    found = _sentence_questions(reply)
+    for item in _request_list_items(reply):
+        if not any(item in q or q in item for q in found):
+            found.append(item)
+    return found
+
+
+def _sentence_questions(reply: str) -> list[str]:
     sents = _sentences(reply)
     n = len(sents)
     total_len = max(1, len(reply))
@@ -100,7 +140,7 @@ def user_directed_questions(reply: str) -> list[str]:
         is_request = bool(_REQUEST_NO_QMARK.search(s))
         if not (is_q or is_request):
             continue
-        if _HEADING.match(s) or _QUOTED.search(s):
+        if _HEADING.match(s) or _QUOTED.search(s) or _IMPLICIT_CONFIRM.search(s) or _is_draft_or_quote(s, reply):
             continue
         nxt = sents[i + 1] if i + 1 < n else ""
         if is_q and _RHETORICAL_NEXT.match(nxt):
