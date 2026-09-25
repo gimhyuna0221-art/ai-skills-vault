@@ -2,7 +2,7 @@
   "suite": "fieldpilot-prompt-robustness",
   "version": "1.0",
   "target": "FieldPilot v1.9.9-rc04 candidate (compare against v1.9.9-rc03 main)",
-  "method_note": "CheckList-style behavioral testing: INV = same case, different wording (floor must not drop); DIR = adding/removing one fact changes only the dependent part; MFT = minimum functionality for hard cases. All products are fictional and deliberately different from the frozen LockerDesk benchmark case so that no rc04 output can mix with the rc03 paid-competitor benchmark.",
+  "method_note": "CheckList-style behavioral testing: INV = same case, different wording (floor must not drop); DIR = adding/removing one fact changes only the dependent part; MFT = minimum functionality for hard cases. All products are fictional and deliberately different from any frozen benchmark case so that no candidate output can mix with a running benchmark of an earlier version.",
   "floor_rows": {
     "U": [
       "DIRECT_ANSWER",
@@ -90,7 +90,8 @@
       "id": "F2_GEO",
       "family": "F2_MISSING_CONTEXT",
       "test_type": "MFT+variance",
-      "case_facts": "StudioTally: offline Android app for small independent dance studios (class-pass expiry, remaining sessions, make-up credits, renewal dates). No personal data. Piloted by one studio. No payments or repeat users. Geography NOT stated. Structurally isomorphic to the rc03 RUN-1/RUN-2 geography divergence, but a different product.",
+      "case_facts": "StudioTally: offline Android app for small independent dance studios (class-pass expiry, remaining sessions, make-up credits, renewal dates). No personal data. Piloted by one studio. No payments or repeat users. Geography NOT stated.",
+      "design_note": "Repeated samples expose ask-first vs answer-first divergence when geography is missing (the pattern that motivated the question gate). Not shown to judges.",
       "expected_floor": [
         "U",
         "ALTERNATIVES",

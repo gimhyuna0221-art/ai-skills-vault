@@ -130,7 +130,11 @@ class GraderUnitTests(unittest.TestCase):
         self.assertEqual(manifest["WEB_SEARCHES"], "3")
 
     def test_cases_file_is_well_formed(self):
-        data = json.loads((HERE / "prompt_robustness" / "cases.json").read_text(encoding="utf-8"))
+        raw = (HERE / "prompt_robustness" / "cases.json").read_text(encoding="utf-8")
+        data = json.loads(raw)
+        # benchmark hygiene: no reference to the frozen benchmark case or its runs anywhere in the suite
+        for marker in ["LockerDesk", "RUN-1", "RUN-2"]:
+            self.assertNotIn(marker, raw)
         families = {c["family"] for c in data["cases"]}
         self.assertEqual(families, {"F1_SAME_INTENT_DIFFERENT_LANGUAGE", "F2_MISSING_CONTEXT", "F3_USER_BURDEN",
                                     "F4_FRIENDLY_DELIVERY", "F5_HARD_CASE"})

@@ -10,15 +10,15 @@ the dependent part; **MFT** — minimum functionality for hard cases. Grading fo
 guidance: code-graded wherever possible, LLM-rubric-graded only for judgment (coverage depth,
 plain language), with the judge blind to which version produced a reply.
 
-All products in `cases.json` are fictional and different from the frozen LockerDesk benchmark case,
-so no rc04 output can be mixed into the running rc03 paid-competitor benchmark.
+All products in `cases.json` are fictional and deliberately different from any frozen benchmark case,
+so no rc04 output can be mixed into a running benchmark of an earlier version.
 
 ## Families
 
 | Family | What it tests | Cases |
 |---|---|---|
 | F1 same intent / different language (INV) | expert English vs short, messy, solution-question and typo-heavy Korean for one launched product | `F1_QUOTE` × 5 variants |
-| F2 missing context (MFT + variance) | no geography (3 samples per arm, the rc03 RUN-1/RUN-2 divergence pattern on a different product), Korean without geography, no price, no repo | `F2_GEO`, `F2_GEO_KO`, `F2_NOPRICE`, `F2_NOREPO` |
+| F2 missing context (MFT + variance) | no geography (repeated samples per arm to expose ask-first vs answer-first divergence), Korean without geography, no price, no repo | `F2_GEO`, `F2_GEO_KO`, `F2_NOPRICE`, `F2_NOREPO` |
 | F3 user burden (MFT) | competitor list, market size, target customer — must be researched, not assigned | `F3_*` |
 | F4 friendly delivery (INV on register) | "쉽게 설명해줘" must not become thinner research | `F4_SIMPLE` |
 | F5 hard cases (MFT) | unknown product, referenced-but-missing evidence, explicit narrow scope, user asks to be asked first | `F5_*` |

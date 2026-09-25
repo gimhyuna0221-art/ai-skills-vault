@@ -26,9 +26,9 @@ Why this needs an explicit contract (evidence, not taste):
   proficiency, less formal education or non-US origin (Poole-Dayan et al., AAAI 2026). A skill that
   passes the user's wording straight through inherits that gap.
 - Underspecified behavior is fragile: it regresses about twice as often when the model or prompt
-  changes (Yang et al., 2025). The rc03 clean runs showed it: on the same frozen input one model
-  proceeded with open questions flagged, another model stopped to ask "Which market?". Both readings
-  were permitted by rc03 text, so the difference was product-reducible, not only model randomness.
+  changes (Yang et al., 2025). When rule text permits both "ask first" and "answer with the gap
+  flagged", the same input can produce either one depending on the model run. That difference is
+  product-reducible, not only model randomness, so this module removes the choice.
 - Restating or abstracting a question before answering improves answers (Rephrase-and-Respond;
   Step-Back prompting). Users often ask about an attempted solution instead of the root problem
   (the XY problem).
@@ -213,10 +213,11 @@ stage unless ASK_FIRST applies.
 questions over several turns. A question answered "몰라 / 없음 / 정해진 것 없음" is not asked again:
 proceed with UNKNOWN.
 
-**Anti-pattern observed in the rc03 clean runs.** First turn = "Which market is this aimed at?" and
-nothing else. This is wrong under the gate: the case was identifiable, so the full bounded answer was
-possible, and a reply of "not specified" would have added no information. Correct: the full answer
-with `GEOGRAPHY_UNRESOLVED` stated, then the geography question as the last line.
+**Anti-pattern: the blocking market question.** First turn = "Which market is this aimed at?" and
+nothing else, for a case that is otherwise identifiable. This is wrong under the gate: the full
+bounded answer was possible, and a reply of "not specified" would add no information while costing
+the user a turn. Correct: the full answer with `GEOGRAPHY_UNRESOLVED` stated in plain words, then the
+geography question as the last line.
 
 ## 4. FRIENDLY_EXPERT delivery — the default for every user
 
@@ -233,6 +234,11 @@ Order of a decision answer:
    diagnosis, lead the body with the observed symptom and the top competing explanations.
 4. **끝.** Only when needed: at most 2 follow-up questions (§3) and, for a broad decision in Route A,
    one line offering the full report.
+
+The opening must stand alone: within the first two or three lines a beginner should have the direct
+answer and the one thing to do now, in plain words. Everything after is support the user can skim.
+Prefer short bullets or a small table over long prose. Length is not thoroughness: the expert-twin
+check adds missing substance, never volume.
 
 Plain words:
 
@@ -262,6 +268,7 @@ market). Then check the draft:
    casual or emotional? Restore it.
 4. Did an internal token or unexplained jargon reach the main text? Translate it.
 5. Is every literal question answered, with a direct answer in the first line? Fix it.
+6. Is anything there only to look thorough? Cut it; substance stays.
 
 ## 6. Precedence and boundaries
 

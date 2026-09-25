@@ -145,7 +145,9 @@ class PromptSkillIndependenceContract(unittest.TestCase):
         self.assertIn("never turns into a question or homework", gate)
 
     def test_rc03_blocking_geography_antipattern_is_named_and_forbidden(self):
-        self.assertIn("Anti-pattern observed in the rc03 clean runs", self.module)
+        self.assertIn("Anti-pattern: the blocking market question", self.module)
+        # product text carries no benchmark-run references (blind benchmark hygiene)
+        self.assertNotIn("clean run", self.module.lower())
         self.assertIn("Geography alone never blocks the first answer", self.module)
         self.assertIn("do not guess and do not stop", self.skill)
         korea = read("references/modules/KOREA_LOCAL_DISTRIBUTION.md")
@@ -216,6 +218,8 @@ class PromptSkillIndependenceContract(unittest.TestCase):
         self.assertIn("as the default register of every answer", self.skill)
         self.assertIn("This is the default register of every FieldPilot answer", self.continuity)
         self.assertIn("never the main text", flat(self.module))
+        self.assertIn("The opening must stand alone", self.module)
+        self.assertIn("Length is not thoroughness", self.module)
         self.assertIn("Easy to read never means thinner underneath", self.skill)
         example = read("references/delivery/SELLABILITY_WORKED_EXAMPLE.md")
         self.assertIn("지금 판단 (CURRENT_DECISION)", example)
