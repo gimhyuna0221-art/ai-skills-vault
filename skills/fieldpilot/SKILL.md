@@ -1,13 +1,13 @@
 ---
 name: fieldpilot
-description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 그 근거를 현재 개발 결정에 바로 적용하도록 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 현재 결정, 근거·반대근거·미확인 사항, 지금 만들거나 보류할 범위, 다음 AI/개발 행동을 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. 이미 만든 앱·웹서비스의 판매 가능성, 경쟁 대안, 첫 결제 실험을 판단할 때 사용한다. Use for market research, competitor/pricing facts, commercialization of an existing product, and returning evidence.
+description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 아이디어→MVP/개발→출시→판매·결제→재평가 전 단계의 제품·사업 결정을 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 경쟁·대체재·고객 후보·가격·포지셔닝·유통/홍보·제품 상태를 현재 결정에 필요한 범위만 조사하고, 출시 후에는 노출/메시지/채널/활성/리텐션/결제/제품·측정 문제를 한 원인으로 뭉개지 않고 진단한다. 현재 결정, 근거·반대근거·미확인 사항, 만들거나 바꿀/보류할 범위, 다음 행동 하나를 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. Use for idea viability, market research, competitor/pricing/channel facts, next-build decisions, post-launch diagnosis, commercialization, payment conversion, and returning evidence.
 metadata:
-  version: "1.9.9-rc02"
+  version: "1.9.9-rc03"
 ---
 
 # FieldPilot
 
-## v1.9.9-rc02 — existing-product decision candidate + geography-sensitive local coverage
+## v1.9.9-rc03 — lifecycle decision routing + geography-sensitive local coverage
 
 FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The ordinary path should read less, repeat less research, and output less while preserving competitor/substitute discovery, evidence, uncertainty, direct useful links, product-state discipline, and one exact next action.
 
@@ -33,13 +33,22 @@ This file is the small always-loaded kernel. Detailed mode-specific rules are re
 
 ## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
-Load and apply only the ordinary decision module first:
+Load and apply the lifecycle router plus the ordinary decision module first:
 
-`references/modules/DECISION_CONTINUITY.md`
+- `references/modules/LIFECYCLE_DECISION_ROUTER.md`
+- `references/modules/DECISION_CONTINUITY.md`
 
-Do not load professional-report methodology/rendering modules merely because FieldPilot activated. The ordinary module owns adaptive search facets, canonical competitor/entity dedup, saturation stopping, selective repo reads, decision/evidence reuse, coverage honesty, Market→Build safeguards, and compact output.
+Do not load professional-report methodology/rendering modules merely because FieldPilot activated. The lifecycle router first identifies the current lifecycle stage and symptom, then conditionally loads only the existing modules needed for that decision — including product-state comparison, market-favored patterns, demand-vs-distribution diagnostics, signal integrity, channel routing, pricing/payment detail, or decision surfaces. The ordinary module owns adaptive search facets, canonical competitor/entity dedup, saturation stopping, selective repo reads, decision/evidence reuse, coverage honesty, Market→Build safeguards, and compact output.
 
 When current repo/spec/project material is accessible, inspect it selectively and produce a `MARKET_TO_BUILD_DECISION`. `PRODUCT_STATE` uses only `IMPLEMENTED / PARTIALLY_IMPLEMENTED / PLANNED / UNKNOWN`. If product state is unavailable, state `PRODUCT_STATE_UNAVAILABLE` and continue with the bounded market decision using only legitimate known facts.
+
+### Lifecycle-stage and symptom routing
+
+Use `LIFECYCLE_DECISION_ROUTER.md` so one `/fieldpilot` invocation works across `IDEA / BUILDING_OR_MVP / PRE_LAUNCH_OR_PRE_SELL / LAUNCHED_NO_RESPONSE / LAUNCHED_WITH_INTEREST_NO_PAYMENT / MONETIZING / RETURNING_EVIDENCE` without making the user choose an internal mode.
+
+For post-launch symptoms, do not jump from "no response" to a single explanation. When material, route through `PRODUCT_READINESS_AND_SIGNAL_INTEGRITY.md` and `DEMAND_DISTRIBUTION_DIAGNOSTICS.md`; distinguish reach, message, channel, landing, activation, retention, payment, product reliability and measurement health. If channel/promotion is still decision-material, load `FREE_FIRST_AND_CHANNEL_ROUTING.md` and recommend one evidence-backed first route plus one fallback and an exact measurement plan. For "interest but no payment", distinguish payer/price/packaging/payment-path/trust/value explanations and use `MONEY_SHAPE` / `FIRST_PAID_PROOF` without claiming WTP that has not been observed.
+
+For "대박인가 / 가망 없나 / 레드오션인가 / 틈새가 있나" questions, give the strongest evidence-bounded judgment rather than a success label. Competition density alone is not a NO-GO; a missing competitor feature is not a confirmed niche; a public-evidence customer segment is a candidate customer, not a proven buyer.
 
 ### Question framing, coverage and positioning
 
