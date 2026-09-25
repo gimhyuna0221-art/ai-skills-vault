@@ -9,7 +9,7 @@
 | [Prompt Router](skills/prompt-router/) | 요청을 분석해 사고·검증·도구·현실 판단·관계 분석 모드를 자동 선택 | stable draft |
 | [Obsidian Lecture Pack — General](skills/obsidian-lecture-pack/) | 일반 강의를 단독 강의팩 또는 같은 분야 누적 지식베이스로 변환 | stable draft |
 | [Obsidian Lecture Pack — CG Omnibus](skills/obsidian-lecture-pack-cg/) | 학생별 CG 옴니버스 피드백을 학생 이력·개념·11단계 워크플로우에 누적 | stable draft |
-| [Field Pilot](skills/fieldpilot/) | 외부 사용자 모집부터 파일럿·설문·개선까지 단계별 운영 | stable draft |
+| [FieldPilot](skills/fieldpilot/) | AI 빌더의 아이디어→MVP→출시→판매·결제 전 단계 시장조사·제품결정·출시 후 진단 | stable draft |
 | [Rect Strip UV](skills/rect-strip-uv/) | 열린 쿼드 벨트·스트랩의 형상 보존 직사각형 UV 전개와 양 끝 연결 | stable draft |
 
 ## Rect Strip UV
