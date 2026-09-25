@@ -13,7 +13,7 @@ class LifecycleDecisionRouterContract(unittest.TestCase):
         cls.channels = (ROOT / "references/modules/FREE_FIRST_AND_CHANNEL_ROUTING.md").read_text(encoding="utf-8")
 
     def test_runtime_routes_through_lifecycle_router(self):
-        self.assertIn('version: "1.9.9-rc03"', self.skill)
+        self.assertIn('version: "1.9.9-rc04"', self.skill)
         self.assertIn("LIFECYCLE_DECISION_ROUTER.md", self.skill)
         for marker in [
             "IDEA",

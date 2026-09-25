@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - 'fieldpilot/korea-local-coverage-rc02'
+      - 'worker/fieldpilot-**'
     paths:
       - 'skills/fieldpilot/**'
       - '.github/workflows/fieldpilot-korea-local.yml'

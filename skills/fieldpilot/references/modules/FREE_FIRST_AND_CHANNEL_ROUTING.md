@@ -166,7 +166,7 @@ Execution behavior:
 - Do not treat comments, likes, or replies as demand by themselves; define a downstream action when a stronger behavioral signal is feasible.
 - A failed test must include a diagnostic path so the user can distinguish reach/access/message/channel failure from product-demand failure.
 - If an audit discovers that eligible users never received the price, offer, repeat-use opportunity, or other behavior required by the active decision, attach the smallest next step that creates and observes that missing opportunity. Do not report an audit as if it supplied evidence that never had a chance to occur.
-- If the product, buyer, job, or prior exposure is absent and changes the route, do not substitute FieldPilot or a familiar example as user fact. Ask only the decision-changing fact, or keep a copy-ready parameterized artifact with explicit placeholders.
+- If the product, buyer, job, or prior exposure is absent and changes the route, do not substitute FieldPilot or a familiar example as user fact. Find or infer what can be found or inferred, keep a copy-ready parameterized artifact with explicit placeholders now, and ask only the decision-changing fact through the QUESTION_GATE (`PROMPT_SKILL_INDEPENDENCE.md` §3 — at the end of the answer unless the product itself cannot be identified).
 
 ### User-visible instrumentation minimum
 

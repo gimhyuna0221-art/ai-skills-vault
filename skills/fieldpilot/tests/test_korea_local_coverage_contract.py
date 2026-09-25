@@ -13,7 +13,7 @@ class KoreaLocalCoverageContract(unittest.TestCase):
         cls.comp = (ROOT / "references/methods/secondary-and-competitors.md").read_text(encoding="utf-8")
 
     def test_runtime_version_and_route(self):
-        self.assertIn('version: "1.9.9-rc03"', self.skill)
+        self.assertIn('version: "1.9.9-rc04"', self.skill)
         self.assertIn("Geography-sensitive coverage without geography guessing", self.skill)
         self.assertIn("GEOGRAPHY_UNRESOLVED", self.skill)
         self.assertIn("KOREA_LOCAL_DISTRIBUTION.md", self.skill)

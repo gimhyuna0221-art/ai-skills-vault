@@ -66,7 +66,7 @@ For Korea, route the local source/channel details through `../modules/KOREA_LOCA
 If geography is unresolved:
 - do not infer it from conversation language or owner location;
 - mark the affected competitor coverage `LOCAL_GEOGRAPHY_NOT_CHECKED` or `GEOGRAPHY_UNRESOLVED`;
-- if the missing geography can change the recommendation, ask the minimum one question or lower the claim ceiling.
+- if the missing geography can change the recommendation, lower the affected claim ceiling, finish the bounded answer, and ask the one geography question at its end (QUESTION_GATE `ASK_AFTER` in `../modules/PROMPT_SKILL_INDEPENDENCE.md`).
 
 A local search miss is `LOCAL_DIRECT_SEARCHED_NOT_FOUND`, not "no local competitor" and not `CONFIRMED_GAP`.
 

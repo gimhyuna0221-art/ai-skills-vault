@@ -1,6 +1,6 @@
 # FieldPilot
 
-**v1.9.9-rc03 — AI-First Market Research + Lifecycle Decision Routing + Local Coverage**
+**v1.9.9-rc04 (candidate) — AI-First Market Research + Prompt-Skill Independence + Lifecycle Decision Routing + Local Coverage**
 
 FieldPilot은 바이브코더와 AI-assisted builder가 이미 쓰는 AI 안에서 시장조사를 가능한 한 대신 수행하고, 그 근거를 지금 무엇을 만들고·바꾸고·보류할지 결정하는 데 연결하는 Agent Skill입니다.
 
@@ -12,7 +12,28 @@ FieldPilot은 바이브코더와 AI-assisted builder가 이미 쓰는 AI 안에�
 - 근거가 충분하면 만들 범위와 만들지 말아야 할 범위를 구체화합니다.
 - 사용자가 이미 가진 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 업데이트합니다.
 - 명시적인 전체 시장조사 요청에는 기존 전문 보고서 경로를 유지합니다.
-- 타깃 지역이 의사결정을 바꾸는 경우 글로벌 결과만으로 끝내지 않습니다. 한국이 명시되면 국내 경쟁·대체재·규제·접근 채널을 조건부로 점검하고, 지역이 미상일 때는 한국으로 추측하지 않습니다.
+- 타깃 지역이 의사결정을 바꾸는 경우 글로벌 결과만으로 끝내지 않습니다. 한국이 명시되면 국내 경쟁·대체재·규제·접근 채널을 조건부로 점검하고, 지역이 미상일 때는 한국으로 추측하지 않습니다. 지역을 몰라도 먼저 답하고, 지역 질문은 답의 끝에 한 번만 합니다.
+- 프롬프트를 잘 써야 좋은 결과가 나오는 도구가 아닙니다. 짧게, 평소 말로, 오타가 섞여도 같은 사례면 같은 깊이로 조사합니다. 말투와 길이는 달라져도 경쟁·대안, 제품 상태, 반대 근거, 모르는 것, 돈 관련 판단의 한계, 만들기·바꾸기·보류, 다음 행동 하나는 똑같이 챙깁니다.
+- 질문은 꼭 필요할 때만 합니다. 찾을 수 있는 건 찾고, 추론할 수 있는 건 가정으로 밝히고, 먼저 답한 뒤 결론을 바꿀 질문만 끝에 최대 2개 묻습니다. 무엇인지 전혀 알 수 없을 때만 먼저 묻습니다.
+
+## 개떡같이 말해도 됩니다
+
+```text
+/fieldpilot
+앱 만들었는데 아무도 안 써. 이거 망한 거야? 광고해야 돼? 뭐부터 해?
+```
+
+```text
+/fieldpilot
+헬스장 프론트용 회원권 계산 앱인데 이거 팔릴까?
+```
+
+```text
+/fieldpilot
+관심은 있는데 결재를 안 해 ㅠ 뭐가 문제야
+```
+
+아래처럼 길게 써도 되지만, 필수는 아닙니다. 같은 사례면 짧게 물어도 조사 깊이는 같습니다.
 
 ## 어느 단계에서든 같은 명령어
 
@@ -110,7 +131,7 @@ fieldpilot/
 ## 버전
 
 - Skill name: `fieldpilot`
-- Runtime version: `1.9.9-rc03`
+- Runtime version: `1.9.9-rc04` (candidate; current released main remains `1.9.9-rc03` until merge)
 - Primary invocation: `/fieldpilot`
 
 ## 판매 판단 예시

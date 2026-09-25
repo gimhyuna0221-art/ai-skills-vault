@@ -36,7 +36,7 @@ problem/job × target user/customer × buyer/payer if distinct × platform × ge
 × price band × business model × product form × purchase complexity × alternatives
 ```
 
-Prefer the user's actual target and product. If a field is unknown and materially changes the research, ask at most two tightly related questions. Otherwise proceed with explicit assumptions.
+Prefer the user's actual target and product. If a field is unknown, find it, infer it with a visible label, or keep it UNKNOWN and proceed with explicit assumptions. If it is user-owned and materially changes the research, ask at most two tightly related questions through the QUESTION_GATE (`PROMPT_SKILL_INDEPENDENCE.md` §3 — after the bounded answer unless no useful answer is possible).
 
 ## Six prior axes
 

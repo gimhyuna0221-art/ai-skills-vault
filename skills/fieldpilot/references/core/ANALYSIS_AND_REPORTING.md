@@ -250,7 +250,7 @@ Current decision status
 Next uncertainty
 ```
 
-Ask no more than two tightly linked questions per turn unless safety/legal review requires more. Recommend one defensible default and define technical terms only when they change the choice. When blocked, name the unsupported claim, the missing evidence, and the nearest valid repair. Distinguish `we do not know` from `not currently answerable under available access`.
+Ask no more than two tightly linked questions per turn unless safety/legal review requires more, and time them with the QUESTION_GATE (`references/modules/PROMPT_SKILL_INDEPENDENCE.md` §3: after the bounded answer unless no useful answer is possible). Recommend one defensible default and define technical terms only when they change the choice. When blocked, name the unsupported claim, the missing evidence, and the nearest valid repair. Distinguish `we do not know` from `not currently answerable under available access`.
 
 The Recommendation-first view does not collapse FIR objects: it links back to Interpretation and Findings. It must never imply that FieldPilot recruited, observed, interviewed, paid, enrolled, or ran fieldwork unless an authorized system supplied verifiable execution evidence.
 
