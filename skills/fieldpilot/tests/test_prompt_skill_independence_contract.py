@@ -228,6 +228,40 @@ class PromptSkillIndependenceContract(unittest.TestCase):
         for marker in ["UNKNOWN_GAP", "CONFIRMED_GAP", "WTP UNKNOWN", "OBSERVED_PURCHASE", "NOT_CHECKED"]:
             self.assertIn(marker, example)
 
+    # ---- rc04 Stage-A bounded correction: claim discipline + opening action ---------
+    def test_claim_discipline_rules_are_in_module_and_kernel(self):
+        self.assertIn("**Claim discipline in delivery.**", self.skill)
+        self.assertIn("### 4.1 CLAIM_DISCIPLINE — plain words never add certainty", self.module)
+        rules = flat(self.module.split("### 4.1 CLAIM_DISCIPLINE")[1].split("## 5.")[0])
+        for marker in [
+            # A. product-state inference guard
+            "No product-state facts from adjacent facts", "payment model", "remote-update capability",
+            "support burden", "legal/regulatory status", "not from \"offline\", \"no personal data\"",
+            "Regulatory status stays jurisdiction-specific",
+            # B. causal-ranking guard
+            "No causal dominance from tiny observational samples", "\"dominant\"",
+            "\"almost certainly the main cause\"", "cheapest check that tells them apart",
+            # C. external outcome/time guard
+            "No external outcome or timing guarantees", "response time", "\"하루면 답이 옵니다\"",
+            # D. provenance guard
+            "Locator or explicit limit for every material researched claim", "NOT_CHECKED",
+            "says it is generic",
+        ]:
+            self.assertIn(marker, rules)
+        kernel = flat(self.skill.split("**Claim discipline in delivery.**")[1].split("## STEP 0")[0])
+        for marker in ["adjacent facts", "dominant from a tiny observational sample",
+                       "never promise external response time", "locator or an explicit NOT_CHECKED limit"]:
+            self.assertIn(marker, kernel)
+
+    def test_opening_hard_check_requires_answer_and_action(self):
+        delivery = flat(self.module.split("## 4. FRIENDLY_EXPERT")[1].split("### 4.1")[0])
+        self.assertIn("Opening hard check (answerable cases): lines 1–3 contain both (a) the direct answer and (b) one immediate action direction", delivery)
+        self.assertIn("A conclusion alone, or a meta/setup line", delivery)
+        self.assertIn("Lines 1–3 carry both the direct answer and one immediate action", self.skill)
+        twin = flat(self.module.split("## 5. EXPERT_TWIN")[1].split("## 6.")[0])
+        self.assertIn("one action direction within the first three lines", twin)
+        self.assertIn("break §4.1", twin)
+
     # ---- regression: rc03/core strengths stay in the runtime text -------------------
     def test_rc03_core_strengths_preserved(self):
         anchors = {
