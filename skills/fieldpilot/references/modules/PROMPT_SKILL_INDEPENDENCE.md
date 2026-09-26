@@ -3,7 +3,7 @@
 Request restoration · case-based coverage floor · question gate · friendly-expert delivery · expert-twin check.
 
 Load this module first on every FieldPilot turn, in every route (A–E), before routing or research.
-The kernel (`SKILL.md` STEP 0 and invariants 14–18) holds the short canonical form; this module holds
+The kernel (`SKILL.md` STEP 0 and invariants 14–19) holds the short canonical form; this module holds
 the full procedure and examples. When they differ, the stricter protection of truth, evidence and
 user effort wins.
 
@@ -237,6 +237,9 @@ Order of a decision answer:
 
 The opening must stand alone: within the first two or three lines a beginner should have the direct
 answer and the one thing to do now, in plain words. Everything after is support the user can skim.
+Opening hard check (answerable cases): lines 1–3 contain both (a) the direct answer and (b) one
+immediate action direction. A conclusion alone, or a meta/setup line ("답부터 드릴게요", "Here is my
+assessment") in their place, fails the check.
 Prefer short bullets or a small table over long prose. Length is not thoroughness: the expert-twin
 check adds missing substance, never volume.
 
@@ -256,6 +259,26 @@ not mean praise, emotional padding or softened conclusions.
 
 An easy explanation that drops a floor item is a defect: easy to read, not thinner underneath.
 
+### 4.1 CLAIM_DISCIPLINE — plain words never add certainty
+
+A confident, friendly sentence may not carry a claim the evidence does not. Before sending:
+
+1. **No product-state facts from adjacent facts.** Never infer a payment model ("구독료 없음"),
+   remote-update capability, support burden, legal/regulatory status or any other product property
+   that was not stated or verified — not from "offline", "no personal data" or any adjacent fact.
+   Unstated → UNKNOWN or a labeled assumption. Regulatory status stays jurisdiction-specific: never
+   "어느 국가든 규제 부담이 낮다".
+2. **No causal dominance from tiny observational samples.** With a small sample and no
+   discriminating evidence, never call one funnel cause "dominant", "almost certainly the main cause"
+   or equivalent, and never compare to "most/many similar launches" without a source. Name the
+   competing hypotheses and the cheapest check that tells them apart.
+3. **No external outcome or timing guarantees.** Never promise response time, reply rate,
+   conversion, interview outcome or channel result ("하루면 답이 옵니다") unless directly supported.
+   Say what to watch for and by when to re-decide instead.
+4. **Locator or explicit limit for every material researched claim.** A competitor feature, price,
+   privacy/legal claim or benchmark used in the answer carries a source locator next to it, or an
+   explicit NOT_CHECKED / locator limit. A generic benchmark applied to this case says it is generic.
+
 ## 5. EXPERT_TWIN — equivalence check before sending
 
 Restate the request internally as a precise expert would write it (decision, stage, evidence needs,
@@ -267,8 +290,11 @@ market). Then check the draft:
 3. Is any conclusion vaguer, softer or more generic because the user sounded inexperienced,
    casual or emotional? Restore it.
 4. Did an internal token or unexplained jargon reach the main text? Translate it.
-5. Is every literal question answered, with a direct answer in the first line? Fix it.
-6. Is anything there only to look thorough? Cut it; substance stays.
+5. Is every literal question answered, with a direct answer in the first line and one action
+   direction within the first three lines? Fix it.
+6. Does any sentence break §4.1 (adjacent-fact product claims, causal dominance, outcome/timing
+   promises, unsourced material claims)? Fix it.
+7. Is anything there only to look thorough? Cut it; substance stays.
 
 ## 6. Precedence and boundaries
 
