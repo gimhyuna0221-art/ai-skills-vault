@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-and-check:
@@ -55,6 +55,20 @@ jobs:
           CANDIDATE_ROOT: ${{ runner.temp }}/fieldpilot-candidate/fieldpilot
         run: |
           PYTHONPATH="$CANDIDATE_ROOT/tools"           python -m unittest discover             -s "$CANDIDATE_ROOT/tests"             -p 'test_*_contract.py' -v
+
+      - name: Materialize verified candidate into this isolated branch
+        run: |
+          rm -rf skills/fieldpilot
+          cp -a "$RUNNER_TEMP/fieldpilot-candidate/fieldpilot" skills/fieldpilot
+          git add skills/fieldpilot
+          if git diff --cached --quiet; then
+            echo "No materialization changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore(fieldpilot): materialize verified readiness-review-02 candidate"
+            git push origin HEAD:worker/fieldpilot-agent-reach-readiness-02
+          fi
 
       - name: Package candidate
         run: |
