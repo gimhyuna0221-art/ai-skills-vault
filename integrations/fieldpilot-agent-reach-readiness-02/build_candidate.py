@@ -28,10 +28,10 @@ def make_frontmatter_yaml_safe(skill_path: Path) -> None:
     for i, line in enumerate(lines):
         if line.startswith("description: "):
             description = line[len("description: "):]
-            lines[i:i+1] = ["description: >-", "  " + description]
+            if description.startswith('"') and description.endswith('"'):
+                return
+            lines[i] = "description: " + json.dumps(description, ensure_ascii=False)
             skill_path.write_text("\n".join(lines) + ("\n" if text.endswith("\n") else ""), encoding="utf-8")
-            return
-        if line == "description: >-" or line == "description: |":
             return
         if i > 0 and line == "---":
             break
