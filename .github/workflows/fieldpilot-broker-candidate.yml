@@ -1,0 +1,49 @@
+name: FieldPilot Broker Candidate
+
+on:
+  push:
+    branches:
+      - 'worker/fieldpilot-broker-exec-*'
+    paths:
+      - 'integrations/fieldpilot-broker-exec-01/**'
+      - '.github/workflows/fieldpilot-broker-candidate.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fieldpilot-broker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build from exact rc04 source
+        run: python integrations/fieldpilot-broker-exec-01/build_candidate.py --output "$RUNNER_TEMP/fieldpilot-candidate"
+      - name: Run inherited and extension tests plus HTML smoke
+        run: python integrations/fieldpilot-broker-exec-01/build_candidate.py --output "$RUNNER_TEMP/fieldpilot-candidate" --verify
+      - name: Upload verified candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: fieldpilot-rc04-broker-exec-01-${{ github.sha }}
+          path: ${{ runner.temp }}/fieldpilot-candidate/
+          retention-days: 7
+          if-no-files-found: error
+      - name: Upload failure diagnostics only
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fieldpilot-broker-diagnostics-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/fieldpilot-candidate/TEST_LOG.txt
+            ${{ runner.temp }}/fieldpilot-candidate/RENDER_LOG.txt
+          retention-days: 7
+          if-no-files-found: warn
