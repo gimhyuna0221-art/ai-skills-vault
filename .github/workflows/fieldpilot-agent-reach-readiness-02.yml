@@ -1,0 +1,83 @@
+name: FieldPilot Agent-Reach Readiness Candidate
+
+on:
+  push:
+    branches:
+      - 'worker/fieldpilot-agent-reach-readiness-02'
+    paths:
+      - 'integrations/fieldpilot-agent-reach-readiness-02/**'
+      - '.github/workflows/fieldpilot-agent-reach-readiness-02.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build exact readiness-review-02 candidate
+        run: |
+          python integrations/fieldpilot-agent-reach-readiness-02/build_candidate.py             --output "$RUNNER_TEMP/fieldpilot-candidate"
+
+      - name: Verify candidate identity and required overlay
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / "fieldpilot-candidate"
+          required = [
+              root / "SKILL.md",
+              root / "references/modules/AGENT_REACH_ACCESS.md",
+              root / "references/modules/RESEARCH_REVIEW_NOTES.md",
+              root / "tools/research_receipts.py",
+              root / "tests/test_research_receipts_contract.py",
+          ]
+          missing = [str(p) for p in required if not p.is_file()]
+          assert not missing, missing
+          skill = (root / "SKILL.md").read_text(encoding="utf-8")
+          assert 'review_extension_revision: "readiness-review-02"' in skill
+          assert skill.count("**Truth before fluency.**") == 1
+          print("CANDIDATE_IDENTITY_PASS")
+          PY
+
+      - name: Run inherited plus readiness contract tests
+        run: |
+          python -m unittest discover             -s "$RUNNER_TEMP/fieldpilot-candidate/tests"             -p 'test_*_contract.py' -v
+
+      - name: Package candidate
+        run: |
+          cd "$RUNNER_TEMP"
+          python - <<'PY'
+          import hashlib, json, pathlib, zipfile
+          root = pathlib.Path("fieldpilot-candidate")
+          manifest = {}
+          for p in sorted(root.rglob("*")):
+              if p.is_file():
+                  manifest[p.relative_to(root).as_posix()] = hashlib.sha256(p.read_bytes()).hexdigest()
+          (root / "READINESS_CI_MANIFEST.json").write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          with zipfile.ZipFile("FieldPilot_readiness_review_02_CI.zip", "w", zipfile.ZIP_DEFLATED) as zf:
+              for p in sorted(root.rglob("*")):
+                  if p.is_file():
+                      zf.write(p, pathlib.Path("fieldpilot") / p.relative_to(root))
+          print("FILES", len(manifest))
+          print("ZIP_SHA256", hashlib.sha256(pathlib.Path("FieldPilot_readiness_review_02_CI.zip").read_bytes()).hexdigest())
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fieldpilot-readiness-review-02-${{ github.sha }}
+          path: ${{ runner.temp }}/FieldPilot_readiness_review_02_CI.zip
+          retention-days: 14
+          if-no-files-found: error
