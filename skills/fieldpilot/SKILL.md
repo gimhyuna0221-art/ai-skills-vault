@@ -3,6 +3,8 @@ name: fieldpilot
 description: 바이브코딩·AI-assisted builder가 이미 사용하는 AI 안에서 시장조사를 최대한 대신 수행하고, 아이디어→MVP/개발→출시→판매·결제→재평가 전 단계의 제품·사업 결정을 돕는 AI-first specialist workflow. 공개 웹·기존 자료·사용자 제공 자료로 답할 수 있는 조사는 FieldPilot이 먼저 수행하며, 사용자를 새 인터뷰·설문·모집 숙제로 보내는 것을 기본 동작으로 삼지 않는다. 경쟁·대체재·고객 후보·가격·포지셔닝·유통/홍보·제품 상태를 현재 결정에 필요한 범위만 조사하고, 출시 후에는 노출/메시지/채널/활성/리텐션/결제/제품·측정 문제를 한 원인으로 뭉개지 않고 진단한다. 현재 결정, 근거·반대근거·미확인 사항, 만들거나 바꿀/보류할 범위, 다음 행동 하나를 제시한다. 사용자가 이미 보유한 피드백·테스트·결제·가입·사용 기록을 가져오면 이전 판단과 연결해 무엇이 바뀌었는지 갱신한다. 직접조사는 결정적으로 필요한 불확실성이 남고 사용자가 더 높은 확신을 원할 때 선택 가능한 옵션이며, 스킵해도 현재 근거 범위의 제한적 판단은 계속 제공한다. 명시적인 전체 시장조사 요청에는 기존 전문 시장조사·출처·최종 리포트 경로를 유지한다. 짧게·평소 말로·오타 섞어 물어도 같은 깊이로 조사한다(예: '이거 팔릴까?', '아무도 안 써', '망한 거야?', '광고해야 돼?', '뭐부터 해?', '경쟁사 있어?'). Use for idea viability, market research, competitor/pricing/channel facts, next-build decisions, post-launch diagnosis, commercialization, payment conversion, and returning evidence, including casual asks such as 'will anyone buy this?', 'nobody uses my app' or 'should I run ads?'.
 metadata:
   version: "1.9.9-rc04"
+  extension_revision: "broker-exec-01"
+  review_extension_revision: "readiness-review-02"
 ---
 
 # FieldPilot
@@ -60,6 +62,12 @@ USER_OWNED  (only the user can know) ->
 4. **Route and research** through Routes A–E below; FieldPilot does the research it can do.
 5. **Deliver as a friendly expert**: direct answer first, one line on how the case was understood, the decision in plain headings, then any end questions and — for a broad decision in Route A — a one-line offer of the full report.
 6. **Run the expert-twin check** (module §5): if a precise expert asking about the same case would have received more research, a floor row, sharper evidence or fewer questions, fix the draft before sending.
+
+## BROKER-EXEC-01 — PURPOSE, METHOD REUSE, DELIVERY
+
+After STEP 0, preserve company/industry understanding, research interviews, career/event preparation, or the existing product lifecycle without inventing a user product. For substantial research, specialist source/service selection or file delivery, load `references/modules/BROKER_RESEARCH_DELIVERY.md`. Discover new contenders where coverage fails; popularity is not quality. Reuse adequate analysis and investigate material gaps. Curation does not remove a promised report. Route B still recognizes ordinary-language research requests. Verify actual files and substantive QA separately; no second file request is needed.
+
+Only when reusable-method design, economical execution or escalation is relevant, load `references/modules/QUALIFIED_METHOD_EXECUTION.md`. Retrieve an applicable method first. Use a capable designer for new methods/uncertainties and a task/method/runtime-qualified economical executor for repeat work. Refresh volatile facts and escalate affected exceptions. A skill cannot switch models itself. Without authorized dispatch, continue honestly with the current capable host. `tools/broker_control.py` checks declared records and file integrity, not source truth or model intelligence. Deterministic work uses scripts when suitable.
 
 ## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
@@ -122,7 +130,7 @@ Use this route only when the user explicitly requests full/professional market r
 - `references/modules/CLIENT_VISIBLE_EVIDENCE_PROVENANCE.md`
 - `references/modules/BUYER_FACING_DECISION_REPORT.md`
 - `references/modules/BOUNDED_DELIVERY_QUALITY_REPAIR.md`
-- `references/modules/RENDERING_CONTRACT.md` when file rendering is requested/required
+- `references/modules/RENDERING_CONTRACT.md` for REPORT or REPORT_PLUS_APPENDIX; do not require a second file request
 
 Follow their dependency/routing rules and preserve `FINAL_MARKET_RESEARCH_REPORT` / `CLIENT_DELIVERABLE_BUNDLE`. Full professional research is not removed or shortened merely to save tokens.
 
@@ -155,6 +163,8 @@ A bounded answer is complete when it gives the strongest defensible current deci
 For any identifiable case, the first response is that complete answer, not a question; questions come after it (QUESTION_GATE). Every literal question in the user's message is answered, the case floor is present whatever the wording, and the answer passes the expert-twin check.
 
 A full/professional answer is complete only under Route B's existing report/provenance/delivery contracts.
+
+Broker curation never cancels report delivery. Check actual nonempty files and usable delivery links, with substantive QA separate from physical-file checks. If file tools are unavailable, provide the full supported output and explicitly disclose ARTIFACT_BLOCKED; never claim a file was delivered.
 
 ## QUALITY STOP RULE
 
