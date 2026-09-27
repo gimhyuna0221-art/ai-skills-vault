@@ -186,3 +186,14 @@ rule; the `FINAL_MARKET_RESEARCH_REPORT.md` schema for a report that does not op
 It adds no new research capability, benchmark, scoring router, evidence architecture, crawler,
 pricing engine, or always-on monitor. Where this module and any of the above appear to
 conflict, the preserved behavior governs.
+
+## 7. User-specified outline and purpose — report-actionability-01
+
+For substantial category/industry reports, apply
+[report actionability](REPORT_ACTIONABILITY.md).
+For a supplied outline, its order governs customer-facing section order rather
+than the generic section list above. Preserve the four opening meanings briefly;
+if the user requires only their headings, integrate them inside those headings.
+This is the bounded presentation exception to sections 1 and 6, not a relaxation
+of provenance, practical-fit honesty, audit split or renderer consistency.
+General market understanding is not an invented founder/entry decision.
