@@ -20,6 +20,24 @@ BASE_COMMIT = "55b1aa7824627b23304be869187dbc25d66e540d"
 AGENT_REACH_PIN = "a19a171fa980a0785849596492e0af4db800c82f"
 
 
+def make_frontmatter_yaml_safe(skill_path: Path) -> None:
+    text = skill_path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    if not lines or lines[0] != "---":
+        raise RuntimeError("SKILL.md frontmatter missing")
+    for i, line in enumerate(lines):
+        if line.startswith("description: "):
+            description = line[len("description: "):]
+            lines[i:i+1] = ["description: >-", "  " + description]
+            skill_path.write_text("\n".join(lines) + ("\n" if text.endswith("\n") else ""), encoding="utf-8")
+            return
+        if line == "description: >-" or line == "description: |":
+            return
+        if i > 0 and line == "---":
+            break
+    raise RuntimeError("SKILL.md description field missing")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", required=True)
@@ -48,6 +66,8 @@ def main() -> None:
         dest = skill / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(file_content, encoding="utf-8")
+
+    make_frontmatter_yaml_safe(skill / "SKILL.md")
 
     print(
         json.dumps(
