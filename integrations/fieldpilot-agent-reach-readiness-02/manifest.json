@@ -1,0 +1,8 @@
+{
+  "candidate": "FieldPilot_readiness_review_02_TRIAL",
+  "base_branch": "worker/fieldpilot-broker-exec-20260927",
+  "base_commit": "55b1aa7824627b23304be869187dbc25d66e540d",
+  "trial_zip_sha256": "ed3a149ab4fa83da5b3322973e012ebae6a1ce8048f0e156a555c0b115c2599f",
+  "source_reference": "Panniantong/Agent-Reach@a19a171fa980a0785849596492e0af4db800c82f",
+  "merge_status": "TRIAL_ONLY"
+}
