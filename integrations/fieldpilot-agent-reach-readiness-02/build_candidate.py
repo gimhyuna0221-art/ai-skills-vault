@@ -35,13 +35,17 @@ def main() -> None:
         cwd=REPO,
     )
 
+    skill = out / "fieldpilot"
+    if not (skill / "SKILL.md").is_file():
+        raise RuntimeError("broker base candidate missing fieldpilot/SKILL.md")
+
     encoded = "".join(p.read_text(encoding="utf-8") for p in PARTS)
     files = json.loads(
         zlib.decompress(base64.b64decode(encoded)).decode("utf-8")
     )
 
     for rel, file_content in files.items():
-        dest = out / rel
+        dest = skill / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(file_content, encoding="utf-8")
 
@@ -49,7 +53,7 @@ def main() -> None:
         json.dumps(
             {
                 "status": "BUILT",
-                "output": str(out),
+                "output": str(skill),
                 "overlaid_files": len(files),
                 "trial_zip_sha256": TRIAL_ZIP_SHA256,
                 "base_commit": BASE_COMMIT,
