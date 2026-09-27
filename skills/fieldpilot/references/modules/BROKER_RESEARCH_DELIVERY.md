@@ -15,6 +15,15 @@ DELIVERY is independent of research strategy:
 
 ## 2. Discover contenders, not permanent winners
 
+### Required reference-first checkpoint
+
+Before substantive conclusions apply [reference-first value](REFERENCE_FIRST_VALUE.md).
+Reuse sufficient inspected evidence first; otherwise discover and inspect better
+claim-matched sources or authorized service outputs. Record selection rationale and
+remaining gaps in the existing source register. Best available for this task is not
+verified global first place. Finding good material does not replace explaining
+supported options and why one fits. Explicit source-only limits remain binding.
+
 Reuse adequate, current evidence and applicable methods before starting new research. For a gap, search by job, topic, sector, geography, missing evidence and source type, not only familiar brands. Add a new challenger when a better capability appears, current coverage fails or circumstances change. Do not rediscover all sites on every invocation; no universal search/source quota.
 
 Distinguish SOURCE (an existing report, statistic or document) from SERVICE (a tool generating an output from input). A service's advertised feature is not its actual output, a public report, or an authorized API. Popularity and repeated promotional posts are discovery signals, not quality or independent corroboration. Inspect real outputs and compare only overlapping supported tasks. Access-unavailable is not poor quality.
