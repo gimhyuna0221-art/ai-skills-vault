@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "method_id": "REPLACE_WITH_TASK_METHOD_ID",
+  "state": "DRAFT",
+  "task_family": "company_interview",
+  "scope": {"market": ["REPLACE_WITH_SUPPORTED_MARKET"]},
+  "coverage": ["company", "alternatives", "risk", "interview"],
+  "capabilities": ["web_search", "source_read", "file_write"],
+  "review_by": "2000-01-01T00:00:00Z",
+  "procedure": [
+    "Preserve the user's actual purpose and applicability.",
+    "Find suitable existing evidence and new contenders for uncovered questions.",
+    "Read relevant passages with origin, period, units, definition and limitations.",
+    "Resolve material differences or retain the conflict; adapt to the purpose.",
+    "Generate and inspect the requested report and role-bounded appendix."
+  ],
+  "source_fields": ["claim", "locator", "read_scope", "origin", "period", "units", "definition", "limit"],
+  "example": "SYNTHETIC: ExampleCo annual revenue does not establish current-quarter revenue.",
+  "counterexample": "An advertised analysis feature does not establish accurate unseen outputs.",
+  "qualifications": [],
+  "notice": "Expired DRAFT TEMPLATE, not real qualification. Set a justified review date and attach actual held-out clean-session evidence before use."
+}
