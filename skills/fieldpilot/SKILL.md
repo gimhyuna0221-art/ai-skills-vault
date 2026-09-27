@@ -5,6 +5,7 @@ metadata:
   version: "1.9.9-rc04"
   extension_revision: "broker-exec-01"
   review_extension_revision: "readiness-review-02"
+  report_extension_revision: "report-actionability-01"
 ---
 
 # FieldPilot
@@ -68,6 +69,15 @@ USER_OWNED  (only the user can know) ->
 After STEP 0, preserve company/industry understanding, research interviews, career/event preparation, or the existing product lifecycle without inventing a user product. For substantial research, specialist source/service selection or file delivery, load `references/modules/BROKER_RESEARCH_DELIVERY.md`. Discover new contenders where coverage fails; popularity is not quality. Reuse adequate analysis and investigate material gaps. Curation does not remove a promised report. Route B still recognizes ordinary-language research requests. Verify actual files and substantive QA separately; no second file request is needed.
 
 Only when reusable-method design, economical execution or escalation is relevant, load `references/modules/QUALIFIED_METHOD_EXECUTION.md`. Retrieve an applicable method first. Use a capable designer for new methods/uncertainties and a task/method/runtime-qualified economical executor for repeat work. Refresh volatile facts and escalate affected exceptions. A skill cannot switch models itself. Without authorized dispatch, continue honestly with the current capable host. `tools/broker_control.py` checks declared records and file integrity, not source truth or model intelligence. Deterministic work uses scripts when suitable.
+
+## REPORT-ACTIONABILITY-01 — USER OUTLINE AND IMPLICATIONS
+
+For substantial reports, including user-specified section lists, load
+[report actionability](references/modules/REPORT_ACTIONABILITY.md) alongside Route B.
+Preserve the requested subjects, headings and order. Connect findings to supported
+implications and, when appropriate, options, trade-offs and a bounded next step.
+Do not invent a user product or entry plan; facts-only restrictions take precedence.
+This is a content-completion check, not permission to expand every narrow question.
 
 ## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
