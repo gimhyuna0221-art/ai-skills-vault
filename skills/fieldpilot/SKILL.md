@@ -8,6 +8,7 @@ metadata:
   report_extension_revision: "report-actionability-01"
   reference_extension_revision: "reference-first-01"
   delivery_extension_revision: "premium-deliverable-01"
+  scenario_extension_revision: "scenario-stress-01"
 ---
 
 # FieldPilot
@@ -93,6 +94,14 @@ implications and, when appropriate, options, trade-offs and a bounded next step.
 Do not invent a user product or entry plan; facts-only restrictions take precedence.
 This is a content-completion check, not permission to expand every narrow question.
 
+## SCENARIO-STRESS-01 — EVIDENCE-GROUNDED FUTURE REACTION TEST
+
+When a decision materially depends on how customers, competitors, channels, partners or other actors may react after an action, conditionally load `references/modules/SCENARIO_STRESS_TEST.md`. This layer runs **after** real evidence collection and alternative mapping, never before them.
+
+Use it to build an evidence-grounded actor map, compare a small set of feasible scenarios, trace first- and second-order reactions, expose adverse/counter-responses, and turn the result into real-world validation questions. Every simulated reaction remains `SYNTHETIC_HYPOTHESIS`; it is never demand, WTP, market share, conversion, causal proof or a forecast.
+
+Do not activate it for narrow facts, ordinary descriptive reports where reactions do not change the decision, facts-only/source-only requests, or merely to make a report look advanced. It uses the current capable host and does not require a new swarm engine, thousands of agents, Zep, or another paid dependency. Real evidence always outranks synthetic scenario output.
+
 ## ROUTE A — ORDINARY BUILDER / MARKET→BUILD
 
 Load and apply the lifecycle router plus the ordinary decision module first:
@@ -137,7 +146,9 @@ ONE_NEXT_ACTION
 
 For broad viability/commercialization of an already-built product, §7.3 of the ordinary module adds the compact buyer surface: `PAIN_SIGNAL_SYNTHESIS / COMPETITIVE_ALTERNATIVES / MONEY_SHAPE / PRODUCT_STATE_DELTA / WHY_SWITCH_OR_NOT / FIRST_PAID_PROOF`, alongside `CURRENT_DECISION / UNKNOWNS / BUILD_CHANGE_OR_HOLD`. Keep decisive sources and counterevidence visible; this is one answer, not a duplicate report. §7.4 makes FIRST_PAID_PROOF the same next action when a paid experiment is appropriate. Narrow facts stay narrow; returning evidence updates affected fields only.
 
-For broad already-built-product decisions, or when risk/change options, a validation threshold, product pattern, handoff or variant comparison is decision-material, also apply [decision surfaces](references/modules/DECISION_SURFACES.md). It strengthens §7.3 inside the same answer: claim-level trace, full alternative map/economics, reality check, bounded risks/options and falsifiable experiments. Narrow price/fact questions do not load that module. Route B integrates relevant surfaces into its existing report; returning evidence loads only detail needed by affected claims.
+For broad already-built-product decisions, or when risk/change options, a validation threshold, product pattern, handoff or variant comparison is decision-material, also apply [decision surfaces](references/modules/DECISION_SURFACES.md).
+
+If the ranking between feasible actions can materially change because of likely actor reactions, then after the real-evidence alternative map is established load [scenario stress test](references/modules/SCENARIO_STRESS_TEST.md). Keep every reaction synthetic and use it only to expose second-order risks, counter-moves and real-world checks; never promote it into demand or probability. It strengthens §7.3 inside the same answer: claim-level trace, full alternative map/economics, reality check, bounded risks/options and falsifiable experiments. Narrow price/fact questions do not load that module. Route B integrates relevant surfaces into its existing report; returning evidence loads only detail needed by affected claims.
 
 If implementation is the next action, `ONE_NEXT_ACTION` may expand into `EXACT_NEXT_BUILD_ACTION` with:
 
@@ -154,6 +165,7 @@ Use this route only when the user explicitly requests full/professional market r
 - `references/modules/MARKET_RESEARCH_DELIVERABLES.md`
 - `references/modules/COMMERCIAL_DELIVERABLE_SYSTEM.md`
 - `references/modules/PREMIUM_FINAL_REPORT_STANDARD.md`
+- `references/modules/SCENARIO_STRESS_TEST.md` when future actor reactions are decision-material
 - `references/modules/CLIENT_VISIBLE_EVIDENCE_PROVENANCE.md`
 - `references/modules/BUYER_FACING_DECISION_REPORT.md`
 - `references/modules/BOUNDED_DELIVERY_QUALITY_REPAIR.md`
