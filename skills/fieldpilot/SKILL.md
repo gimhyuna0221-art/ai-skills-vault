@@ -7,6 +7,7 @@ metadata:
   review_extension_revision: "readiness-review-02"
   report_extension_revision: "report-actionability-01"
   reference_extension_revision: "reference-first-01"
+  delivery_extension_revision: "premium-deliverable-01"
 ---
 
 # FieldPilot
@@ -150,6 +151,9 @@ Use this route only when the user explicitly requests full/professional market r
 
 - `references/core/RUNTIME_CORE.md`
 - `references/core/METHODOLOGY_SOURCES.md`
+- `references/modules/MARKET_RESEARCH_DELIVERABLES.md`
+- `references/modules/COMMERCIAL_DELIVERABLE_SYSTEM.md`
+- `references/modules/PREMIUM_FINAL_REPORT_STANDARD.md`
 - `references/modules/CLIENT_VISIBLE_EVIDENCE_PROVENANCE.md`
 - `references/modules/BUYER_FACING_DECISION_REPORT.md`
 - `references/modules/BOUNDED_DELIVERY_QUALITY_REPAIR.md`
