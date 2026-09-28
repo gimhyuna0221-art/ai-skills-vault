@@ -200,7 +200,8 @@ Scenario Stress Test (Synthetic)
 ```
 
 Keep it in the customer report only when it changes the decision or clarifies a major risk. Put
-the detailed actor/reaction ledger in the appendix when long.
+the detailed actor/reaction ledger in the appendix when long. Every detailed actor/reaction ledger
+row also carries `SYNTHETIC_HYPOTHESIS` so appendix detail cannot be mistaken for observed evidence.
 
 The first sentence must explain that this is an AI-generated stress test grounded in observed
 evidence, not observed behavior or a forecast.
