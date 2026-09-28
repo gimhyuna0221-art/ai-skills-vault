@@ -10,6 +10,7 @@ metadata:
   delivery_extension_revision: "premium-deliverable-01"
   scenario_extension_revision: "scenario-stress-01"
   council_extension_revision: "decision-council-01"
+  methodology_extension_revision: "method-parity-01"
 ---
 
 # FieldPilot
@@ -95,6 +96,16 @@ implications and, when appropriate, options, trade-offs and a bounded next step.
 Do not invent a user product or entry plan; facts-only restrictions take precedence.
 This is a content-completion check, not permission to expand every narrow question.
 
+## METHOD-PARITY-01 — PROFESSIONAL RESEARCH DESIGN / ANALYSIS / PLATFORM BROKERAGE
+
+For substantial full/professional market research, build a decision-driven research question map before broad retrieval by loading `references/modules/RESEARCH_QUESTION_COVERAGE_MAP.md`. Research breadth follows unanswered decision-material questions and contradictions, not a fixed source count or report template.
+
+When an irreducible primary-research gap moves into method/instrument/platform design, load `references/modules/PRIMARY_RESEARCH_PLATFORM_BRIDGE.md`. Preserve the chain from business question → objective → population/evidence holder → construct → method → instrument → collector/sample → analysis. Use specialist survey/panel/data platforms for their infrastructure when they fit; do not rebuild panels, proprietary datasets, SSO, SMS/email delivery or social firehoses inside FieldPilot.
+
+When returned survey/panel/tracker/concept-test data require analysis, load `references/modules/RESEARCH_ANALYSIS_COMPILER.md`. Clean and quality-check before interpretation; expose bases/denominators; use crosstabs and inferential tests only when the design supports them; keep effect/practical significance, weighting limits, open-text AI assistance and wave comparability explicit.
+
+When choosing specialist market-research infrastructure/data, load `references/data/MARKET_RESEARCH_CAPABILITY_CATALOG.md` only as a replaceable capability map. Provider names are examples, not permanent winners; re-check current official scope, access, output and terms.
+
 ## DECISION-COUNCIL-01 — EVIDENCE-GROUNDED DOCUMENTED LENSES
 
 When a material product/business/strategy choice has adequate base evidence and a distinct documented decision lens could expose a trade-off, blind spot or reversal condition, conditionally load `references/modules/EVIDENCE_GROUNDED_DECISION_COUNCIL.md` and its verified starter cards in `references/data/DECISION_LENS_LIBRARY.md`.
@@ -173,6 +184,9 @@ Use this route only when the user explicitly requests full/professional market r
 
 - `references/core/RUNTIME_CORE.md`
 - `references/core/METHODOLOGY_SOURCES.md`
+- `references/modules/RESEARCH_ANALYSIS_COMPILER.md` when returned structured/customer research requires analysis
+- `references/modules/PRIMARY_RESEARCH_PLATFORM_BRIDGE.md` when primary-research platform/instrument execution is decision-material
+- `references/modules/RESEARCH_QUESTION_COVERAGE_MAP.md`
 - `references/modules/MARKET_RESEARCH_DELIVERABLES.md`
 - `references/modules/COMMERCIAL_DELIVERABLE_SYSTEM.md`
 - `references/modules/PREMIUM_FINAL_REPORT_STANDARD.md`

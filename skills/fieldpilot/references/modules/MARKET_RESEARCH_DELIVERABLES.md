@@ -17,6 +17,16 @@ page-count padding.
 
 Decision support, development-priority advice, commitment ceilings, and next actions may appear in `Expert Interpretation / Recommendations`, but they remain **derived advice from the market research**.
 
+For every substantial full engagement, compile a decision-driven research-question coverage map via
+`references/modules/RESEARCH_QUESTION_COVERAGE_MAP.md` before broad retrieval. The map determines the
+minimum sufficient questions, binds evidence to those questions, and drives the pre-writing outline.
+It does not replace the user's requested headings.
+
+When direct-research execution requires external survey/panel/recruitment infrastructure, use
+`references/modules/PRIMARY_RESEARCH_PLATFORM_BRIDGE.md` to translate the selected method into
+instrument/collector/platform requirements. When returned structured research is analyzed, apply
+`references/modules/RESEARCH_ANALYSIS_COMPILER.md` before final interpretation.
+
 ## 2. Full-research trigger
 
 Activate this contract when the user asks for the market to be researched for their service/product, asks for a comprehensive competitor/customer/market assessment, or requests a final market-research report — in any wording ("시장조사 해줘", "다 조사해줘", "보고서로 줘"). Full-engagement routing is semantic; it must not depend on the user knowing research vocabulary, and research vocabulary alone ("analysis", "assessment", "viability") does not trigger it. **A broad judgment asked in ordinary language — whether people will use or pay for the product, who the customers are, whether it can be sold, whether it has a viable market — is answered through the kernel's ordinary broad-viability route (`SKILL.md` Route A, `DECISION_CONTINUITY.md` §2.1/§7.3) with the same decision-critical evidence floor, and that answer offers this full deliverable in one line.** The kernel's route boundary governs; this contract never narrows a requested comprehensive deliverable.
@@ -174,6 +184,13 @@ Requesting a final report is not itself a `SKIP` choice. `SKIP` remains valid at
 
 FieldPilot informs, recommends, and generates the selected-method materials. The user performs real-world actions that the AI cannot perform. Do not claim FieldPilot itself recruited participants, interviewed them, purchased anything, observed offline behavior, collected payment, or completed fieldwork unless verifiable authorized tooling actually did so. When the user returns REAL evidence, preserve raw provenance, check fieldwork/measurement integrity, integrate it with desk/web evidence, separate observations from interpretation, consider negative evidence and alternative explanations, update claim ceilings, and update the professional market-research report.
 
+For returned surveys/panels/trackers or structured concept-test data, the analysis pass must expose
+denominators/base sizes, weighted versus unweighted results when relevant, missingness/exclusions, and
+subgroup/wave comparability. Crosstabs or significance markers are interpreted only when the design and
+assumptions support them; statistical significance never substitutes for practical significance or fixes
+selection/measurement bias. Open-text topic/sentiment processing retains raw-text provenance and AI-use
+disclosure.
+
 ## 6. Skip semantics
 
 When the user skips, persist/report:
@@ -218,6 +235,12 @@ MARKET_RESEARCH_KIT/
 The exact set depends on the recorded MethodDecision and readiness. A qualitative interview does not require a survey file; an instrumented behavior test does not receive an interview guide unless interviews were also selected; a combination receives only the union of relevant materials. A desk-only task does not require recruitment files.
 
 Every generated execution file must be directly usable by a novice and must preserve the method/evidence limits from the core modules.
+
+For survey/concept-test kits, include applicable execution logic explicitly rather than relying on
+platform defaults: answer validation, screener/disqualification, branch/skip logic, piping/prefill,
+question/choice/block randomization where order effects matter, quota/composition controls,
+language/translation handling, accessibility/mobile constraints, collector/mode plan, and pretest/version
+lock. Verify the selected platform actually supports the required behavior before calling the kit executable.
 
 Before delivering the kit, run an internal executability check:
 

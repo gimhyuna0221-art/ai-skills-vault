@@ -34,6 +34,13 @@ Record CONTENT_ACCESS as READ, PARTIAL, LOCATED_ONLY or UNAVAILABLE, with exact 
 
 For services record ADVERTISED, SAMPLE_INSPECTED or TESTED_FOR_JOB, with actual evaluation evidence before the last state. Never treat TIO, CATCH or any seed site as an immutable winner. Site names belong in replaceable task-specific source records, not a global ranking hardcoded into the kernel.
 
+When the need is research infrastructure rather than a finished source, broker by **capability class**.
+Examples include survey build/logic, participant panels, consumer/audience datasets, market/category
+databases, digital competitive intelligence, social listening, web retrieval and deep-research synthesis.
+Use `references/data/MARKET_RESEARCH_CAPABILITY_CATALOG.md` only as a replaceable discovery map. Verify
+current official capability, geography/method, access, cost/terms and actual output before promoting a
+provider. Do not rebuild mature infrastructure merely to keep the workflow "all FieldPilot."
+
 ## 3. Use only the necessary research action
 
 CURATE when an accessible fit source already answers the question; VERIFY_AND_ADAPT when its date, scope or purpose differs; TARGETED_RESEARCH for a material gap/conflict; BOUNDED_UNKNOWN when adequate accessible routes are exhausted. Choose per question. Stop satisfied facets, not required coverage. Reopen a facet when new evidence changes it.

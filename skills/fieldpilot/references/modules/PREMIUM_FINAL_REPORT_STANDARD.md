@@ -76,6 +76,18 @@ full report when comparable fields exist. Do not fabricate charts, market shares
 margin merely to make the PDF look expensive. A clean UNKNOWN is more professional than decorative
 precision.
 
+## 3a. Portable, accessible and localized delivery
+
+A paid report should remain usable after the chat closes.
+
+- Prefer a self-contained HTML render plus PDF/Markdown fallback under the existing rendering contract.
+- Do not rely on color alone to communicate positive/negative/unknown states; tables and labels carry the meaning.
+- Use semantic headings/tables and provide text equivalents or descriptive captions for material visuals where the rendering path supports them.
+- Preserve keyboard/read-order accessibility for any interactive or navigable output the runtime actually creates; do not claim WCAG conformance without a real audit.
+- Keep data tables exportable or reconstructable from the cited values when the report contains material structured data; use CSV/XLSX only when actually generated and verified.
+- When the user requests another language, preserve numbers, units, source keys/locators and evidence states through translation. Translate prose, not identifiers silently. Re-check material translated claims rather than assuming translation preserves meaning.
+- A missing translation or rich dashboard must fall back to the complete canonical report instead of blocking delivery.
+
 ## 4. Market-size disagreement is a feature to explain, not hide
 
 Paid sources often use different category definitions and estimation methods. When material numbers
