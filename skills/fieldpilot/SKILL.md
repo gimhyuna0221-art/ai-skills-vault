@@ -11,13 +11,14 @@ metadata:
   scenario_extension_revision: "scenario-stress-01"
   council_extension_revision: "decision-council-01"
   methodology_extension_revision: "method-parity-01"
+  quality_extension_revision: "quality-max-01"
 ---
 
 # FieldPilot
 
 ## v1.9.9-rc04 — prompt-skill independence + lifecycle decision routing + geography-sensitive local coverage
 
-FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The ordinary path should read less, repeat less research, and output less while preserving competitor/substitute discovery, evidence, uncertainty, direct useful links, product-state discipline, and one exact next action.
+FieldPilot is an AI-first market-research and Market→Build decision workflow for builders. The default priority is maximum decision quality: factuality, decision-critical coverage, high-recall competitor/substitute/reference discovery, specific comparisons, and useful detail come before usage minimization. Remove duplicated search, repeated entities, unchanged rereads and empty prose, but do not reduce research depth or useful output merely to save tokens/time unless the user explicitly asks for that trade-off.
 
 The buyer does not need to know research vocabulary or how to write prompts. The same case gets the same investigation, evidence discipline and decision quality whether it is asked in expert terms or as "앱 만들었는데 아무도 안 써. 이거 망한 거야? 광고해야 돼? 뭐부터 해?" — only the explanation register and length may differ.
 
@@ -96,6 +97,14 @@ implications and, when appropriate, options, trade-offs and a bounded next step.
 Do not invent a user product or entry plan; facts-only restrictions take precedence.
 This is a content-completion check, not permission to expand every narrow question.
 
+## QUALITY-MAX-01 — MAXIMUM PERFORMANCE OVER USAGE MINIMIZATION
+
+Load `references/modules/QUALITY_MAXIMUM_PERFORMANCE.md` for broad market, competitor, product-fit, positioning and full/professional research. Unless the user explicitly sets a hard usage/time/length constraint, optimize for result quality before efficiency. Efficiency removes redundancy only; it must not remove material competitors, substitutes, non-obvious overlap dimensions, representative references, contradictions or comparison detail.
+
+Protect **high-recall overlap discovery** as a signature behavior. Decompose the subject into material experience/buying dimensions, find real representative products/cases for each important overlap (including adjacent/component/cross-category references when useful), explain the meaningful similarity and difference, and connect each reference to a decision implication. Do not claim global exhaustiveness; stop on semantic saturation/blocked routes, not an arbitrary token/search budget.
+
+For broad work, a longer answer or report is acceptable when its information density earns the length. Do not compress a differentiated finding into a generic summary merely to make the response shorter. Narrow factual questions remain narrow.
+
 ## METHOD-PARITY-01 — PROFESSIONAL RESEARCH DESIGN / ANALYSIS / PLATFORM BROKERAGE
 
 For substantial full/professional market research, build a decision-driven research question map before broad retrieval by loading `references/modules/RESEARCH_QUESTION_COVERAGE_MAP.md`. Research breadth follows unanswered decision-material questions and contradictions, not a fixed source count or report template.
@@ -129,7 +138,7 @@ Load and apply the lifecycle router plus the ordinary decision module first:
 - `references/modules/LIFECYCLE_DECISION_ROUTER.md`
 - `references/modules/DECISION_CONTINUITY.md`
 
-Do not load professional-report methodology/rendering modules merely because FieldPilot activated. The lifecycle router first identifies the current lifecycle stage and symptom, then conditionally loads only the existing modules needed for that decision — including product-state comparison, market-favored patterns, demand-vs-distribution diagnostics, signal integrity, channel routing, pricing/payment detail, or decision surfaces. The ordinary module owns adaptive search facets, canonical competitor/entity dedup, saturation stopping, selective repo reads, decision/evidence reuse, coverage honesty, Market→Build safeguards, and compact output.
+Do not load professional-report methodology/rendering modules merely because FieldPilot activated. The lifecycle router first identifies the current lifecycle stage and symptom, then conditionally loads only the existing modules needed for that decision — including product-state comparison, market-favored patterns, demand-vs-distribution diagnostics, signal integrity, channel routing, pricing/payment detail, or decision surfaces. The ordinary module owns adaptive high-recall search facets, canonical competitor/entity dedup, saturation stopping, selective repo reads, decision/evidence reuse, coverage honesty, Market→Build safeguards, and decision-readable output that preserves useful detail.
 
 When current repo/spec/project material is accessible, inspect it selectively and produce a `MARKET_TO_BUILD_DECISION`. `PRODUCT_STATE` uses only `IMPLEMENTED / PARTIALLY_IMPLEMENTED / PLANNED / UNKNOWN`. If product state is unavailable, state `PRODUCT_STATE_UNAVAILABLE` and continue with the bounded market decision using only legitimate known facts.
 
