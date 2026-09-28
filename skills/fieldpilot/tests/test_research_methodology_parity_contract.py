@@ -11,6 +11,7 @@ class ResearchMethodParityContract(unittest.TestCase):
         cls.bridge=(ROOT/'references/modules/PRIMARY_RESEARCH_PLATFORM_BRIDGE.md').read_text(encoding='utf-8')
         cls.analysis=(ROOT/'references/modules/RESEARCH_ANALYSIS_COMPILER.md').read_text(encoding='utf-8')
         cls.catalog=(ROOT/'references/data/MARKET_RESEARCH_CAPABILITY_CATALOG.md').read_text(encoding='utf-8')
+        cls.premium=(ROOT/'references/modules/PREMIUM_FINAL_REPORT_STANDARD.md').read_text(encoding='utf-8')
 
     def test_revision_and_wiring(self):
         self.assertIn('methodology_extension_revision: "method-parity-01"',self.skill)
@@ -44,6 +45,10 @@ class ResearchMethodParityContract(unittest.TestCase):
         self.assertIn('SCQA as an **editorial heuristic**',self.analysis)
         self.assertIn('SMART-like action',self.analysis)
         self.assertIn('Never invent targets or dates',self.analysis)
+
+    def test_paid_report_portability_and_accessibility(self):
+        for x in ('self-contained HTML','Do not rely on color alone','do not claim WCAG conformance','CSV/XLSX','preserve numbers, units, source keys/locators'):
+            self.assertIn(x,self.premium)
 
     def test_existing_methodology_stays_governing(self):
         for x in ('CLAIM_GRAMMAR','SAMPLE_AND_FIELDWORK','EXPERT_CORE_RULES'):
