@@ -1,6 +1,6 @@
-# AI-First Decision Continuity + Market→Build — v1.9.7 efficiency profile
+# AI-First Decision Continuity + Market→Build — quality-first execution profile
 
-This is the ordinary-builder execution module. It preserves the accepted Market→Build semantics while reducing repeated search, repo reading, reruns, and output. It is not a second research methodology.
+This is the ordinary-builder execution module. It preserves the accepted Market→Build semantics while maximizing decision quality. Remove repeated search, duplicate entities, unchanged rereads, unnecessary reruns and empty prose, but do not trade away material discovery, comparison depth or useful output merely to reduce usage. It is not a second research methodology.
 
 ## 1. Product promise and role boundary
 
@@ -48,7 +48,7 @@ For each area, record an existing applicability state: `PRESENT / NOT_APPLICABLE
 
 Do not silently omit an area. NOT_APPLICABLE requires a decision-specific reason, not missing evidence. If size matters but inputs are missing, use NOT_DEFENSIBLE or UNKNOWN, not NOT_APPLICABLE. Resolve accessible decision-critical gaps first; otherwise retain the affected unknown and give a bounded conclusion. An unperformed interview/survey is not a negative customer response, and public reviews are not this product's completed customer research. No mandatory interviews, surveys, paid sources or universal source counts are introduced.
 
-Keep the answer compact: summarize each area's finding or non-PRESENT reason in the existing §7 fields, without duplicating a full report. Missing evidence limits the conclusion; it does not force every other area to stop. For returning REAL evidence with a valid baseline, refresh only changed, stale or decision-affected areas under §9. If there is NO_VALID_BASELINE for an area needed by the current decision, establish only that missing baseline. Do not rerun all five areas merely because new feedback arrived.
+Keep the answer decision-readable, but preserve the material evidence and comparison detail needed to make the result feel complete and differentiated. Summarize each area's finding or non-PRESENT reason in the existing §7 fields without deleting useful competitor/reference breadth merely to shorten the answer. Missing evidence limits the conclusion; it does not force every other area to stop. For returning REAL evidence with a valid baseline, refresh only changed, stale or decision-affected areas under §9. If there is NO_VALID_BASELINE for an area needed by the current decision, establish only that missing baseline. Do not rerun all five areas merely because new feedback arrived.
 
 ### 2.2 REQUEST_FRAMING_VS_RESEARCH_DEPTH — wording is not depth
 
@@ -74,10 +74,15 @@ Define decision-relevant search facets first. Typical facets are:
 DIRECT_CATEGORY
 SUBSTITUTE_JOB
 ADJACENT_BEHAVIOR
+COMPONENT_OR_MECHANIC_ANALOGUE
+CROSS_CATEGORY_REFERENCE
+MARKETPLACE_OR_COMMUNITY_VOCABULARY
 NEGATIVE_CLOSURE
 ```
 
 Add a domain-specific marketplace/community/regulatory facet only when it can change the active decision.
+For broad product-fit/reference work, also decompose the product into the material overlap dimensions
+defined by `QUALITY_MAXIMUM_PERFORMANCE.md` rather than treating the category label as the whole market.
 
 For each weak facet:
 1. create semantically distinct query expansions rather than paraphrase spam;
@@ -89,6 +94,25 @@ For each weak facet:
 7. continue when a new relevant entity, contradiction, or decision-relevant facet appears.
 
 Any generated or hypothetical expansion text is discovery material, not evidence. It may suggest vocabulary, but a real source must be retrieved and checked before a claim is admitted.
+
+### Representative overlap references
+
+When a product combines multiple genres, mechanics, workflows, audiences, aesthetics, pricing models or
+other material dimensions, identify real representative references for each important dimension instead
+of returning only an overall competitor list.
+
+For each useful reference retain:
+- overlap dimension;
+- representative product/case;
+- why the overlap matters;
+- the important difference that prevents false equivalence;
+- direct evidence locator;
+- what the user can learn, preserve, avoid or differentiate.
+
+A representative reference may be a direct competitor, substitute, adjacent reference, component
+analogue or cross-category reference. Finding a useful analogue is not evidence that buyers see the two
+products as substitutes.
+
 
 ### Saturation stop
 
@@ -174,7 +198,7 @@ UNKNOWN_GAP
 
 Keep `LISTED_PRICE / ACTIVE_OFFER / PREORDER_OFFER / OBSERVED_PURCHASE / OBSERVED_REPEAT_PURCHASE_OR_RETENTION / PROVEN_WTP` distinct. If real demand, payment, retention, or willingness-to-pay has not been observed at the required rung, preserve it as `UNKNOWN` or the applicable lower state. Competitor pricing, comments, survey intent, or waitlist interest are not observed WTP.
 
-## 7. Decision-first output compression
+## 7. Decision-first output architecture
 
 For an ordinary builder decision, use the following first layer; apply §7.3 for broad already-built-product viability. A narrow factual answer needs only the requested fact and its material conditions:
 
@@ -189,7 +213,7 @@ ONE_NEXT_ACTION
 
 `DECISIVE_EVIDENCE` retains direct source locators/IDs for material claims. `COUNTEREVIDENCE`, decision-flipping uncertainty, and claim ceiling remain visible. Do not delete them to make the answer shorter.
 
-Detailed methodology, giant comparison tables, complete evidence ledger, audit notes, and renderer/report detail are on-demand unless decision integrity requires them. If the user asks for full/professional research, route out of this ordinary module to the professional path.
+Methodology exposition, complete audit ledgers and renderer internals are on-demand unless decision integrity requires them. But do not hide useful competitor/reference comparisons, non-obvious discoveries, concrete similarities/differences or decision-changing detail merely because the ordinary path was once optimized for brevity. If the user asks for full/professional research, route out of this ordinary module to the professional path.
 
 When product state is available, the internal Market→Build decision surface remains:
 
