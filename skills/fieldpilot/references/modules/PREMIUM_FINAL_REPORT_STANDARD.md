@@ -53,8 +53,9 @@ For FieldPilot, a substantial applicable report should therefore make the follow
 9. **Entry barriers / feasibility** — role- and geography-sensitive, with supported response options.
 10. **Implications / recommendation** — what the evidence changes, alternatives/trade-offs, reversal
     conditions and next check when advice is part of the job.
-11. **Scenario stress test (synthetic, conditional)** — only when future actor reactions can change the decision; show actors, second-order risks, reversal conditions and real-world checks, with every reaction labeled `SYNTHETIC_HYPOTHESIS`.
-12. **Sources and method appendix** — source register, evidence limits, contradictions, AI/tool use,
+11. **Decision Council (documented lenses, conditional)** — only when distinct verified decision lenses materially clarify the strategy; show the base FieldPilot decision first, then at most 2–3 source-backed lenses, their transfer limits, agreement/conflict, and the final FieldPilot synthesis. Never imply endorsement or actual advice from the named person.
+12. **Scenario stress test (synthetic, conditional)** — only when future actor reactions can change the decision; show actors, second-order risks, reversal conditions and real-world checks, with every reaction labeled `SYNTHETIC_HYPOTHESIS`.
+13. **Sources and method appendix** — source register, evidence limits, contradictions, AI/tool use,
     human-review state and reproducibility notes.
 
 Do not pad to hit a page count. COMMERCIAL_DELIVERABLE_SYSTEM's 15–30-page *class* means professional
@@ -94,6 +95,10 @@ Before delivery, the customer-facing report must answer without reading the audi
 
 The buyer should not need a second prompt to receive the promised file. Internal gate names, version
 lineage and debug history stay in the appendix or manifest.
+
+Council agreement cannot raise the evidence tier. A named lens is interpretation from documented
+public principles, not a real person's review or endorsement. Show its primary-source basis and
+transfer limit; if the council adds no material value, omit it.
 
 A scenario layer may not raise the evidence tier. If used, it must visibly state that it is synthetic,
 grounded in observed evidence/assumptions, and is not observed demand, WTP, conversion, causal proof or
