@@ -1,0 +1,48 @@
+name: FieldPilot Decision Council Package
+on:
+  push:
+    branches: ['worker/fieldpilot-decision-council-01']
+    paths:
+      - 'skills/fieldpilot/**'
+      - '.github/workflows/fieldpilot-decision-council-package.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run contract tests
+        run: python -m unittest discover -s skills/fieldpilot/tests -p 'test_*_contract.py' -v
+      - name: Package latest skill
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, subprocess, zipfile
+          root=Path('skills/fieldpilot')
+          out=Path(os.environ['RUNNER_TEMP'])/'delivery'
+          out.mkdir()
+          files=sorted(p for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')
+          zpath=out/'FieldPilot_decision_council_01_TRIAL.zip'
+          with zipfile.ZipFile(zpath,'w',zipfile.ZIP_DEFLATED) as z:
+              for p in files:
+                  z.write(p,'fieldpilot/'+p.relative_to(root).as_posix())
+          manifest={
+              'commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),
+              'file_count':len(files),
+              'zip_sha256':hashlib.sha256(zpath.read_bytes()).hexdigest(),
+              'behavioral_cold_start':'NOT_RUN'
+          }
+          (out/'MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fieldpilot-decision-council-latest
+          path: ${{ runner.temp }}/delivery/
+          if-no-files-found: error
+          retention-days: 14

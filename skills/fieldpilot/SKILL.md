@@ -9,6 +9,7 @@ metadata:
   reference_extension_revision: "reference-first-01"
   delivery_extension_revision: "premium-deliverable-01"
   scenario_extension_revision: "scenario-stress-01"
+  council_extension_revision: "decision-council-01"
 ---
 
 # FieldPilot
@@ -94,6 +95,14 @@ implications and, when appropriate, options, trade-offs and a bounded next step.
 Do not invent a user product or entry plan; facts-only restrictions take precedence.
 This is a content-completion check, not permission to expand every narrow question.
 
+## DECISION-COUNCIL-01 — EVIDENCE-GROUNDED DOCUMENTED LENSES
+
+When a material product/business/strategy choice has adequate base evidence and a distinct documented decision lens could expose a trade-off, blind spot or reversal condition, conditionally load `references/modules/EVIDENCE_GROUNDED_DECISION_COUNCIL.md` and its verified starter cards in `references/data/DECISION_LENS_LIBRARY.md`.
+
+Always produce the evidence-bounded **base FieldPilot decision first**. Then select at most 2–3 task-fit lenses from verified primary-source cards. Render them as documented lenses, not impersonations or endorsements. No majority vote: fame, wealth, company success, rhetorical force, or agreement among lenses never raises the evidence tier. The final synthesis remains FieldPilot's and verified current evidence dominates.
+
+Do not activate this layer for narrow facts, facts-only/source-only work, ordinary descriptive reports with no strategic decision, evidence-poor cases, or merely to make the answer look sophisticated. If a requested named person lacks a verified evidence card, research the card first or say it is not grounded; never invent the persona.
+
 ## SCENARIO-STRESS-01 — EVIDENCE-GROUNDED FUTURE REACTION TEST
 
 When a decision materially depends on how customers, competitors, channels, partners or other actors may react after an action, conditionally load `references/modules/SCENARIO_STRESS_TEST.md`. This layer runs **after** real evidence collection and alternative mapping, never before them.
@@ -146,9 +155,11 @@ ONE_NEXT_ACTION
 
 For broad viability/commercialization of an already-built product, §7.3 of the ordinary module adds the compact buyer surface: `PAIN_SIGNAL_SYNTHESIS / COMPETITIVE_ALTERNATIVES / MONEY_SHAPE / PRODUCT_STATE_DELTA / WHY_SWITCH_OR_NOT / FIRST_PAID_PROOF`, alongside `CURRENT_DECISION / UNKNOWNS / BUILD_CHANGE_OR_HOLD`. Keep decisive sources and counterevidence visible; this is one answer, not a duplicate report. §7.4 makes FIRST_PAID_PROOF the same next action when a paid experiment is appropriate. Narrow facts stay narrow; returning evidence updates affected fields only.
 
-For broad already-built-product decisions, or when risk/change options, a validation threshold, product pattern, handoff or variant comparison is decision-material, also apply [decision surfaces](references/modules/DECISION_SURFACES.md).
+For broad already-built-product decisions, or when risk/change options, a validation threshold, product pattern, handoff or variant comparison is decision-material, also apply [decision surfaces](references/modules/DECISION_SURFACES.md). It strengthens §7.3 inside the same answer: claim-level trace, full alternative map/economics, reality check, bounded risks/options and falsifiable experiments. Narrow price/fact questions do not load that module. Route B integrates relevant surfaces into its existing report; returning evidence loads only detail needed by affected claims.
 
-If the ranking between feasible actions can materially change because of likely actor reactions, then after the real-evidence alternative map is established load [scenario stress test](references/modules/SCENARIO_STRESS_TEST.md). Keep every reaction synthetic and use it only to expose second-order risks, counter-moves and real-world checks; never promote it into demand or probability. It strengthens §7.3 inside the same answer: claim-level trace, full alternative map/economics, reality check, bounded risks/options and falsifiable experiments. Narrow price/fact questions do not load that module. Route B integrates relevant surfaces into its existing report; returning evidence loads only detail needed by affected claims.
+If a distinct documented operator/founder lens can materially expose a trade-off or blind spot after the base decision is formed, load [evidence-grounded decision council](references/modules/EVIDENCE_GROUNDED_DECISION_COUNCIL.md). Use at most 2–3 verified task-fit lenses, never celebrity voting or impersonation.
+
+If the ranking between feasible actions can materially change because of likely actor reactions, then after the real-evidence alternative map is established load [scenario stress test](references/modules/SCENARIO_STRESS_TEST.md). Keep every reaction synthetic and use it only to expose second-order risks, counter-moves and real-world checks; never promote it into demand or probability.
 
 If implementation is the next action, `ONE_NEXT_ACTION` may expand into `EXACT_NEXT_BUILD_ACTION` with:
 
@@ -165,6 +176,7 @@ Use this route only when the user explicitly requests full/professional market r
 - `references/modules/MARKET_RESEARCH_DELIVERABLES.md`
 - `references/modules/COMMERCIAL_DELIVERABLE_SYSTEM.md`
 - `references/modules/PREMIUM_FINAL_REPORT_STANDARD.md`
+- `references/modules/EVIDENCE_GROUNDED_DECISION_COUNCIL.md` when documented decision lenses can materially improve the decision
 - `references/modules/SCENARIO_STRESS_TEST.md` when future actor reactions are decision-material
 - `references/modules/CLIENT_VISIBLE_EVIDENCE_PROVENANCE.md`
 - `references/modules/BUYER_FACING_DECISION_REPORT.md`
