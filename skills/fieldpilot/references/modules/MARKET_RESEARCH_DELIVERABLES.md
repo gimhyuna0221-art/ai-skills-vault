@@ -83,6 +83,7 @@ Include only applicable sections, but a full engagement must explicitly assess w
 - success cases and failure/low-outcome/near-miss cases, plus the recorded negative-case search;
 - cross-case common patterns kept distinct from candidate success mechanisms, with the comparator discrimination check;
 - causal/alternative explanations and replicability limits;
+- an evidence-grounded scenario stress test when downstream actor reactions are decision-material, governed by `references/modules/SCENARIO_STRESS_TEST.md`; synthetic reactions never count as observed market evidence;
 - service-vs-market assessment and the five-valued user-case gap diagnosis;
 - prioritized actions (`P0 / P1 / P2 / NOT_YET`) and do-not-build, each with its evidence basis;
 - source discovery and selection strategy, and the evidence independence profile;
@@ -355,6 +356,7 @@ Recommended structure, omitting only genuinely inapplicable sections:
 ## 19. Unverified / Not-Tested Questions
 ## 20. Findings
 ## 21. Interpretation
+## 21a. Scenario Stress Test (Synthetic; only when decision-material)
 ## 22. Expert Recommendations
 ### 22a. Prioritized Actions — P0 / P1 / P2 / NOT_YET
 ### 22b. Do Not Build
