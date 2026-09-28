@@ -10,6 +10,11 @@ For a full market-research request, FieldPilot's research spine is:
 
 The report is the compiled result of the market research. It is not an investment memo and it is not replaced by a single recommendation or next action. For a substantial commercial brief it is delivered inside the professional `CLIENT_DELIVERABLE_BUNDLE` governed by `references/modules/COMMERCIAL_DELIVERABLE_SYSTEM.md`; one undifferentiated report/chat wall is not the complete customer contract.
 
+For a buyer-facing full/professional report, also apply `references/modules/PREMIUM_FINAL_REPORT_STANDARD.md`.
+The standard makes tangible Markdown/HTML/PDF-or-truthful-fallback delivery and paid-report-class
+information architecture explicit; it does not grant access to proprietary paid datasets or require
+page-count padding.
+
 Decision support, development-priority advice, commitment ceilings, and next actions may appear in `Expert Interpretation / Recommendations`, but they remain **derived advice from the market research**.
 
 ## 2. Full-research trigger
