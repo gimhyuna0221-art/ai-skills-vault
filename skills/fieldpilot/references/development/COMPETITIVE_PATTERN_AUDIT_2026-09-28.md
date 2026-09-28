@@ -86,6 +86,51 @@ Useful:
 Already represented:
 - Scenario Stress Test with stricter SYNTHETIC_HYPOTHESIS ceiling.
 
+
+
+### shipblueprint/deep-market-research-agent
+Useful:
+- one capable agent owns context while tools fetch on demand, reducing repeated context reads;
+- explicit phased research for brand, desire/pain, competitors, communities, market analysis, final report;
+- direct customer-voice quotes with source links;
+- batch search / targeted page extraction / saved report.
+Already represented or strengthened:
+- FieldPilot defaults to one capable worker unless delegation adds value;
+- Research Question/Coverage Map replaces fixed phases with decision-driven nodes;
+- pain/review/community evidence keeps direct locators and dedup/claim ceilings;
+- broker/source receipts and professional report delivery.
+Not adopted:
+- mandatory competitor/quote counts, since fixed quotas can reward filler and duplicate evidence.
+
+### Hainrixz/maia-skill
+Useful:
+- deterministic free-source fallback before optional premium data;
+- parallel specialists only where sectors are separable;
+- explicit JSON/numeric data contract;
+- interactive report with HTML fallback;
+- bilingual delivery, accessibility, local/private report storage;
+- outcome-history comparison with clear caveat that it is not an audited record.
+Already represented or strengthened:
+- source ladder + access receipts;
+- conditional delegation, not mandatory multi-agent;
+- reproducible data/transform rules;
+- self-contained HTML/PDF fallback;
+- premium report portability/accessibility/localization requirements;
+- returning-evidence decision continuity.
+Not adopted:
+- investment-specific risk allocation/scoring or an interactive dashboard dependency.
+
+### ElmatadorZ/MoneyAtlas-ClaudeSkill-Agent
+Useful:
+- multiple scenarios rather than one brittle prediction;
+- explicit invalidation conditions, unknowns and abstention;
+- human decision primacy;
+- contract tests around decision gates.
+Already represented:
+- Scenario Stress Test, reversal conditions, UNKNOWN, claim ceilings, human approval and extensive contract tests.
+Not adopted:
+- financial-market-specific cycle models or numeric confidence without calibration.
+
 ## Remaining differentiated thesis
 
 FieldPilot should not try to beat every research system at crawling, every survey platform at
