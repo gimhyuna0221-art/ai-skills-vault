@@ -53,7 +53,8 @@ For FieldPilot, a substantial applicable report should therefore make the follow
 9. **Entry barriers / feasibility** — role- and geography-sensitive, with supported response options.
 10. **Implications / recommendation** — what the evidence changes, alternatives/trade-offs, reversal
     conditions and next check when advice is part of the job.
-11. **Sources and method appendix** — source register, evidence limits, contradictions, AI/tool use,
+11. **Scenario stress test (synthetic, conditional)** — only when future actor reactions can change the decision; show actors, second-order risks, reversal conditions and real-world checks, with every reaction labeled `SYNTHETIC_HYPOTHESIS`.
+12. **Sources and method appendix** — source register, evidence limits, contradictions, AI/tool use,
     human-review state and reproducibility notes.
 
 Do not pad to hit a page count. COMMERCIAL_DELIVERABLE_SYSTEM's 15–30-page *class* means professional
@@ -93,6 +94,10 @@ Before delivery, the customer-facing report must answer without reading the audi
 
 The buyer should not need a second prompt to receive the promised file. Internal gate names, version
 lineage and debug history stay in the appendix or manifest.
+
+A scenario layer may not raise the evidence tier. If used, it must visibly state that it is synthetic,
+grounded in observed evidence/assumptions, and is not observed demand, WTP, conversion, causal proof or
+a forecast. Put detailed actor/reaction ledgers in the appendix when they would dominate the buyer pages.
 
 ## 6. Delivery verification
 
